@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>FlipRun - One-tap gravity runner. Free to play, no login</title>
+<meta name="description" content="Flip gravity, dodge spikes, grab coins and beat your best score. Free browser game, no login needed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">FLIP<span>RUN</span></div>
+    <div class="hdr-right">
+      <div class="pill">Best<b id="hdrBest">0</b></div>
+      <button class="icon-btn" id="soundBtn" aria-label="Toggle sound">Sound on</button>
+    </div>
+  </header>
+
+  <!-- AD SLOT 1: top banner. Put your AdSense slot id in data-slot -->
+  <div class="ad-slot" id="adTop" data-slot="">Ad space (banner)</div>
+
+  <div class="stage" id="stage">
+    <canvas id="game" aria-label="FlipRun game"></canvas>
+
+    <!-- Start screen -->
+    <div class="overlay" id="menu">
+      <div class="card">
+        <h1>FLIPRUN</h1>
+        <p>Tap, click or press Space to flip gravity. Dodge the spikes, grab the coins, and chase your best score.</p>
+        <div class="stats">
+          <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
+          <div class="stat"><small>Today</small><strong id="mToday">0</strong></div>
+          <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+        </div>
+        <button class="btn" id="playBtn">Play</button>
+      </div>
+    </div>
+
+    <!-- Game over screen -->
+    <div class="overlay hidden" id="over">
+      <div class="card">
+        <h2>Crashed!</h2>
+        <div class="big-score" id="oScore">0</div>
+        <div class="badge hidden" id="oBadge">New best!</div>
+        <p id="oMsg"></p>
+        <div class="stats">
+          <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
+          <div class="stat"><small>Coins</small><strong id="oCoins">0</strong></div>
+        </div>
+        <button class="btn" id="againBtn">Play again</button>
+        <button class="btn alt" id="shareBtn">Share my score</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="howto">
+    <div><b>Flip:</b> tap the screen, click, or press Space / Up / W.</div>
+    <div><b>Combo:</b> collect coins in a row to raise your multiplier up to x5.</div>
+    <div><b>Saved:</b> your best score stays on this device. No login needed.</div>
+  </div>
+
+  <!-- AD SLOT 2: bottom banner -->
+  <div class="ad-slot" id="adBottom" data-slot="">Ad space (banner)</div>
+
+  <footer>
+    <a href="privacy.html">Privacy Policy</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- Load order matters. Top to bottom. -->
+<script src="js/config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/spawner.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/input.js"></script>
+<script src="js/ads.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
