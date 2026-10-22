@@ -51,7 +51,7 @@ const GAMES = [
     category: 'Puzzle',
     desc: 'Play vs the computer on 3 levels or with a friend. Build a winning streak.',
     bestKey: 'tictactoe_best',
-    art: 'XO', c1: '#ff5c7a', c2: '#2a0f2e',
+    art: 'TTT', c1: '#ff5c7a', c2: '#2a0f2e',
     isNew: true
   },
   // ADD NEW GAMES ABOVE THIS LINE
