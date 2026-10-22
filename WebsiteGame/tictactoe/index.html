@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tic Tac Toe - Play vs Computer or a Friend, no login</title>
+<meta name="description" content="Free Tic Tac Toe. Play against the computer on Easy, Medium or Hard, or play with a friend on the same screen. Build a winning streak and beat your best score.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">TIC<span>TAC</span>TOE</div>
+    <div class="hdr-right">
+      <div class="pill">Best<b id="hdrBest">0</b></div>
+      <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
+    </div>
+  </header>
+
+  <!-- AD SLOT 1 -->
+  <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+  <div class="stage" id="stage">
+    <div class="hud">
+      <div class="stat"><small id="l1">Level</small><strong id="h1">-</strong></div>
+      <div class="stat"><small id="l2">Score</small><strong id="h2">0</strong></div>
+      <div class="stat"><small id="l3">Streak</small><strong id="h3">0</strong></div>
+      <div class="stat"><small>Round</small><strong id="h4">1</strong></div>
+    </div>
+
+    <div id="board" aria-label="Tic Tac Toe board"></div>
+    <p class="status" id="status"></p>
+
+    <div class="row-btns">
+      <button class="btn alt hidden" id="nextBtn">Next round</button>
+      <button class="btn ghost" id="endBtn">End game</button>
+    </div>
+
+    <div class="overlay" id="menu">
+      <div class="card">
+        <h1>TIC TAC TOE</h1>
+        <p>You are X. Win rounds to build a streak. Lose a round and your run ends. Pick a level:</p>
+        <button class="btn sm" data-diff="easy">Easy</button>
+        <button class="btn sm" data-diff="medium">Medium</button>
+        <button class="btn sm" data-diff="hard">Hard</button>
+        <button class="btn alt sm" id="twoBtn">2 Players (same screen)</button>
+        <div class="stats">
+          <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
+          <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="over">
+      <div class="card">
+        <h2 id="oTitle">Game over</h2>
+        <div class="big-score" id="oScore">0</div>
+        <div class="badge hidden" id="oBadge">New best!</div>
+        <p id="oMsg"></p>
+        <div class="stats">
+          <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
+          <div class="stat"><small>Wins</small><strong id="oWins">0</strong></div>
+        </div>
+        <button class="btn" id="againBtn">Play again</button>
+        <button class="btn alt" id="shareBtn">Share my score</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="info">
+    <h2>How to play Tic Tac Toe</h2>
+    <p>The board has 9 squares. Players take turns placing their mark. You play X and the computer plays O. The first player to get three marks in a row, across, down or diagonally, wins the round. If all 9 squares are full and nobody has three in a row, the round is a draw.</p>
+
+    <h2>Run and scoring</h2>
+    <p>Against the computer, your game is a run. A win gives points: 10 on Easy, 20 on Medium and 40 on Hard. Every extra win in a row adds a streak bonus of 5 points more than the last one. A draw gives 5 points and resets your streak, and the run continues. If the computer wins a round, the run ends and your score is saved if it is your best. Who goes first changes every round.</p>
+
+    <h2>Levels</h2>
+    <p>Easy plays random moves. Medium takes a winning move when it can and blocks yours, but does not plan ahead. Hard plans many moves ahead and rarely makes a mistake, so on Hard a draw is a good result and a win is a real achievement.</p>
+
+    <h2>Tips to win more</h2>
+    <p>Start in the centre or a corner, because those squares are part of the most winning lines. If the computer takes a corner, take the centre. Always check if your opponent has two in a row and block the third square. Try to create a fork, which is a move that gives you two ways to win at once.</p>
+  </section>
+
+  <!-- AD SLOT 2 -->
+  <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+  <footer>
+    <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="../assets/js/site-config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+<script src="../assets/js/ads.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

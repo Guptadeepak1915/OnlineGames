@@ -44,5 +44,15 @@ const GAMES = [
     art: 'MM', c1: '#ffd23f', c2: '#3b1b6b',
     isNew: true
   },
+  {
+    id: 'tictactoe',
+    name: 'Tic Tac Toe',
+    folder: 'tictactoe/',
+    category: 'Puzzle',
+    desc: 'Play vs the computer on 3 levels or with a friend. Build a winning streak.',
+    bestKey: 'tictactoe_best',
+    art: 'XO', c1: '#ff5c7a', c2: '#2a0f2e',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];
