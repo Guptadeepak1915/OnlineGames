@@ -1,35 +1,200 @@
 /* NumFill only styles. Colors come from ../css/style.css */
-.stage.nf{background:var(--panel);padding:14px 10px 18px;min-height:520px}
-.hud{display:flex;gap:8px;margin-bottom:12px}
-.hud .stat{padding:6px 4px;text-align:center}
-.hud .stat strong{font-size:20px}
-.lives{color:var(--coral)!important;letter-spacing:2px;font-size:18px!important}
+.stage.nf {
+  background: var(--panel);
+  padding: 14px 10px 18px;
+  min-height: 520px
+}
 
-#board{--cell:clamp(44px,12.5vw,70px);display:grid;gap:6px;justify-content:center;margin:6px auto 16px}
-.cell{width:var(--cell);height:var(--cell);border-radius:12px;border:2px solid var(--line);background:var(--ink);color:var(--paper);
-  font-family:var(--display);font-size:calc(var(--cell)*.45);display:flex;align-items:center;justify-content:center;padding:0}
-.cell.blank{background:transparent;border-style:dashed;border-color:#6a5cc0;color:var(--cyan)}
-.cell.hinted{border-style:solid;border-color:var(--sun);color:var(--sun)}
-.cell.sel{outline:3px solid var(--sun);outline-offset:1px}
-.cell.bad{border-color:var(--coral);background:rgba(255,92,122,.15)}
-.cell:focus-visible{outline:3px solid var(--cyan)}
+.hud {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px
+}
 
-.clue{height:var(--cell);min-width:var(--cell);padding:0 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  border-radius:12px;background:#2a2063;line-height:1.15;text-align:center}
-.clue.row{min-width:calc(var(--cell)*1.4)}
-.clue small{font-size:calc(var(--cell)*.2);color:#b9b0f0;font-weight:800;white-space:nowrap}
-.clue b{font-family:var(--display);font-weight:400;font-size:calc(var(--cell)*.34);color:var(--sun);white-space:nowrap}
-.clue.ok{background:#14604f}.clue.ok b{color:#b6ffe9}
-.clue.bad{background:#7a2640}.clue.bad b{color:#ffd0da}
-.corner{visibility:hidden}
+.hud .stat {
+  padding: 6px 4px;
+  text-align: center
+}
 
-.pad{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:420px;margin:0 auto}
-.pad button{background:var(--ink);border:2px solid var(--line);border-radius:12px;padding:12px 0;font-family:var(--display);font-size:22px;color:var(--paper)}
-.pad button:active{background:var(--line)}
-.pad .erase{color:var(--coral)}
-.hint-btn{max-width:420px;margin:12px auto 0}
-.hint-btn:disabled{opacity:.45;cursor:not-allowed}
+.hud .stat strong {
+  font-size: 20px
+}
 
-@keyframes nf-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
-#board.shake{animation:nf-shake .4s}
-@media (prefers-reduced-motion:reduce){#board.shake{animation:none}}
+.lives {
+  color: var(--coral) !important;
+  letter-spacing: 2px;
+  font-size: 18px !important
+}
+
+#board {
+  --cell: clamp(44px, 12.5vw, 70px);
+  display: grid;
+  gap: 6px;
+  justify-content: center;
+  margin: 6px auto 16px
+}
+
+.cell {
+  width: var(--cell);
+  height: var(--cell);
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--display);
+  font-size: calc(var(--cell)*.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0
+}
+
+.cell.blank {
+  background: transparent;
+  border-style: dashed;
+  border-color: #6a5cc0;
+  color: var(--cyan)
+}
+
+.cell.hinted {
+  border-style: solid;
+  border-color: var(--sun);
+  color: var(--sun)
+}
+
+.cell.sel {
+  outline: 3px solid var(--sun);
+  outline-offset: 1px
+}
+
+.cell.bad {
+  border-color: var(--coral);
+  background: rgba(255, 92, 122, .15)
+}
+
+.cell:focus-visible {
+  outline: 3px solid var(--cyan)
+}
+
+.clue {
+  height: var(--cell);
+  min-width: var(--cell);
+  padding: 0 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #2a2063;
+  line-height: 1.15;
+  text-align: center
+}
+
+.clue.row {
+  min-width: calc(var(--cell)*1.4)
+}
+
+.clue small {
+  font-size: calc(var(--cell)*.2);
+  color: #b9b0f0;
+  font-weight: 800;
+  white-space: nowrap
+}
+
+.clue b {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: calc(var(--cell)*.34);
+  color: var(--sun);
+  white-space: nowrap
+}
+
+.clue.ok {
+  background: #14604f
+}
+
+.clue.ok b {
+  color: #b6ffe9
+}
+
+.clue.bad {
+  background: #7a2640
+}
+
+.clue.bad b {
+  color: #ffd0da
+}
+
+.corner {
+  visibility: hidden
+}
+
+.pad {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  max-width: 420px;
+  margin: 0 auto
+}
+
+.pad button {
+  background: var(--ink);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 0;
+  font-family: var(--display);
+  font-size: 22px;
+  color: var(--paper)
+}
+
+.pad button:active {
+  background: var(--line)
+}
+
+.pad .erase {
+  color: var(--coral)
+}
+
+.hint-btn {
+  max-width: 420px;
+  margin: 12px auto 0
+}
+
+.hint-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed
+}
+
+@keyframes nf-shake {
+
+  0%,
+  100% {
+    transform: translateX(0)
+  }
+
+  20% {
+    transform: translateX(-8px)
+  }
+
+  40% {
+    transform: translateX(8px)
+  }
+
+  60% {
+    transform: translateX(-6px)
+  }
+
+  80% {
+    transform: translateX(6px)
+  }
+}
+
+#board.shake {
+  animation: nf-shake .4s
+}
+
+@media (prefers-reduced-motion:reduce) {
+  #board.shake {
+    animation: none
+  }
+}
