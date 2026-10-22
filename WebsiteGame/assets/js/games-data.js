@@ -24,5 +24,25 @@ const GAMES = [
     art: 'NF', c1: '#3df2e0', c2: '#1b6b4e',
     isNew: true
   },
+  {
+    id: "snakerush",
+    name: "Snake Rush",
+    folder: "snakerush/",
+    category: "Arcade",
+    desc: "Eat, grow and do not hit the wall.",
+    bestKey: "snakerush_best",
+    art: "SR", c1: '#ff9f43', c2: '#6b1b4e',
+    isNew: true
+  },
+  {
+    id: 'memorymatch',
+    name: 'Memory Match',
+    folder: 'memorymatch/',
+    category: 'Puzzle',
+    desc: 'Flip cards, find all the pairs and build combos. Every level gets bigger.',
+    bestKey: 'memorymatch_best',
+    art: 'MM', c1: '#ffd23f', c2: '#3b1b6b',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];

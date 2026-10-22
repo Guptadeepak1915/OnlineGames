@@ -1,0 +1,17 @@
+/* Styles only for Snake Rush. Shared theme is in ../assets/css/style.css */
+.stage {
+  background: var(--panel);
+  padding: 24px 16px;
+  min-height: 320px
+}
+
+.demo {
+  max-width: 360px;
+  margin: 0 auto;
+  text-align: center
+}
+
+.demo .btn {
+  font-size: 26px;
+  padding: 26px 14px
+}

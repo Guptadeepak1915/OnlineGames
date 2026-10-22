@@ -8,31 +8,57 @@
    It makes:  snakerush/index.html, css/game.css, js/game.js
    (a tiny working demo you can replace with your real game)
    ===================================================== */
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const root = path.join(__dirname, '..');
-const [name, category = 'Arcade', ...rest] = process.argv.slice(2);
-const desc = rest.join(' ') || 'A new free browser game.';
+const root = path.join(__dirname, "..");
+const [name, category = "Arcade", ...rest] = process.argv.slice(2);
+const desc = rest.join(" ") || "A new free browser game.";
 
-function fail(msg){ console.error('Error: ' + msg); process.exit(1); }
-if(!name) fail('Usage: node tools/new-game.js "Game Name" [Category] [Description]');
+function fail(msg) {
+  console.error("Error: " + msg);
+  process.exit(1);
+}
+if (!name)
+  fail('Usage: node tools/new-game.js "Game Name" [Category] [Description]');
 
-const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 24);
-if(!slug) fail('Please use letters or numbers in the game name.');
+const slug = name
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, "")
+  .slice(0, 24);
+if (!slug) fail("Please use letters or numbers in the game name.");
 const dir = path.join(root, slug);
-if(fs.existsSync(dir)) fail(`Folder "${slug}" already exists.`);
+if (fs.existsSync(dir)) fail(`Folder "${slug}" already exists.`);
 
-const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-const art = name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase() || name.slice(0, 2).toUpperCase();
-const palettes = [['#ff9f43', '#6b1b4e'], ['#a0ff6b', '#0b5a6b'], ['#ffd23f', '#3b1b6b'], ['#3df2e0', '#2a0f2e'], ['#ff5c7a', '#0f2a1a']];
+const esc = (s) =>
+  String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+const art =
+  name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() || name.slice(0, 2).toUpperCase();
+const palettes = [
+  ["#ff9f43", "#6b1b4e"],
+  ["#a0ff6b", "#0b5a6b"],
+  ["#ffd23f", "#3b1b6b"],
+  ["#3df2e0", "#2a0f2e"],
+  ["#ff5c7a", "#0f2a1a"],
+];
 const [c1, c2] = palettes[Math.floor(Math.random() * palettes.length)];
 
-fs.mkdirSync(path.join(dir, 'css'), {recursive: true});
-fs.mkdirSync(path.join(dir, 'js'), {recursive: true});
+fs.mkdirSync(path.join(dir, "css"), { recursive: true });
+fs.mkdirSync(path.join(dir, "js"), { recursive: true });
 
 /* ---------- index.html ---------- */
-fs.writeFileSync(path.join(dir, 'index.html'), `<!DOCTYPE html>
+fs.writeFileSync(
+  path.join(dir, "index.html"),
+  `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -86,17 +112,23 @@ fs.writeFileSync(path.join(dir, 'index.html'), `<!DOCTYPE html>
 <script>initAds();</script>
 </body>
 </html>
-`);
+`,
+);
 
 /* ---------- css/game.css ---------- */
-fs.writeFileSync(path.join(dir, 'css/game.css'), `/* Styles only for ${name}. Shared theme is in ../assets/css/style.css */
+fs.writeFileSync(
+  path.join(dir, "css/game.css"),
+  `/* Styles only for ${name}. Shared theme is in ../assets/css/style.css */
 .stage{background:var(--panel);padding:24px 16px;min-height:320px}
 .demo{max-width:360px;margin:0 auto;text-align:center}
 .demo .btn{font-size:26px;padding:26px 14px}
-`);
+`,
+);
 
 /* ---------- js/game.js (tiny demo: tap counter) ---------- */
-fs.writeFileSync(path.join(dir, 'js/game.js'), `/* ${name} - starter code (tap counter demo). Replace with your game.
+fs.writeFileSync(
+  path.join(dir, "js/game.js"),
+  `/* ${name} - starter code (tap counter demo). Replace with your game.
    Best score is saved with the key "${slug}_best", which the dashboard reads. */
 const BEST_KEY = '${slug}_best';
 
@@ -125,33 +157,42 @@ function end(){
 }
 $('tapBtn').onclick = () => { if(!running) start(); else { score++; show(); } };
 show();
-`);
+`,
+);
 
 /* ---------- register on dashboard ---------- */
-const gdPath = path.join(root, 'assets/js/games-data.js');
-let gd = fs.readFileSync(gdPath, 'utf8');
-const marker = '  // ADD NEW GAMES ABOVE THIS LINE';
-if(!gd.includes(marker)) fail('Marker line not found in assets/js/games-data.js');
-const q = s => JSON.stringify(String(s));
-gd = gd.replace(marker, `  {
+const gdPath = path.join(root, "assets/js/games-data.js");
+let gd = fs.readFileSync(gdPath, "utf8");
+const marker = "  // ADD NEW GAMES ABOVE THIS LINE";
+if (!gd.includes(marker))
+  fail("Marker line not found in assets/js/games-data.js");
+const q = (s) => JSON.stringify(String(s));
+gd = gd.replace(
+  marker,
+  `  {
     id: ${q(slug)},
     name: ${q(name)},
-    folder: ${q(slug + '/')},
+    folder: ${q(slug + "/")},
     category: ${q(category)},
     desc: ${q(desc)},
-    bestKey: ${q(slug + '_best')},
+    bestKey: ${q(slug + "_best")},
     art: ${q(art)}, c1: '${c1}', c2: '${c2}',
     isNew: true
   },
-` + marker);
+` + marker,
+);
 fs.writeFileSync(gdPath, gd);
 
 /* ---------- add to sitemap ---------- */
-const smPath = path.join(root, 'sitemap.xml');
-if(fs.existsSync(smPath)){
-  let sm = fs.readFileSync(smPath, 'utf8');
+const smPath = path.join(root, "sitemap.xml");
+if (fs.existsSync(smPath)) {
+  let sm = fs.readFileSync(smPath, "utf8");
   const m = sm.match(/<loc>(https?:\/\/[^/<]+)\//);
-  if(m && !sm.includes(`/${slug}/<`)) sm = sm.replace('</urlset>', `  <url><loc>${m[1]}/${slug}/</loc></url>\n</urlset>`);
+  if (m && !sm.includes(`/${slug}/<`))
+    sm = sm.replace(
+      "</urlset>",
+      `  <url><loc>${m[1]}/${slug}/</loc></url>\n</urlset>`,
+    );
   fs.writeFileSync(smPath, sm);
 }
 
