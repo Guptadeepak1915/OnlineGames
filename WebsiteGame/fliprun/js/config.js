@@ -3,9 +3,6 @@
    Change difficulty, size, colors, ad id from here.
    ===================================================== */
 
-// Fill after AdSense approval, example: "ca-pub-1234567890123456"
-const ADSENSE_CLIENT = "";
-
 // Link used in the Share button
 const GAME_URL = location.href;
 

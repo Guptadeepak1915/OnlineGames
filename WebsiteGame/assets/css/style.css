@@ -65,3 +65,19 @@ footer a{color:#b9b0f0;margin:0 8px}
 /* ---------- Small screens ---------- */
 @media (max-width:520px){.logo{font-size:22px}.card h1{font-size:34px}.big-score{font-size:52px}.pill{padding:5px 10px}}
 @media (prefers-reduced-motion:reduce){.btn,.toast{transition:none}}
+
+/* ---------- Info section and text pages (privacy, about, contact) ---------- */
+.info,.page{margin-top:16px;background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:20px 22px;line-height:1.6;color:#cfc9f5}
+.info h2,.page h1{font-family:var(--display);font-weight:400;color:var(--paper);margin-bottom:10px}
+.info h2{font-size:22px;margin-top:18px}
+.info h2:first-child{margin-top:0}
+.page h1{font-size:30px}
+.page h2{font-size:18px;color:var(--paper);margin:18px 0 6px}
+.info p,.page p,.page li{font-size:15px;margin-top:8px}
+.page ul{padding-left:20px}
+.page a,.info a{color:var(--cyan)}
+.back{display:inline-block;margin-top:14px;color:var(--cyan);font-weight:800;text-decoration:none}
+
+/* ---------- header on small screens ---------- */
+header{gap:8px;flex-wrap:wrap}
+.hdr-right{flex-wrap:wrap;justify-content:flex-end}
