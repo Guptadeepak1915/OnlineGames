@@ -54,5 +54,15 @@ const GAMES = [
     art: 'TTT', c1: '#ff5c7a', c2: '#2a0f2e',
     isNew: true
   },
+  {
+    id: "2048merge",
+    name: "2048 Merge",
+    folder: "2048merge/",
+    category: "Puzzle",
+    desc: "Slide and merge tiles to reach 2048.",
+    bestKey: "2048merge_best",
+    art: "2M", c1: '#ffd23f', c2: '#3b1b6b',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];
