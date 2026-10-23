@@ -44,7 +44,8 @@ const S = {
 /* ---------- Difficulty (change numbers here) ---------- */
 const pairsFor = (l) => [4, 6, 8, 10, 12, 15][Math.min(l, 6) - 1];
 const colsFor = (p) => (p <= 8 ? 4 : p === 10 ? 5 : 6);
-const previewFor = (l) => Math.max(700, 2400 - (l - 1) * 200); // ms cards are shown at the start
+//const previewFor = (l) => Math.max(4000, 4000 - (l - 1) * 200); // ms cards are shown at the start
+const previewFor = l => pairsFor(l) * 800 + 4000;
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
