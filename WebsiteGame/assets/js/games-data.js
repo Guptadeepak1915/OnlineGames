@@ -52,7 +52,7 @@ const GAMES = [
     desc: 'Play vs the computer on 3 levels or with a friend. Build a winning streak.',
     bestKey: 'tictactoe_best',
     art: 'TTT', c1: '#ff5c7a', c2: '#2a0f2e',
-    isNew: true
+    isNew: false
   },
   {
     id: "2048merge",
@@ -62,6 +62,16 @@ const GAMES = [
     desc: "Slide and merge tiles to reach 2048.",
     bestKey: "2048merge_best",
     art: "2M", c1: '#ffd23f', c2: '#3b1b6b',
+    isNew: false
+  },
+    {
+    id: 'fourinarow',
+    name: 'Four in a Row',
+    folder: 'fourinarow/',
+    category: 'Puzzle',
+    desc: 'Drop discs and connect four. Play vs the computer on 3 levels or with a friend.',
+    bestKey: 'fourinarow_best',
+    art: '4R', c1: '#ffd23f', c2: '#c93353',
     isNew: true
   },
   // ADD NEW GAMES ABOVE THIS LINE
