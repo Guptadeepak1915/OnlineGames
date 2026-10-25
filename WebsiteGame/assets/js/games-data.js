@@ -74,5 +74,15 @@ const GAMES = [
     art: '4R', c1: '#ffd23f', c2: '#c93353',
     isNew: true
   },
+    {
+    id: 'wordfill',
+    name: 'Word Fill',
+    folder: 'wordfill/',
+    category: 'Word',
+    desc: 'Find the missing letters before time runs out. Pick a category and beat the clock.',
+    bestKey: 'wordfill_best',
+    art: 'WF', c1: '#3df2e0', c2: '#3b1b6b',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];

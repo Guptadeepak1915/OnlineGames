@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Word Fill - Find the missing letters before time runs out</title>
+<meta name="description" content="Free word game. Letters are missing from a word. Pick the right letters before the timer ends. Choose categories like Cities, Science, Technology, History and Geography.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">WORD<span>FILL</span></div>
+    <div class="hdr-right">
+      <div class="pill">Best<b id="hdrBest">0</b></div>
+      <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
+    </div>
+  </header>
+
+  <!-- AD SLOT 1 -->
+  <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+  <div class="stage" id="stage">
+    <div class="hud">
+      <div class="stat"><small>Score</small><strong id="hScore">0</strong></div>
+      <div class="stat"><small>Lives</small><strong class="lives" id="hLives">♥♥♥</strong></div>
+      <div class="stat"><small>Streak</small><strong id="hStreak">0</strong></div>
+      <div class="stat"><small>Time</small><strong id="hTime">-</strong></div>
+    </div>
+
+    <div class="timebar" id="timebar"><i id="bar"></i></div>
+    <p class="catline" id="catLine"></p>
+
+    <div id="word" aria-label="Word with missing letters"></div>
+    <p class="status" id="status"></p>
+    <div id="bank" aria-label="Letters to choose from"></div>
+
+    <div class="row-btns">
+      <button class="btn alt" id="hintBtn">Hint (2)</button>
+      <button class="btn ghost" id="endBtn">End game</button>
+    </div>
+    <p class="hint">Tap a letter to fill the next blank. Tap a filled box to take the letter back. On a computer you can also type the letters.</p>
+
+    <div class="overlay" id="menu">
+      <div class="card">
+        <h1>WORD FILL</h1>
+        <p>Some letters are missing from each word. Choose the right letters before time runs out.</p>
+        <h3>Category</h3>
+        <div class="opts" id="catOpts"></div>
+        <h3>Time for each word</h3>
+        <div class="opts three" id="modeOpts"></div>
+        <button class="btn" id="playBtn">Play</button>
+        <div class="stats">
+          <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
+          <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="over">
+      <div class="card">
+        <h2 id="oTitle">Game over</h2>
+        <div class="big-score" id="oScore">0</div>
+        <div class="badge hidden" id="oBadge">New best!</div>
+        <p id="oMsg"></p>
+        <div class="stats">
+          <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
+          <div class="stat"><small>Words</small><strong id="oSolved">0</strong></div>
+        </div>
+        <button class="btn" id="againBtn">Play again</button>
+        <button class="btn alt" id="shareBtn">Share my score</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="info">
+    <h2>How to play Word Fill</h2>
+    <p>A word appears with some letters missing, for example L _ _ H T. Below the word you see a set of letters. Some of them are the missing letters and some are wrong. Tap the right letters to fill the blanks. When all blanks are full, the game checks your answer. A correct answer gives points. A wrong answer, or running out of time, costs one of your 3 lives. When you have no lives left, the game ends.</p>
+
+    <h2>Time and score</h2>
+    <p>Pick how much time you get for each word: 15 seconds on Easy, 10 seconds on Medium or 5 seconds on Hard. When a word has more blanks you get 1 extra second for each extra blank. You earn points for every missing letter, plus bonus points for the seconds you have left and for your streak of correct words. Medium multiplies your points by 1.5 and Hard by 2.</p>
+
+    <h2>Categories</h2>
+    <p>Choose one category to practise, or play Mixed to get words from every category. The categories are Cities, Science, Technology, History, Geography, Animals, Food, Sports and India. The game gets harder as you solve more words, because more letters go missing, up to four blanks in one word.</p>
+
+    <h2>Tips</h2>
+    <p>Look at the letters you can already see and think about the category. Use the wrong letters to your advantage: if a letter would not fit anywhere, it is probably a decoy. You have 2 hints in every game, so save them for the hardest words. Playing in a category you know well is a great way to learn new spellings too.</p>
+  </section>
+
+  <!-- AD SLOT 2 -->
+  <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+  <footer>
+    <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="../assets/js/site-config.js"></script>
+<script src="js/words.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+<script src="../assets/js/ads.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
