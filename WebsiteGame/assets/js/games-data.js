@@ -72,7 +72,7 @@ const GAMES = [
     desc: 'Drop discs and connect four. Play vs the computer on 3 levels or with a friend.',
     bestKey: 'fourinarow_best',
     art: '4R', c1: '#ffd23f', c2: '#c93353',
-    isNew: true
+    isNew: false
   },
     {
     id: 'wordfill',
@@ -82,7 +82,7 @@ const GAMES = [
     desc: 'Find the missing letters before time runs out. Pick a category and beat the clock.',
     bestKey: 'wordfill_best',
     art: 'WF', c1: '#3df2e0', c2: '#3b1b6b',
-    isNew: true
+    isNew: false
   },
   // ADD NEW GAMES ABOVE THIS LINE
 ];
