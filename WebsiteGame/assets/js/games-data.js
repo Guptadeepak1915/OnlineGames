@@ -84,5 +84,15 @@ const GAMES = [
     art: 'WF', c1: '#3df2e0', c2: '#3b1b6b',
     isNew: false
   },
+    {
+    id: 'bricksbreakerquest',
+    name: 'Bricks Breaker Quest',
+    folder: 'bricksbreakerquest/',
+    category: 'Arcade',
+    desc: 'Bounce the ball, break every brick, catch power-ups and earn stars on each level quest.',
+    bestKey: 'bricksbreakerquest_best',
+    art: 'BQ', c1: '#ff9f43', c2: '#3b1b6b',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];
