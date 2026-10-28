@@ -1,59 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GameHub - Free online games, no login needed</title>
-<meta name="description" content="Play free browser games on phone or computer. No login, no download. Your best scores are saved on your device.">
-<!-- ADSENSE VERIFICATION CODE: paste your AdSense <script> snippet here, just above the fonts line -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GameHub - Free online games, no login needed</title>
+  <meta name="description"
+    content="Play free browser games on phone or computer. No login, no download. Your best scores are saved on your device.">
+  <!-- ADSENSE VERIFICATION CODE: paste your AdSense <script> snippet here, just above the fonts line -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4347484573038894"
-     crossorigin="anonymous"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/site.css">
+    crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
+
 <body>
-<div class="wrap">
-  <header>
-    <a class="logo" href="index.html" style="text-decoration:none">GAME<span>HUB</span></a>
-    <nav class="nav"><a href="index.html">Games</a><a href="blog/">Blog</a></nav>
-  </header>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="index.html" style="text-decoration:none">GAME<span>HUB</span></a>
+      <nav class="nav"><a href="index.html">Games</a><a href="blog/">Blog</a></nav>
+    </header>
 
-  <section class="hero">
-    <h1>Free games. No login. Just play.</h1>
-    <p>Pick a game and start in one tap. Your best scores are saved on your own device, so they are waiting when you come back.</p>
-    <span class="count"><b id="gCount">0</b> games</span>
-  </section>
+    <section class="hero">
+      <h1>Free games. No login. Just play.</h1>
+      <p>Pick a game and start in one tap. Your best scores are saved on your own device, so they are waiting when you
+        come back.</p>
+      <span class="count"><b id="gCount">0</b> games</span>
+    </section>
 
-  <div class="tools">
-    <input id="search" type="search" placeholder="Search games" aria-label="Search games">
-    <div class="chips" id="chips"></div>
+    <div class="tools">
+      <input id="search" type="search" placeholder="Search games" aria-label="Search games">
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="cards" id="grid"></div>
+    <p id="empty" class="hidden">No game found. Try another word.</p>
+
+    <noscript>
+      <ul class="post-list">
+        <li><a href="fliprun/">FlipRun</a>
+          <p>One-tap gravity runner.</p>
+        </li>
+        <li><a href="numfill/">NumFill</a>
+          <p>Number grid puzzle.</p>
+        </li>
+      </ul>
+    </noscript>
+
+    <section class="info">
+      <h2>About these games</h2>
+      <p>Every game on this site runs in your browser. There is nothing to install and no account to make. Games save
+        your best score on your own device, so you can come back and try to beat it.</p>
+      <p>Looking for tips? Read our <a href="blog/">blog</a> for guides on scoring higher and solving puzzles faster.
+      </p>
+    </section>
+
+    <footer>
+      <a href="index.html">Games</a><a href="blog/">Blog</a><a href="privacy.html">Privacy Policy</a><a
+        href="about.html">About</a><a href="contact.html">Contact</a>
+    </footer>
   </div>
-
-  <div class="cards" id="grid"></div>
-  <p id="empty" class="hidden">No game found. Try another word.</p>
-
-  <noscript>
-    <ul class="post-list">
-      <li><a href="fliprun/">FlipRun</a><p>One-tap gravity runner.</p></li>
-      <li><a href="numfill/">NumFill</a><p>Number grid puzzle.</p></li>
-    </ul>
-  </noscript>
-
-  <section class="info">
-    <h2>About these games</h2>
-    <p>Every game on this site runs in your browser. There is nothing to install and no account to make. Games save your best score on your own device, so you can come back and try to beat it.</p>
-    <p>Looking for tips? Read our <a href="blog/">blog</a> for guides on scoring higher and solving puzzles faster.</p>
-  </section>
-
-  <footer>
-    <a href="index.html">Games</a><a href="blog/">Blog</a><a href="privacy.html">Privacy Policy</a><a href="about.html">About</a><a href="contact.html">Contact</a>
-  </footer>
-</div>
-<script src="assets/js/site-config.js"></script>
-<script src="assets/js/games-data.js"></script>
-<script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/site-config.js"></script>
+  <script src="assets/js/games-data.js"></script>
+  <script src="assets/js/dashboard.js"></script>
 </body>
+
 </html>
