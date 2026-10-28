@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://YOUR-SITE.netlify.app/sitemap.xml
+Sitemap: https://onlinefreegame.netlify.app/sitemap.xml

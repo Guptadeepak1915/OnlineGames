@@ -1,101 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NumFill - Number grid puzzle. Fill the blanks, beat your best</title>
-<meta name="description" content="Free number puzzle. Fill the blank boxes so every row and column adds up to the right total. No login needed.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="css/numfill.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NumFill - Number grid puzzle. Fill the blanks, beat your best</title>
+  <meta name="description"
+    content="Free number puzzle. Fill the blank boxes so every row and column adds up to the right total. No login needed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="css/numfill.css">
 </head>
+
 <body>
-<div class="wrap">
+  <div class="wrap">
 
-  <header>
-    <div class="logo">NUM<span>FILL</span></div>
-    <div class="hdr-right">
-      <div class="pill">Best<b id="hdrBest">0</b></div>
-      <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
-    </div>
-  </header>
+    <header>
+      <div class="logo">NUM<span>FILL</span></div>
+      <div class="hdr-right">
+        <div class="pill">Best<b id="hdrBest">0</b></div>
+        <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
+      </div>
+    </header>
 
-  <!-- AD SLOT 1 -->
-  <div class="ad-slot" id="adTop" data-slot="">Ad space (banner)</div>
+    <!-- AD SLOT 1 -->
+    <div class="ad-slot" id="adTop" data-slot="">Ad space (banner)</div>
 
-  <div class="stage nf" id="stage">
-    <div class="hud">
-      <div class="stat"><small>Level</small><strong id="hLevel">1</strong></div>
-      <div class="stat"><small>Score</small><strong id="hScore">0</strong></div>
-      <div class="stat"><small>Lives</small><strong class="lives" id="hLives">♥♥♥</strong></div>
-      <div class="stat"><small>Time</small><strong id="hTime">0:00</strong></div>
-    </div>
+    <div class="stage nf" id="stage">
+      <div class="hud">
+        <div class="stat"><small>Level</small><strong id="hLevel">1</strong></div>
+        <div class="stat"><small>Score</small><strong id="hScore">0</strong></div>
+        <div class="stat"><small>Lives</small><strong class="lives" id="hLives">♥♥♥</strong></div>
+        <div class="stat"><small>Time</small><strong id="hTime">0:00</strong></div>
+      </div>
 
-    <div id="board" aria-label="Number grid"></div>
+      <div id="board" aria-label="Number grid"></div>
 
-    <div class="pad" id="pad">
-      <button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button>
-      <button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="0" class="erase" aria-label="Erase">⌫</button>
-    </div>
-    <button class="btn alt hint-btn" id="hintBtn">Hint (3 left)</button>
+      <div class="pad" id="pad">
+        <button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button
+          data-v="4">4</button><button data-v="5">5</button>
+        <button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button
+          data-v="9">9</button><button data-v="0" class="erase" aria-label="Erase">⌫</button>
+      </div>
+      <button class="btn alt hint-btn" id="hintBtn">Hint (3 left)</button>
 
-    <div class="overlay" id="menu">
-      <div class="card">
-        <h1>NUMFILL</h1>
-        <p>Fill the blank boxes. Every row and column must add up to the total shown by its clue.</p>
-        <div class="stats">
-          <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
-          <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+      <div class="overlay" id="menu">
+        <div class="card">
+          <h1>NUMFILL</h1>
+          <p>Fill the blank boxes. Every row and column must add up to the total shown by its clue.</p>
+          <div class="stats">
+            <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
+            <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+          </div>
+          <button class="btn" id="playBtn">Play</button>
         </div>
-        <button class="btn" id="playBtn">Play</button>
+      </div>
+
+      <div class="overlay hidden" id="over">
+        <div class="card">
+          <h2>Game over</h2>
+          <div class="big-score" id="oScore">0</div>
+          <div class="badge hidden" id="oBadge">New best!</div>
+          <p id="oMsg"></p>
+          <div class="stats">
+            <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
+            <div class="stat"><small>Level</small><strong id="oLevel">1</strong></div>
+          </div>
+          <button class="btn" id="againBtn">Play again</button>
+          <button class="btn alt" id="shareBtn">Share my score</button>
+        </div>
       </div>
     </div>
 
-    <div class="overlay hidden" id="over">
-      <div class="card">
-        <h2>Game over</h2>
-        <div class="big-score" id="oScore">0</div>
-        <div class="badge hidden" id="oBadge">New best!</div>
-        <p id="oMsg"></p>
-        <div class="stats">
-          <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
-          <div class="stat"><small>Level</small><strong id="oLevel">1</strong></div>
-        </div>
-        <button class="btn" id="againBtn">Play again</button>
-        <button class="btn alt" id="shareBtn">Share my score</button>
-      </div>
-    </div>
+    <section class="info">
+      <h2>How to play NumFill</h2>
+      <p>Some boxes in the grid are empty. Tap an empty box and choose a number from 1 to 9. Every row and every column
+        has a clue on its end. The clue shows <b>sum ÷ number = answer</b>. Multiply the two numbers to find the total
+        that the line must add up to. For example, <b>sum ÷ 3 = 5</b> means the numbers in that line must add up to 15.
+      </p>
+      <p>Some clues only show <b>= total</b>. Then the line must add up to exactly that number.</p>
+
+      <h2>Lives, hints and score</h2>
+      <p>You start with 3 lives. When the grid is full but a line is wrong, you lose a life. You have 3 hints per game.
+        A hint fills one correct number. Faster solves and no mistakes give bonus points. Every 3 levels you can win
+        back a life.</p>
+
+      <h2>Tips</h2>
+      <p>Start with lines that have only one empty box. Subtract the numbers you can see from the total to find the
+        missing one. Then use the new number to solve the crossing line. Green clues mean the line is correct.</p>
+    </section>
+
+    <!-- AD SLOT 2 -->
+    <div class="ad-slot" id="adBottom" data-slot="">Ad space (banner)</div>
+
+    <footer>
+      <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a
+        href="../about.html">About</a><a href="../contact.html">Contact</a>
+    </footer>
   </div>
+  <div class="toast" id="toast"></div>
 
-  <section class="info">
-    <h2>How to play NumFill</h2>
-    <p>Some boxes in the grid are empty. Tap an empty box and choose a number from 1 to 9. Every row and every column has a clue on its end. The clue shows <b>sum ÷ number = answer</b>. Multiply the two numbers to find the total that the line must add up to. For example, <b>sum ÷ 3 = 5</b> means the numbers in that line must add up to 15.</p>
-    <p>Some clues only show <b>= total</b>. Then the line must add up to exactly that number.</p>
-
-    <h2>Lives, hints and score</h2>
-    <p>You start with 3 lives. When the grid is full but a line is wrong, you lose a life. You have 3 hints per game. A hint fills one correct number. Faster solves and no mistakes give bonus points. Every 3 levels you can win back a life.</p>
-
-    <h2>Tips</h2>
-    <p>Start with lines that have only one empty box. Subtract the numbers you can see from the total to find the missing one. Then use the new number to solve the crossing line. Green clues mean the line is correct.</p>
-  </section>
-
-  <!-- AD SLOT 2 -->
-  <div class="ad-slot" id="adBottom" data-slot="">Ad space (banner)</div>
-
-  <footer>
-    <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
-  </footer>
-</div>
-<div class="toast" id="toast"></div>
-
-<script src="../assets/js/site-config.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/puzzle.js"></script>
-<script src="js/game.js"></script>
-<script src="js/ui.js"></script>
-<script src="../assets/js/ads.js"></script>
-<script src="js/main.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/puzzle.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script src="js/main.js"></script>
 </body>
+
 </html>

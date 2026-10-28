@@ -1,59 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How to Solve NumFill Puzzles Step by Step</title>
-<meta name="description" content="A clear method to solve NumFill number grid puzzles, with worked examples: reading clues, single blanks, crossing lines and the 1 to 9 limit.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="../assets/css/site.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Solve NumFill Puzzles Step by Step</title>
+  <meta name="description"
+    content="A clear method to solve NumFill number grid puzzles, with worked examples: reading clues, single blanks, crossing lines and the 1 to 9 limit.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/site.css">
 </head>
+
 <body>
-<div class="wrap">
-  <header>
-    <a class="logo" href="../index.html" style="text-decoration:none">GAME<span>HUB</span></a>
-    <nav class="nav"><a href="../index.html">Games</a><a href="../blog/">Blog</a></nav>
-  </header>
-  <main class="page">
-    <h1>How to solve NumFill puzzles step by step</h1>
-    <p class="meta">Published October 2026 · 5 min read</p>
-    <p><a href="../numfill/">NumFill</a> is a number grid puzzle. Some boxes are empty, and you fill them with numbers from 1 to 9. Each row and each column has a clue. This guide shows a method that works on every puzzle.</p>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="../index.html" style="text-decoration:none">GAME<span>HUB</span></a>
+      <nav class="nav"><a href="../index.html">Games</a><a href="../blog/">Blog</a></nav>
+    </header>
+    <main class="page">
+      <h1>How to solve NumFill puzzles step by step</h1>
+      <p class="meta">Published October 2026 · 5 min read</p>
+      <p><a href="../numfill/">NumFill</a> is a number grid puzzle. Some boxes are empty, and you fill them with numbers
+        from 1 to 9. Each row and each column has a clue. This guide shows a method that works on every puzzle.</p>
 
-    <h2>Step 1: Read the clue correctly</h2>
-    <p>A clue like <b>sum ÷ 3 = 5</b> means: if you add all numbers in that line and divide by 3, you get 5. So the total of the line is 3 × 5 = 15. A clue like <b>= 11</b> shows the total directly. Always convert the clue to a total first.</p>
+      <h2>Step 1: Read the clue correctly</h2>
+      <p>A clue like <b>sum ÷ 3 = 5</b> means: if you add all numbers in that line and divide by 3, you get 5. So the
+        total of the line is 3 × 5 = 15. A clue like <b>= 11</b> shows the total directly. Always convert the clue to a
+        total first.</p>
 
-    <h2>Step 2: Start with lines that have one blank</h2>
-    <p>If a line has only one empty box, the answer is easy. Subtract the visible numbers from the total.</p>
-<pre>Row: 4, _, 2     clue: sum ÷ 3 = 5
+      <h2>Step 2: Start with lines that have one blank</h2>
+      <p>If a line has only one empty box, the answer is easy. Subtract the visible numbers from the total.</p>
+      <pre>Row: 4, _, 2     clue: sum ÷ 3 = 5
 Total = 3 × 5 = 15
 Blank = 15 - 4 - 2 = 9</pre>
 
-    <h2>Step 3: Use the new number in the crossing line</h2>
-    <p>Every box belongs to one row and one column. When you solve a box using the row, use that number in the column too. This often opens the next blank.</p>
-<pre>Column: 9, 7, _   clue: sum ÷ 7 = 3
+      <h2>Step 3: Use the new number in the crossing line</h2>
+      <p>Every box belongs to one row and one column. When you solve a box using the row, use that number in the column
+        too. This often opens the next blank.</p>
+      <pre>Column: 9, 7, _   clue: sum ÷ 7 = 3
 Total = 7 × 3 = 21
 Blank = 21 - 9 - 7 = 5</pre>
 
-    <h2>Step 4: Use the limits of 1 to 9</h2>
-    <p>When a line has two blanks, the limits help. Every number is between 1 and 9. Suppose two blanks must add up to 17. The only pair is 8 and 9, because 9 is the biggest number allowed. If two blanks must add up to 3, the pair is 1 and 2. Small and large totals give you strong hints.</p>
+      <h2>Step 4: Use the limits of 1 to 9</h2>
+      <p>When a line has two blanks, the limits help. Every number is between 1 and 9. Suppose two blanks must add up to
+        17. The only pair is 8 and 9, because 9 is the biggest number allowed. If two blanks must add up to 3, the pair
+        is 1 and 2. Small and large totals give you strong hints.</p>
 
-    <h2>Step 5: Try the other direction</h2>
-    <p>If a row does not help, look at the column that crosses the same blank. One of the two lines often has fewer blanks and gives you the answer.</p>
+      <h2>Step 5: Try the other direction</h2>
+      <p>If a row does not help, look at the column that crosses the same blank. One of the two lines often has fewer
+        blanks and gives you the answer.</p>
 
-    <h2>Step 6: Check green clues</h2>
-    <p>When a line is full and correct, its clue turns green. A red clue means the line is full but the total is wrong. Check the numbers in that line and the lines that cross it.</p>
+      <h2>Step 6: Check green clues</h2>
+      <p>When a line is full and correct, its clue turns green. A red clue means the line is full but the total is
+        wrong. Check the numbers in that line and the lines that cross it.</p>
 
-    <h2>Lives and hints</h2>
-    <p>You have 3 lives. You lose one when the grid is full and something is wrong. So do not guess when you are not sure. Use a hint if you are stuck. A hint fills one correct number but costs some bonus points.</p>
+      <h2>Lives and hints</h2>
+      <p>You have 3 lives. You lose one when the grid is full and something is wrong. So do not guess when you are not
+        sure. Use a hint if you are stuck. A hint fills one correct number but costs some bonus points.</p>
 
-    <p>Ready? <a href="../numfill/">Play NumFill</a>. Want faster adding? Read <a href="mental-math-tricks.html">6 easy mental maths tricks</a>.</p>
-  </main>
-  <footer>
-    <a href="../fliprun/">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
-  </footer>
-</div>
+      <p>Ready? <a href="../numfill/">Play NumFill</a>. Want faster adding? Read <a href="mental-math-tricks.html">6
+          easy mental maths tricks</a>.</p>
+    </main>
+    <footer>
+      <a href="../fliprun/">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a
+        href="../about.html">About</a><a href="../contact.html">Contact</a>
+    </footer>
+  </div>
 </body>
+
 </html>

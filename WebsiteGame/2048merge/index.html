@@ -1,54 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>2048 Merge - Free online game</title>
-<meta name="description" content="Slide and merge tiles to reach 2048.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="css/game.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2048 Merge - Free online game</title>
+  <meta name="description" content="Slide and merge tiles to reach 2048.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="css/game.css">
 </head>
+
 <body>
-<div class="wrap">
-  <header>
-    <div class="logo">2048 MERGE</div>
-    <div class="hdr-right">
-      <div class="pill">Best<b id="hdrBest">0</b></div>
-      <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
-    </div>
-  </header>
-
-  <div class="ad-slot" data-slot="">Ad space (banner)</div>
-
-  <!-- GAME AREA: replace this demo with your real game -->
-  <div class="stage" id="stage">
-    <div class="demo">
-      <div class="stats">
-        <div class="stat"><small>Score</small><strong id="score">0</strong></div>
-        <div class="stat"><small>Time</small><strong id="time">10</strong></div>
+  <div class="wrap">
+    <header>
+      <div class="logo">2048 MERGE</div>
+      <div class="hdr-right">
+        <div class="pill">Best<b id="hdrBest">0</b></div>
+        <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
       </div>
-      <button class="btn" id="tapBtn">Start</button>
-      <p id="msg">Tap as many times as you can in 10 seconds.</p>
+    </header>
+
+    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+    <!-- GAME AREA: replace this demo with your real game -->
+    <div class="stage" id="stage">
+      <div class="demo">
+        <div class="stats">
+          <div class="stat"><small>Score</small><strong id="score">0</strong></div>
+          <div class="stat"><small>Time</small><strong id="time">10</strong></div>
+        </div>
+        <button class="btn" id="tapBtn">Start</button>
+        <p id="msg">Tap as many times as you can in 10 seconds.</p>
+      </div>
     </div>
+
+    <section class="info">
+      <h2>How to play 2048 Merge</h2>
+      <p>Slide and merge tiles to reach 2048. Write the rules, scoring and tips for your game here. A clear text section
+        helps visitors and search engines.</p>
+    </section>
+
+    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+    <footer>
+      <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a
+        href="../about.html">About</a><a href="../contact.html">Contact</a>
+    </footer>
   </div>
-
-  <section class="info">
-    <h2>How to play 2048 Merge</h2>
-    <p>Slide and merge tiles to reach 2048. Write the rules, scoring and tips for your game here. A clear text section helps visitors and search engines.</p>
-  </section>
-
-  <div class="ad-slot" data-slot="">Ad space (banner)</div>
-
-  <footer>
-    <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
-  </footer>
-</div>
-<script src="../assets/js/site-config.js"></script>
-<script src="js/game.js"></script>
-<script src="../assets/js/ads.js"></script>
-<script>initAds();</script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="js/game.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>initAds();</script>
 </body>
+
 </html>

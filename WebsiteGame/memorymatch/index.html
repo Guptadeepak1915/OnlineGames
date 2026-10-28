@@ -1,97 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Memory Match - Free card matching game, no login</title>
-<meta name="description" content="Flip cards and find all the pairs. A free memory game where every level gets bigger. Beat your best score. No login needed.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="css/game.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Memory Match - Free card matching game, no login</title>
+  <meta name="description"
+    content="Flip cards and find all the pairs. A free memory game where every level gets bigger. Beat your best score. No login needed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="css/game.css">
 </head>
+
 <body>
-<div class="wrap">
+  <div class="wrap">
 
-  <header>
-    <div class="logo">MEMORY<span>MATCH</span></div>
-    <div class="hdr-right">
-      <div class="pill">Best<b id="hdrBest">0</b></div>
-      <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
-    </div>
-  </header>
+    <header>
+      <div class="logo">MEMORY<span>MATCH</span></div>
+      <div class="hdr-right">
+        <div class="pill">Best<b id="hdrBest">0</b></div>
+        <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
+      </div>
+    </header>
 
-  <!-- AD SLOT 1 -->
-  <div class="ad-slot" data-slot="">Ad space (banner)</div>
+    <!-- AD SLOT 1 -->
+    <div class="ad-slot" data-slot="">Ad space (banner)</div>
 
-  <div class="stage" id="stage">
-    <div class="hud">
-      <div class="stat"><small>Level</small><strong id="hLevel">1</strong></div>
-      <div class="stat"><small>Score</small><strong id="hScore">0</strong></div>
-      <div class="stat"><small>Lives</small><strong class="lives" id="hLives">♥♥♥♥♥</strong></div>
-      <div class="stat"><small>Combo</small><strong id="hCombo">x1</strong></div>
-    </div>
+    <div class="stage" id="stage">
+      <div class="hud">
+        <div class="stat"><small>Level</small><strong id="hLevel">1</strong></div>
+        <div class="stat"><small>Score</small><strong id="hScore">0</strong></div>
+        <div class="stat"><small>Lives</small><strong class="lives" id="hLives">♥♥♥♥♥</strong></div>
+        <div class="stat"><small>Combo</small><strong id="hCombo">x1</strong></div>
+      </div>
 
-    <div id="board" aria-label="Card board"></div>
-    <p class="status" id="status"></p>
+      <div id="board" aria-label="Card board"></div>
+      <p class="status" id="status"></p>
 
-    <div class="overlay" id="menu">
-      <div class="card">
-        <h1>MEMORY MATCH</h1>
-        <p>Cards show for a moment, then flip face down. Find all the matching pairs before your lives run out.</p>
-        <div class="stats">
-          <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
-          <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+      <div class="overlay" id="menu">
+        <div class="card">
+          <h1>MEMORY MATCH</h1>
+          <p>Cards show for a moment, then flip face down. Find all the matching pairs before your lives run out.</p>
+          <div class="stats">
+            <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
+            <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+          </div>
+          <button class="btn" id="playBtn">Play</button>
         </div>
-        <button class="btn" id="playBtn">Play</button>
+      </div>
+
+      <div class="overlay hidden" id="over">
+        <div class="card">
+          <h2>Game over</h2>
+          <div class="big-score" id="oScore">0</div>
+          <div class="badge hidden" id="oBadge">New best!</div>
+          <p id="oMsg"></p>
+          <div class="stats">
+            <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
+            <div class="stat"><small>Level</small><strong id="oLevel">1</strong></div>
+          </div>
+          <button class="btn" id="againBtn">Play again</button>
+          <button class="btn alt" id="shareBtn">Share my score</button>
+        </div>
       </div>
     </div>
 
-    <div class="overlay hidden" id="over">
-      <div class="card">
-        <h2>Game over</h2>
-        <div class="big-score" id="oScore">0</div>
-        <div class="badge hidden" id="oBadge">New best!</div>
-        <p id="oMsg"></p>
-        <div class="stats">
-          <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
-          <div class="stat"><small>Level</small><strong id="oLevel">1</strong></div>
-        </div>
-        <button class="btn" id="againBtn">Play again</button>
-        <button class="btn alt" id="shareBtn">Share my score</button>
-      </div>
-    </div>
+    <section class="info">
+      <h2>How to play Memory Match</h2>
+      <p>At the start of each level all cards are shown for a short time. Remember where each symbol is. Then the cards
+        turn face down. Tap two cards to flip them. If the symbols are the same, they stay open. If not, they flip back
+        and you lose a life.</p>
+
+      <h2>Scoring</h2>
+      <p>Each pair gives 10 points multiplied by your combo. Find pairs one after another without a mistake and your
+        combo grows up to x5. A wrong pair resets the combo to x1. When you finish a level you get bonus points for
+        speed, and an extra bonus if you made no mistakes. You also win back one life.</p>
+
+      <h2>Levels</h2>
+      <p>Level 1 has 4 pairs. The board grows up to 15 pairs. From level 2 onward the cards are shown for a shorter
+        time, so your memory is tested more each level.</p>
+
+      <h2>Tips</h2>
+      <p>Do not try to remember every card at once. Group the symbols by position, for example the top row, then the
+        second row. Flip cards in a fixed order to learn the board faster. Keep your combo alive by only flipping a
+        second card when you are fairly sure.</p>
+    </section>
+
+    <!-- AD SLOT 2 -->
+    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+    <footer>
+      <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a
+        href="../about.html">About</a><a href="../contact.html">Contact</a>
+    </footer>
   </div>
+  <div class="toast" id="toast"></div>
 
-  <section class="info">
-    <h2>How to play Memory Match</h2>
-    <p>At the start of each level all cards are shown for a short time. Remember where each symbol is. Then the cards turn face down. Tap two cards to flip them. If the symbols are the same, they stay open. If not, they flip back and you lose a life.</p>
-
-    <h2>Scoring</h2>
-    <p>Each pair gives 10 points multiplied by your combo. Find pairs one after another without a mistake and your combo grows up to x5. A wrong pair resets the combo to x1. When you finish a level you get bonus points for speed, and an extra bonus if you made no mistakes. You also win back one life.</p>
-
-    <h2>Levels</h2>
-    <p>Level 1 has 4 pairs. The board grows up to 15 pairs. From level 2 onward the cards are shown for a shorter time, so your memory is tested more each level.</p>
-
-    <h2>Tips</h2>
-    <p>Do not try to remember every card at once. Group the symbols by position, for example the top row, then the second row. Flip cards in a fixed order to learn the board faster. Keep your combo alive by only flipping a second card when you are fairly sure.</p>
-  </section>
-
-  <!-- AD SLOT 2 -->
-  <div class="ad-slot" data-slot="">Ad space (banner)</div>
-
-  <footer>
-    <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
-  </footer>
-</div>
-<div class="toast" id="toast"></div>
-
-<script src="../assets/js/site-config.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/game.js"></script>
-<script src="js/ui.js"></script>
-<script src="../assets/js/ads.js"></script>
-<script src="js/main.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script src="js/main.js"></script>
 </body>
+
 </html>

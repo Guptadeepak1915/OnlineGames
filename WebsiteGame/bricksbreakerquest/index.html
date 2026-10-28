@@ -1,139 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bricks Breaker Quest - Free brick breaker game with power-ups</title>
-<meta name="description" content="Free brick breaker game. Bounce the ball, break all the bricks, catch power-ups and complete level quests to earn stars. No login needed.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css">
-<link rel="stylesheet" href="css/game.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Bricks Breaker Quest - Free brick breaker game with power-ups</title>
+  <meta name="description"
+    content="Free brick breaker game. Bounce the ball, break all the bricks, catch power-ups and complete level quests to earn stars. No login needed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="css/game.css">
 </head>
+
 <body>
-<div class="wrap">
+  <div class="wrap">
 
-  <header>
-    <div class="logo">BRICKS<span>QUEST</span></div>
-    <div class="hdr-right">
-      <div class="pill">Best<b id="hdrBest">0</b></div>
-      <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
-    </div>
-  </header>
+    <header>
+      <div class="logo">BRICKS<span>QUEST</span></div>
+      <div class="hdr-right">
+        <div class="pill">Best<b id="hdrBest">0</b></div>
+        <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
+      </div>
+    </header>
 
-  <!-- AD SLOT 1 -->
-  <div class="ad-slot" data-slot="">Ad space (banner)</div>
+    <!-- AD SLOT 1 -->
+    <div class="ad-slot" data-slot="">Ad space (banner)</div>
 
-  <div class="stage" id="stage">
-    <div class="hud">
-      <div class="stat"><small>Level</small><strong id="hLevel">1</strong></div>
-      <div class="stat"><small>Score</small><strong id="hScore">0</strong></div>
-      <div class="stat"><small>Lives</small><strong class="lives" id="hLives">♥♥♥</strong></div>
-      <div class="stat"><small>Combo</small><strong id="hCombo">x1</strong></div>
-    </div>
-    <div class="bar">
-      <button class="btn alt" id="pauseBtn" type="button">Pause</button>
-      <button class="btn alt" id="soundBtn" type="button">Sound on</button>
-    </div>
+    <div class="stage" id="stage">
+      <div class="hud">
+        <div class="stat"><small>Level</small><strong id="hLevel">1</strong></div>
+        <div class="stat"><small>Score</small><strong id="hScore">0</strong></div>
+        <div class="stat"><small>Lives</small><strong class="lives" id="hLives">♥♥♥</strong></div>
+        <div class="stat"><small>Combo</small><strong id="hCombo">x1</strong></div>
+      </div>
+      <div class="bar">
+        <button class="btn alt" id="pauseBtn" type="button">Pause</button>
+        <button class="btn alt" id="soundBtn" type="button">Sound on</button>
+      </div>
 
-    <canvas id="game" aria-label="Bricks Breaker Quest game board"></canvas>
-    <p class="hint">Move your finger or mouse to move the paddle. Tap or press Space to launch the ball. Arrow keys also work.</p>
+      <canvas id="game" aria-label="Bricks Breaker Quest game board"></canvas>
+      <p class="hint">Move your finger or mouse to move the paddle. Tap or press Space to launch the ball. Arrow keys
+        also work.</p>
 
-    <!-- Start screen -->
-    <div class="overlay" id="menu">
-      <div class="card">
-        <h1>BRICKS QUEST</h1>
-        <p>Break every brick, catch power-ups, and finish each level's quest to earn up to 3 stars.</p>
-        <div class="stats">
-          <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
-          <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+      <!-- Start screen -->
+      <div class="overlay" id="menu">
+        <div class="card">
+          <h1>BRICKS QUEST</h1>
+          <p>Break every brick, catch power-ups, and finish each level's quest to earn up to 3 stars.</p>
+          <div class="stats">
+            <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
+            <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+          </div>
+          <button class="btn" id="playBtn" type="button">Play</button>
         </div>
-        <button class="btn" id="playBtn" type="button">Play</button>
       </div>
-    </div>
 
-    <!-- Level quest card -->
-    <div class="overlay hidden" id="intro">
-      <div class="card">
-        <h2 id="iTitle">Level 1</h2>
-        <p id="iSub" class="sub"></p>
-        <ul class="goals" id="iGoals"></ul>
-        <button class="btn" id="startBtn" type="button">Start level</button>
-      </div>
-    </div>
-
-    <!-- Level clear -->
-    <div class="overlay hidden" id="clear">
-      <div class="card">
-        <h2 id="cTitle">Level clear!</h2>
-        <div class="stars" id="cStars"></div>
-        <p id="cMsg"></p>
-        <div class="stats">
-          <div class="stat"><small>Score</small><strong id="cScore">0</strong></div>
-          <div class="stat"><small>Time</small><strong id="cTime">0s</strong></div>
+      <!-- Level quest card -->
+      <div class="overlay hidden" id="intro">
+        <div class="card">
+          <h2 id="iTitle">Level 1</h2>
+          <p id="iSub" class="sub"></p>
+          <ul class="goals" id="iGoals"></ul>
+          <button class="btn" id="startBtn" type="button">Start level</button>
         </div>
-        <button class="btn" id="nextBtn" type="button">Next level</button>
       </div>
-    </div>
 
-    <!-- Pause -->
-    <div class="overlay hidden" id="pause">
-      <div class="card">
-        <h2>Paused</h2>
-        <button class="btn" id="resumeBtn" type="button">Resume</button>
-      </div>
-    </div>
-
-    <!-- Game over -->
-    <div class="overlay hidden" id="over">
-      <div class="card">
-        <h2>Game over</h2>
-        <div class="big-score" id="oScore">0</div>
-        <div class="badge hidden" id="oBadge">New best!</div>
-        <p id="oMsg"></p>
-        <div class="stats">
-          <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
-          <div class="stat"><small>Level</small><strong id="oLevel">1</strong></div>
+      <!-- Level clear -->
+      <div class="overlay hidden" id="clear">
+        <div class="card">
+          <h2 id="cTitle">Level clear!</h2>
+          <div class="stars" id="cStars"></div>
+          <p id="cMsg"></p>
+          <div class="stats">
+            <div class="stat"><small>Score</small><strong id="cScore">0</strong></div>
+            <div class="stat"><small>Time</small><strong id="cTime">0s</strong></div>
+          </div>
+          <button class="btn" id="nextBtn" type="button">Next level</button>
         </div>
-        <button class="btn" id="againBtn" type="button">Play again</button>
-        <button class="btn alt" id="shareBtn" type="button">Share my score</button>
+      </div>
+
+      <!-- Pause -->
+      <div class="overlay hidden" id="pause">
+        <div class="card">
+          <h2>Paused</h2>
+          <button class="btn" id="resumeBtn" type="button">Resume</button>
+        </div>
+      </div>
+
+      <!-- Game over -->
+      <div class="overlay hidden" id="over">
+        <div class="card">
+          <h2>Game over</h2>
+          <div class="big-score" id="oScore">0</div>
+          <div class="badge hidden" id="oBadge">New best!</div>
+          <p id="oMsg"></p>
+          <div class="stats">
+            <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
+            <div class="stat"><small>Level</small><strong id="oLevel">1</strong></div>
+          </div>
+          <button class="btn" id="againBtn" type="button">Play again</button>
+          <button class="btn alt" id="shareBtn" type="button">Share my score</button>
+        </div>
       </div>
     </div>
+
+    <section class="info">
+      <h2>How to play Bricks Breaker Quest</h2>
+      <p>Move the paddle left and right at the bottom of the screen to keep the ball in play. The ball bounces off the
+        walls, the paddle and the bricks. Every time the ball hits a brick, the brick breaks. Break all the breakable
+        bricks to finish the level. If the ball falls below the paddle you lose a life. You start with 3 lives, and the
+        game ends when you have none left.</p>
+
+      <h2>Brick types</h2>
+      <p>Coloured bricks break with one hit. Blue-grey bricks are tough and need two hits. Orange bricks marked with an
+        X explode and break the bricks next to them. Gold bricks marked with a plus always drop a power-up. Grey steel
+        bricks cannot be broken, so bounce the ball around them.</p>
+
+      <h2>Power-ups</h2>
+      <p>Some broken bricks drop a capsule. Catch it with your paddle to use it. W makes the paddle wider. M splits the
+        ball into more balls. S slows the ball down. F turns the ball into a fireball that passes through bricks. The
+        heart gives you an extra life.</p>
+
+      <h2>Quests and stars</h2>
+      <p>Each level shows a quest card before you start. Clear all bricks to earn one star. Finish without losing a life
+        for a second star, and finish before the target time for a third star. Extra stars give bonus points. Hitting
+        several bricks in a row without touching the paddle builds a combo that multiplies your points up to x5.</p>
+
+      <h2>Tips</h2>
+      <p>Hit the ball with the edge of the paddle to change its angle. Aim for the gold bricks first to get more
+        power-ups. Use explosive bricks to clear large groups. Do not chase every capsule if it puts the ball at risk.
+      </p>
+    </section>
+
+    <!-- AD SLOT 2 -->
+    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+    <footer>
+      <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a
+        href="../about.html">About</a><a href="../contact.html">Contact</a>
+    </footer>
   </div>
 
-  <section class="info">
-    <h2>How to play Bricks Breaker Quest</h2>
-    <p>Move the paddle left and right at the bottom of the screen to keep the ball in play. The ball bounces off the walls, the paddle and the bricks. Every time the ball hits a brick, the brick breaks. Break all the breakable bricks to finish the level. If the ball falls below the paddle you lose a life. You start with 3 lives, and the game ends when you have none left.</p>
-
-    <h2>Brick types</h2>
-    <p>Coloured bricks break with one hit. Blue-grey bricks are tough and need two hits. Orange bricks marked with an X explode and break the bricks next to them. Gold bricks marked with a plus always drop a power-up. Grey steel bricks cannot be broken, so bounce the ball around them.</p>
-
-    <h2>Power-ups</h2>
-    <p>Some broken bricks drop a capsule. Catch it with your paddle to use it. W makes the paddle wider. M splits the ball into more balls. S slows the ball down. F turns the ball into a fireball that passes through bricks. The heart gives you an extra life.</p>
-
-    <h2>Quests and stars</h2>
-    <p>Each level shows a quest card before you start. Clear all bricks to earn one star. Finish without losing a life for a second star, and finish before the target time for a third star. Extra stars give bonus points. Hitting several bricks in a row without touching the paddle builds a combo that multiplies your points up to x5.</p>
-
-    <h2>Tips</h2>
-    <p>Hit the ball with the edge of the paddle to change its angle. Aim for the gold bricks first to get more power-ups. Use explosive bricks to clear large groups. Do not chase every capsule if it puts the ball at risk.</p>
-  </section>
-
-  <!-- AD SLOT 2 -->
-  <div class="ad-slot" data-slot="">Ad space (banner)</div>
-
-  <footer>
-    <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
-  </footer>
-</div>
-
-<script src="../assets/js/site-config.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/levels.js"></script>
-<script src="js/game.js"></script>
-<script src="js/render.js"></script>
-<script src="js/ui.js"></script>
-<script src="../assets/js/ads.js"></script>
-<script src="js/main.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script src="js/main.js"></script>
 </body>
+
 </html>
