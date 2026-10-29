@@ -92,13 +92,13 @@ const GAMES = [
     desc: 'Bounce the ball, break every brick, catch power-ups and earn stars on each level quest.',
     bestKey: 'bricksbreakerquest_best',
     art: 'BQ', c1: '#ff9f43', c2: '#3b1b6b',
-    isNew: true
+    isNew: false
   },
   {
     id: "slidingpuzzlemaster",
     name: "Sliding Puzzle Master",
     folder: "slidingpuzzlemaster/",
-    category: "Arcade",
+    category: "Puzzle",
     desc: "Challenge your brain with Wooden Number Slide! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩",
     bestKey: "slidingpuzzlemaster_best",
     art: "SP", c1: '#ff9f43', c2: '#6b1b4e',
@@ -108,10 +108,10 @@ const GAMES = [
     id: "woodennumberpuzzle",
     name: "wooden-number-puzzle",
     folder: "woodennumberpuzzle/",
-    category: "Arcade",
-    desc: "Challenge your brain ! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩",
+    category: "Puzzle",
+    desc: "Challenge your brain ! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩 ",
     bestKey: "woodennumberpuzzle_best",
-    art: "W", c1: '#ff5c7a', c2: '#0f2a1a',
+    art: "WOODEN", c1: '#ff5c7a', c2: '#0f2a1a',
     isNew: true
   },
   // ADD NEW GAMES ABOVE THIS LINE
