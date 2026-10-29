@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#6c5ce7">
+  <title>Slide Numbers - Sliding Number Puzzle Game</title>
+  <meta name="description"
+    content="A colourful sliding number puzzle. Slide the tiles into order on a 3x3, 4x4 or 5x5 board. Hints, undo, daily challenge, streaks and a local leaderboard.">
+  <link rel="stylesheet" href="./css/game.css">
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span
+      class="blob b3"></span></div>
+
+  <header class="topbar">
+    <button class="brand" id="brand" type="button" aria-label="Slide Numbers, go to the start screen">
+      <span class="brand-logo" aria-hidden="true"><i>1</i><i>2</i><i>3</i><i>4</i></span>
+      <span class="brand-name">Slide Numbers</span>
+    </button>
+    <div class="top-actions">
+      <button class="icon-btn" id="btnHelp" type="button" aria-label="How to play" title="How to play">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="M9.6 9.4a2.5 2.5 0 114 2c-.9.6-1.6 1.1-1.6 2.1" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" />
+          <circle cx="12" cy="17" r="1.2" fill="currentColor" />
+        </svg>
+      </button>
+      <button class="icon-btn" id="btnBoard" type="button" aria-label="Leaderboard" title="Leaderboard">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 4h10v4a5 5 0 01-10 0V4zM5 5H3v2a3 3 0 003 3M19 5h2v2a3 3 0 01-3 3M12 13v4M8 21h8M10 17h4"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <button class="icon-btn" id="btnSound" type="button" aria-label="Sound on" aria-pressed="true" title="Sound">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" />
+          <path class="waves" d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" />
+          <path class="slash" d="M4 4l16 16" fill="none" stroke="currentColor" stroke-width="2.4"
+            stroke-linecap="round" />
+        </svg>
+      </button>
+      <button class="icon-btn" id="btnTheme" type="button" aria-label="Switch to dark mode" title="Light / dark mode">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <g class="sun" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4" fill="currentColor" />
+            <path
+              d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </g>
+          <path class="moon" d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" fill="currentColor" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="app">
+    <noscript>
+      <p class="card pad">Please turn on JavaScript to play Slide Numbers.</p>
+    </noscript>
+
+    <!-- ============ START SCREEN ============ -->
+    <section id="startScreen" class="screen" aria-labelledby="startTitle">
+      <div class="hero card">
+        <div class="hero-tiles" aria-hidden="true"><i style="--h:330">1</i><i style="--h:20">2</i><i
+            style="--h:60">3</i><i style="--h:150">4</i><i style="--h:200">5</i><i style="--h:260">6</i></div>
+        <h1 id="startTitle">Slide Numbers</h1>
+        <p class="tagline">Slide the tiles into order. Fewer moves and a faster time make a better score.</p>
+
+        <h2 class="label" id="levelLabel">Choose a difficulty</h2>
+        <div class="levels" id="levelGroup" role="radiogroup" aria-labelledby="levelLabel">
+          <button type="button" class="level" role="radio" data-size="3" aria-checked="false">
+            <span class="level-size">3×3</span><span class="level-name">Easy</span><span class="level-sub">8
+              tiles</span><span class="level-best" data-best="3">No record yet</span>
+          </button>
+          <button type="button" class="level" role="radio" data-size="4" aria-checked="true">
+            <span class="level-size">4×4</span><span class="level-name">Medium</span><span class="level-sub">15
+              tiles</span><span class="level-best" data-best="4">No record yet</span>
+          </button>
+          <button type="button" class="level" role="radio" data-size="5" aria-checked="false">
+            <span class="level-size">5×5</span><span class="level-name">Hard</span><span class="level-sub">24
+              tiles</span><span class="level-best" data-best="5">No record yet</span>
+          </button>
+        </div>
+
+        <label class="name-field" for="playerName"><span>Your name (for the leaderboard)</span>
+          <input id="playerName" type="text" maxlength="14" autocomplete="nickname" spellcheck="false"
+            placeholder="Player">
+        </label>
+
+        <div class="cta">
+          <button class="btn primary big" id="btnPlay" type="button">Play</button>
+          <button class="btn daily big" id="btnDaily" type="button"><span class="daily-title">Daily
+              Challenge</span><span class="daily-info" id="dailyInfo">Today's puzzle</span></button>
+        </div>
+
+        <div class="chips" aria-label="Your stats">
+          <div class="chip"><b id="statStreak">0</b><span>Win streak</span></div>
+          <div class="chip"><b id="statBestStreak">0</b><span>Best streak</span></div>
+          <div class="chip"><b id="statSolved">0</b><span>Solved</span></div>
+          <div class="chip"><b id="statDailyStreak">0</b><span>Daily streak</span></div>
+        </div>
+      </div>
+
+      <div class="tips card" aria-label="Quick tips">
+        <h2>Quick tips</h2>
+        <ul>
+          <li><b>Tap</b> a tile next to the empty space to slide it. Tap a tile in the same row or column to slide
+            several at once.</li>
+          <li>On a keyboard, the <b>arrow keys</b> or <b>WASD</b> slide a tile. On a phone, you can also <b>swipe</b> on
+            the board.</li>
+          <li>Stuck? Use <b>Hint</b> for the next good move, or <b>Undo</b> to take a move back.</li>
+        </ul>
+        <button class="btn ghost" id="btnHelp2" type="button">Full instructions</button>
+      </div>
+    </section>
+
+    <!-- ============ GAME SCREEN ============ -->
+    <section id="gameScreen" class="screen" aria-label="Game" hidden>
+      <div class="game-grid">
+        <div class="game-head">
+          <button class="btn ghost small" id="btnBack" type="button">&larr; Menu</button>
+          <span class="chip-title" id="gameTitle">4×4 Medium</span>
+          <span class="chip-streak" id="chipStreak" title="Win streak">🔥 0</span>
+        </div>
+
+        <div class="hud" aria-label="Game status">
+          <div class="hud-card"><span class="hud-label">Moves</span><b id="hudMoves">0</b></div>
+          <div class="hud-card"><span class="hud-label">Time</span><b id="hudTime">0:00</b></div>
+          <div class="hud-card"><span class="hud-label">Best</span><b id="hudBest" class="small-text">-</b></div>
+          <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+            aria-label="Puzzle progress" id="progress">
+            <div class="progress-top"><span>Progress</span><span id="progressText">0%</span></div>
+            <div class="progress-track">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-wrap" id="boardWrap">
+          <div class="board" id="board" role="group" aria-label="Puzzle board"></div>
+          <div class="pause-overlay" id="pauseOverlay" hidden>
+            <div class="pause-card">
+              <h2>Paused</h2>
+              <p>The timer is stopped.</p>
+              <button class="btn primary" id="btnResume" type="button">Resume</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="ctrl" id="btnHint" type="button" aria-label="Hint">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Hint</span><em class="count" id="hintCount">0</em>
+          </button>
+          <button class="ctrl" id="btnUndo" type="button" aria-label="Undo last move">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 7L4 12l5 5M4 12h10a6 6 0 010 12" transform="translate(0 -4)" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Undo</span>
+          </button>
+          <button class="ctrl" id="btnPause" type="button" aria-label="Pause">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+            </svg>
+            <span>Pause</span>
+          </button>
+          <button class="ctrl" id="btnRestart" type="button" aria-label="Restart with a new shuffle">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 12a8 8 0 11-2.3-5.7M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Restart</span>
+          </button>
+        </div>
+        <p class="hint-text" id="hintText" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ MODALS ============ -->
+  <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+      <h2 id="helpTitle">How to play</h2>
+      <ol class="steps">
+        <li><b>Goal:</b> put the numbered tiles in order, from 1 upwards, row by row. The empty space ends up in the
+          bottom-right corner.</li>
+        <li><b>Move:</b> tap or click a tile next to the empty space and it slides in. Tap a tile in the same row or
+          column as the empty space to slide the whole line.</li>
+        <li><b>Keyboard:</b> arrow keys or W A S D slide a tile in that direction. <kbd>U</kbd> undo, <kbd>H</kbd> hint,
+          <kbd>P</kbd> or <kbd>Esc</kbd> pause.</li>
+        <li><b>Touch:</b> tap a tile, or swipe on the board.</li>
+        <li><b>Score:</b> the timer starts on your first move. Fewer moves and a faster time give a better record. Your
+          best time and fewest moves are saved for each difficulty.</li>
+        <li><b>Hint and Undo:</b> Hint highlights the next good tile to move. Undo takes back your last move. Both are
+          counted next to your score on the leaderboard.</li>
+        <li><b>Daily Challenge:</b> every day has one puzzle, the same for everyone, with its own colours. Finish it on
+          consecutive days to build a daily streak.</li>
+        <li><b>Win streak:</b> every puzzle you finish adds one. Leaving a puzzle after you have started it resets the
+          streak.</li>
+      </ol>
+      <button class="btn primary" type="button" data-close>Got it</button>
+    </div>
+  </div>
+
+  <div class="modal" id="boardModal" role="dialog" aria-modal="true" aria-labelledby="boardTitle" hidden>
+    <div class="modal-card wide">
+      <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+      <h2 id="boardTitle">Leaderboard</h2>
+      <p class="muted">Saved on this device. Ranked by time, then moves.</p>
+      <div class="tabs" id="lbTabs" role="tablist" aria-label="Leaderboard category">
+        <button type="button" role="tab" class="tab" data-tab="3" aria-selected="false">3×3</button>
+        <button type="button" role="tab" class="tab" data-tab="4" aria-selected="true">4×4</button>
+        <button type="button" role="tab" class="tab" data-tab="5" aria-selected="false">5×5</button>
+        <button type="button" role="tab" class="tab" data-tab="daily" aria-selected="false">Daily</button>
+      </div>
+      <div class="table-wrap">
+        <div id="lbBody"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost small" id="btnClearScores" type="button">Clear all scores</button>
+        <button class="btn primary" type="button" data-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="winModal" role="dialog" aria-modal="true" aria-labelledby="winTitle" hidden>
+    <div class="modal-card center">
+      <div class="trophy" aria-hidden="true">🏆</div>
+      <h2 id="winTitle">You solved it!</h2>
+      <div class="win-stats" id="winStats"></div>
+      <div class="badges" id="winBadges"></div>
+      <div class="modal-actions stack">
+        <button class="btn primary big" id="btnPlayAgain" type="button">Play again</button>
+        <button class="btn secondary" id="btnReplay" type="button">Replay this puzzle</button>
+        <button class="btn ghost" id="btnWinMenu" type="button">Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="confirmModal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle"
+    aria-describedby="confirmText" hidden>
+    <div class="modal-card small center">
+      <h2 id="confirmTitle">Are you sure?</h2>
+      <p id="confirmText"></p>
+      <div class="modal-actions">
+        <button class="btn ghost" id="confirmNo" type="button">Keep playing</button>
+        <button class="btn primary" id="confirmYes" type="button">Leave</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div class="sr-only" id="live" aria-live="polite"></div>
+
+  <script src="./js/game.js"></script>
+</body>
+
+</html>

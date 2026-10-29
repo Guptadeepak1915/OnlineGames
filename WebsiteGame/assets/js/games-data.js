@@ -94,5 +94,15 @@ const GAMES = [
     art: 'BQ', c1: '#ff9f43', c2: '#3b1b6b',
     isNew: true
   },
+  {
+    id: "slidingpuzzlemaster",
+    name: "Sliding Puzzle Master",
+    folder: "slidingpuzzlemaster/",
+    category: "Arcade",
+    desc: "Challenge your brain with Wooden Number Slide! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩",
+    bestKey: "slidingpuzzlemaster_best",
+    art: "SP", c1: '#ff9f43', c2: '#6b1b4e',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];
