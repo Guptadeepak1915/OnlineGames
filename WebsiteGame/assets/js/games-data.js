@@ -104,5 +104,15 @@ const GAMES = [
     art: "SP", c1: '#ff9f43', c2: '#6b1b4e',
     isNew: true
   },
+  {
+    id: "woodennumberpuzzle",
+    name: "wooden-number-puzzle",
+    folder: "woodennumberpuzzle/",
+    category: "Arcade",
+    desc: "Challenge your brain ! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩",
+    bestKey: "woodennumberpuzzle_best",
+    art: "W", c1: '#ff5c7a', c2: '#0f2a1a',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];

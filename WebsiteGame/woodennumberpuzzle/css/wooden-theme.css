@@ -1,0 +1,291 @@
+/* Wooden Number Slide: tactile, realistic wood finish layered over the original responsive UI. */
+:root {
+  --font: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --accent: #8a542b;
+  --accent-2: #c58a48;
+  --good: #547b43;
+  --text: #392316;
+  --muted: #80644c;
+  --card: rgba(246, 229, 194, 0.94);
+  --card-solid: #f2dfb8;
+  --line: rgba(99, 59, 28, 0.35);
+  --shadow: 0 12px 26px rgba(56, 31, 12, 0.24);
+  --shadow-sm: 0 5px 10px rgba(56, 31, 12, 0.2);
+  --board-bg: #5b351b;
+  --cell: rgba(37, 19, 8, 0.3);
+  --bg1: #d6ae73;
+  --bg2: #b47a43;
+  --bg3: #e2c38c;
+  --blob1: #9a6334;
+  --blob2: #d4a36a;
+  --blob3: #f0d6a0;
+  --radius: 18px;
+}
+
+html,
+body {
+  background-color: #c18a50;
+}
+
+body {
+  background-image:
+    repeating-linear-gradient(
+      92deg,
+      rgba(94, 49, 19, 0.07) 0,
+      rgba(94, 49, 19, 0.07) 2px,
+      transparent 2px,
+      transparent 17px
+    ),
+    linear-gradient(135deg, #e4c48d, #b77b43 55%, #d4a36a);
+  background-attachment: fixed;
+  color: #392316;
+}
+
+.bg {
+  opacity: 0.12;
+  filter: sepia(1);
+}
+
+.card,
+.chip-title,
+.chip-streak,
+.hud-card,
+.ctrl,
+.icon-btn {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 242, 210, 0.96),
+    rgba(218, 178, 116, 0.96)
+  );
+  border-color: #9b6a3d;
+  backdrop-filter: none;
+}
+
+.hero,
+.tips {
+  border: 2px solid #9c6b3b;
+  box-shadow:
+    inset 0 1px 0 #fff0ca,
+    0 10px 22px rgba(61, 34, 13, 0.22);
+}
+
+h1 {
+  background: none;
+  color: #5c351b;
+  -webkit-text-fill-color: #5c351b;
+  text-shadow: 0 1px #f7e3b5;
+}
+
+.tagline,
+.muted,
+.tips ul {
+  color: #765437;
+}
+
+.brand-logo {
+  background: linear-gradient(145deg, #d9a65f, #855027);
+  border: 2px solid #70431f;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 2px #f7d79b,
+    0 4px 7px #70431f66;
+}
+
+.brand-logo i {
+  background: linear-gradient(145deg, #f5dca3, #c18a49);
+  color: #58351c;
+  border-radius: 4px;
+}
+
+.btn {
+  border: 1px solid #8b5b30;
+  border-radius: 10px;
+  background: linear-gradient(#f5dfb0, #c89554);
+  color: #482b16;
+  box-shadow:
+    inset 0 1px 0 #fff0ca,
+    0 4px 0 #8b592e,
+    0 6px 9px #5d371e33;
+}
+
+.btn.primary,
+.btn.daily,
+.btn.secondary {
+  color: #fff8e7;
+  background: linear-gradient(145deg, #a66a34, #6f401e);
+  box-shadow:
+    inset 0 1px 0 #e9bb7b,
+    0 4px 0 #4e2b15,
+    0 7px 12px #5d371e44;
+}
+
+.btn.ghost {
+  background: rgba(245, 222, 177, 0.5);
+  color: #543219;
+  border-color: #9c6b3b;
+  box-shadow: none;
+}
+
+.level {
+  background: linear-gradient(145deg, #f4dfb5, #d5a567);
+  border-color: #a77644;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 0 #fff0ca,
+    0 4px 8px #5d371e22;
+}
+
+.level[aria-checked="true"] {
+  border-color: #70421f;
+  box-shadow:
+    inset 0 0 0 2px #e4bd7b,
+    0 0 0 2px #8b592e;
+}
+
+.level-name,
+.label {
+  color: #7b4b25;
+}
+
+.name-field input {
+  background: #f5e4bd;
+  border: 2px solid #b38754;
+  border-radius: 8px;
+  color: #432816;
+}
+
+.chip {
+  background: rgba(116, 70, 32, 0.1);
+  border: 1px solid #b38754;
+  border-radius: 10px;
+}
+
+.chip span {
+  color: #765437;
+}
+
+.board {
+  padding: 0;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #75451f, #3f2412);
+  border: 7px solid #8a572c;
+  box-shadow:
+    inset 0 0 0 2px #d4a46a,
+    inset 0 0 0 5px #4e2b14,
+    0 12px 22px #4b2a14a8;
+}
+
+.cell {
+  margin: var(--gap);
+  border-radius: 7px;
+  background: linear-gradient(145deg, #422512, #67401f);
+  box-shadow: inset 0 2px 5px #241207;
+}
+
+.face {
+  inset: var(--gap);
+  border-radius: 7px;
+  color: #4c2b15;
+  text-shadow: 0 1px 0 #ffe8b2;
+  background:
+    repeating-linear-gradient(
+      3deg,
+      rgba(92, 48, 17, 0.06) 0,
+      rgba(92, 48, 17, 0.06) 2px,
+      transparent 2px,
+      transparent 7px
+    ),
+    linear-gradient(145deg, #f4d69a 0%, #d9a65f 45%, #b8793d 100%);
+  border: 1px solid #8c5629;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 242, 205, 0.85),
+    inset 0 -3px 0 rgba(103, 57, 23, 0.28),
+    0 4px 0 #6e411f,
+    0 6px 8px rgba(20, 10, 4, 0.32);
+  text-shadow: 0 1px 0 #fbe6b3;
+}
+
+[data-theme="dark"] .face {
+  background:
+    repeating-linear-gradient(
+      3deg,
+      rgba(92, 48, 17, 0.06) 0,
+      rgba(92, 48, 17, 0.06) 2px,
+      transparent 2px,
+      transparent 7px
+    ),
+    linear-gradient(145deg, #f4d69a, #b8793d);
+  color: #4c2b15;
+}
+
+.tile.ok .face::after {
+  background: #55733c;
+  box-shadow: 0 0 4px #d7e6a0;
+}
+
+.tile.hint .face {
+  outline: 3px solid #fff1bd;
+  outline-offset: 0;
+  animation: hintPulse 0.9s ease-in-out infinite;
+}
+
+.hud-card {
+  border-radius: 10px;
+  min-height: 60px;
+}
+
+.progress-track {
+  background: #8b603b;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #9a6230, #e2b96f);
+}
+
+.ctrl {
+  border-radius: 10px;
+  color: #503019;
+}
+
+.modal-card {
+  background: linear-gradient(145deg, #f5e4bd, #d8b078);
+  border: 2px solid #956338;
+  box-shadow:
+    inset 0 1px 0 #fff1ce,
+    0 18px 45px #3e210f66;
+  color: #392316;
+}
+
+.modal-card p,
+.steps {
+  color: #765437;
+}
+
+.modal-close {
+  color: #5c351b;
+}
+
+#toast {
+  background: #57331b;
+  color: #fff0ca;
+  border: 1px solid #d5a15e;
+}
+
+.trophy {
+  filter: sepia(0.3);
+}
+
+@media (max-width: 480px) {
+  .board {
+    border-width: 5px;
+    border-radius: 11px;
+  }
+
+  .face {
+    border-radius: 5px;
+  }
+
+  .hero-tiles i {
+    border-radius: 6px;
+  }
+}
