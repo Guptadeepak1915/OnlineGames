@@ -1,0 +1,611 @@
+/* =====================================================
+   Wood Block Puzzle - game.css
+   Everything here makes the page look like real wood:
+   planks, grain, carved grooves, bevelled blocks and nails.
+   The shared theme (../assets/css/style.css) is re-coloured
+   with the variables below.
+   ===================================================== */
+
+/* ---------- 1. Wood colours and sizes ---------- */
+:root {
+  --ink: #2a1a0e;
+  --panel: #6a4325;
+  --line: #a5733d;
+  --paper: #fff1d8;
+  --coral: #c4572f;
+  --cyan: #e7c07b;
+  --sun: #ffd98a;
+  --display: 'Rockwell', 'Roboto Slab', Georgia, 'Times New Roman', serif;
+  --body: 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+  --bw: min(92vw, 440px);
+  /* board width */
+  --pad: 12px;
+  --gap: 4px;
+  /* frame thickness, space between squares */
+  --ts: calc(var(--bw) / 17);
+  /* block square size in the tray */
+  --tgap: 2px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- 2. The wooden table (page background) ---------- */
+body {
+  background:
+    radial-gradient(ellipse at 18% 8%, rgba(255, 205, 130, .20), transparent 55%),
+    radial-gradient(ellipse at 88% 92%, rgba(0, 0, 0, .38), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .50) 0 3px, rgba(255, 215, 160, .10) 3px 5px, transparent 5px 210px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .10) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(90deg, rgba(255, 220, 160, .05) 0 1px, transparent 1px 13px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .07) 0 3px, transparent 3px 23px),
+    linear-gradient(180deg, #5d3b1f, #3b2412 55%, #2b1a0d);
+  background-attachment: fixed;
+  color: var(--paper);
+}
+
+.logo {
+  font-family: var(--display);
+  letter-spacing: 1px;
+  color: #f7e4bd;
+  text-shadow: 0 2px 0 #2a1a0e, 0 -1px 0 rgba(255, 255, 255, .18);
+}
+
+.logo span {
+  color: #e4a95a;
+  text-shadow: 0 2px 0 #2a1a0e;
+}
+
+.pill,
+.icon-btn {
+  background: linear-gradient(180deg, #a87440, #86582b);
+  color: #fff1d8;
+  border: 3px solid #2a1a0e;
+  border-radius: 12px;
+  box-shadow: inset 0 2px 0 rgba(255, 235, 190, .45), 0 3px 0 #3a2412;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
+}
+
+.pill b {
+  color: #ffe19a;
+}
+
+.ad-slot {
+  border-color: #8a5a2b;
+  color: #d7b383;
+  background: rgba(0, 0, 0, .18);
+}
+
+/* ---------- 3. The playing table (stage) ---------- */
+.stage {
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .07) 0 2px, transparent 2px 8px),
+    repeating-linear-gradient(0deg, rgba(255, 220, 160, .05) 0 1px, transparent 1px 14px),
+    linear-gradient(180deg, #7c5230, #5f3c20);
+  border: 4px solid #2a1a0e;
+  border-radius: 22px;
+  padding: 16px 10px 20px;
+  min-height: 0;
+  box-shadow: inset 0 3px 0 rgba(255, 235, 190, .35), inset 0 -4px 0 rgba(0, 0, 0, .35), 0 14px 28px rgba(0, 0, 0, .5);
+}
+
+/* score plaques */
+.hud {
+  display: flex;
+  gap: 10px;
+  width: var(--bw);
+  margin: 0 auto 12px;
+}
+
+.plaque {
+  flex: 1;
+  text-align: center;
+  padding: 8px 6px;
+  border-radius: 12px;
+  border: 3px solid #2a1a0e;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .07) 0 2px, transparent 2px 7px), linear-gradient(180deg, #b98550, #8f6034);
+  box-shadow: inset 0 2px 0 rgba(255, 235, 190, .45), inset 0 -3px 0 rgba(0, 0, 0, .25), 0 4px 8px rgba(0, 0, 0, .4);
+}
+
+.plaque.score {
+  flex: 1.5;
+}
+
+.plaque small {
+  display: block;
+  font-size: .7rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #f6dfb2;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .6);
+}
+
+.plaque strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.7rem;
+  line-height: 1.15;
+  color: #fff6e2;
+  text-shadow: 0 2px 0 #3a2412;
+  font-variant-numeric: tabular-nums;
+}
+
+.plaque strong.bump {
+  animation: bump .25s ease-out;
+}
+
+@keyframes bump {
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* ---------- 4. The board (wooden frame with a carved groove) ---------- */
+.board {
+  position: relative;
+  width: var(--bw);
+  margin: 0 auto;
+  padding: var(--pad);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 12px 12px, #e6d5ad 0 2.5px, #5a4630 3.5px, transparent 4.5px),
+    radial-gradient(circle at calc(100% - 12px) 12px, #e6d5ad 0 2.5px, #5a4630 3.5px, transparent 4.5px),
+    radial-gradient(circle at 12px calc(100% - 12px), #e6d5ad 0 2.5px, #5a4630 3.5px, transparent 4.5px),
+    radial-gradient(circle at calc(100% - 12px) calc(100% - 12px), #e6d5ad 0 2.5px, #5a4630 3.5px, transparent 4.5px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .09) 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(0deg, rgba(255, 230, 180, .07) 0 1px, transparent 1px 11px),
+    linear-gradient(180deg, #b7814a, #8d5d2e 50%, #6d4420);
+  box-shadow: inset 0 3px 0 rgba(255, 235, 190, .5), inset 0 -5px 0 rgba(0, 0, 0, .35), inset 3px 0 0 rgba(255, 235, 190, .15), inset -3px 0 0 rgba(0, 0, 0, .2), 0 14px 26px rgba(0, 0, 0, .55);
+}
+
+.board.shake {
+  animation: shake .35s;
+}
+
+@keyframes shake {
+  20% {
+    transform: translate(-5px, 2px);
+  }
+
+  40% {
+    transform: translate(5px, -2px);
+  }
+
+  60% {
+    transform: translate(-3px, 1px);
+  }
+
+  80% {
+    transform: translate(3px, 0);
+  }
+}
+
+.board canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--gap);
+  padding: 6px;
+  border-radius: 12px;
+  background: #24150a;
+  box-shadow: inset 0 5px 12px rgba(0, 0, 0, .85), 0 1px 0 rgba(255, 220, 160, .28);
+}
+
+.cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .18) 0 1px, transparent 1px 6px), #4a3019;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, .7), 0 1px 0 rgba(255, 210, 150, .14);
+}
+
+/* ---------- 5. Wooden blocks (oak, maple, cherry, walnut, teak, mahogany) ---------- */
+.w0 {
+  --l: #e2b97c;
+  --b: #c99a5b;
+  --d: #8f6431;
+  --gr: rgba(95, 58, 22, .28);
+}
+
+.w1 {
+  --l: #f3d9a8;
+  --b: #e3bf87;
+  --d: #b98f55;
+  --gr: rgba(130, 90, 40, .26);
+}
+
+.w2 {
+  --l: #cf7a55;
+  --b: #b05a38;
+  --d: #7c3a20;
+  --gr: rgba(70, 25, 10, .30);
+}
+
+.w3 {
+  --l: #9a6e49;
+  --b: #7b5231;
+  --d: #4e3019;
+  --gr: rgba(30, 15, 5, .34);
+}
+
+.w4 {
+  --l: #d9a05f;
+  --b: #bd7e3e;
+  --d: #85501f;
+  --gr: rgba(80, 40, 10, .28);
+}
+
+.w5 {
+  --l: #aa5a43;
+  --b: #8d3f2a;
+  --d: #5c2416;
+  --gr: rgba(40, 10, 5, .34);
+}
+
+.cell.filled,
+.pcell {
+  background:
+    repeating-linear-gradient(var(--ga, 92deg), transparent 0 4px, var(--gr) 4px 5px, transparent 5px 9px, var(--gr) 9px 9.6px),
+    linear-gradient(145deg, var(--l), var(--b) 55%, var(--d));
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .38), inset 0 -3px 0 rgba(0, 0, 0, .30), inset 2px 0 0 rgba(255, 255, 255, .14), inset -2px 0 0 rgba(0, 0, 0, .14), 0 2px 3px rgba(0, 0, 0, .55);
+}
+
+.pcell {
+  border-radius: 5px;
+}
+
+.cell.placed {
+  animation: thunk .2s ease-out;
+}
+
+@keyframes thunk {
+  from {
+    transform: scale(1.18);
+    filter: brightness(1.25);
+  }
+}
+
+.cell.clearing {
+  animation: breakAway .36s ease-in forwards;
+  z-index: 3;
+}
+
+@keyframes breakAway {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  35% {
+    transform: scale(1.14);
+    filter: brightness(1.45);
+  }
+
+  100% {
+    transform: scale(.15) rotate(24deg);
+    opacity: 0;
+  }
+}
+
+/* where the block would land, and which lines would break */
+.cell.ghost {
+  background: linear-gradient(145deg, rgba(255, 236, 185, .6), rgba(222, 172, 92, .5));
+  box-shadow: inset 0 0 0 2px rgba(255, 236, 185, .8);
+}
+
+.cell.will-clear {
+  box-shadow: inset 0 0 0 2px #ffe19a, 0 0 12px 2px rgba(255, 214, 120, .85);
+  animation: glow .7s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  to {
+    filter: brightness(1.3);
+  }
+}
+
+/* ---------- 6. The tray (carved slots) ---------- */
+.tray {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: var(--bw);
+  margin: 14px auto 0;
+}
+
+.slot {
+  position: relative;
+  min-height: calc(var(--ts) * 5 + 22px);
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  cursor: grab;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .14) 0 2px, transparent 2px 8px), rgba(24, 13, 5, .42);
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, .65), 0 1px 0 rgba(255, 210, 150, .2);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: box-shadow .15s;
+}
+
+.slot:focus-visible {
+  outline: 3px solid #ffd98a;
+  outline-offset: 2px;
+}
+
+.slot.selected {
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, .65), inset 0 0 0 3px #ffd98a, 0 0 14px rgba(255, 217, 138, .55);
+}
+
+.slot.empty {
+  opacity: .4;
+  cursor: default;
+}
+
+.slot.nofit .piece {
+  filter: grayscale(.75) brightness(.7);
+}
+
+.slot.dragging .piece {
+  opacity: .22;
+}
+
+.slot.shake-no {
+  animation: no .3s;
+}
+
+@keyframes no {
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.piece {
+  display: grid;
+  grid-template-columns: repeat(var(--pw), var(--ps, var(--ts)));
+  grid-template-rows: repeat(var(--ph), var(--ps, var(--ts)));
+  gap: var(--pgap, var(--tgap));
+  pointer-events: none;
+}
+
+.piece.drag {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 70;
+  filter: drop-shadow(0 14px 10px rgba(0, 0, 0, .55));
+  will-change: transform;
+}
+
+.piece.drag.invalid {
+  filter: drop-shadow(0 14px 10px rgba(0, 0, 0, .55)) saturate(.45) brightness(.9);
+}
+
+/* ---------- 7. Messages that float up ---------- */
+.popup {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 34%;
+  display: grid;
+  justify-items: center;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.pop {
+  grid-area: 1 / 1;
+  text-align: center;
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 7vw, 2.3rem);
+  line-height: 1.1;
+  color: #ffe6a8;
+  text-shadow: 0 3px 0 #3a2412, 0 0 18px rgba(255, 200, 100, .75);
+  animation: popUp 1.15s ease-out forwards;
+  white-space: pre;
+}
+
+.pop small {
+  display: block;
+  font-size: .65em;
+  color: #fff6e0;
+}
+
+@keyframes popUp {
+  0% {
+    transform: translateY(12px) scale(.6);
+    opacity: 0;
+  }
+
+  18% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-64px) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ---------- 8. Buttons, screens, cards (wooden) ---------- */
+.bar {
+  display: flex;
+  gap: 10px;
+  width: var(--bw);
+  margin: 14px auto 0;
+}
+
+.bar .btn {
+  flex: 1;
+  margin-top: 0;
+  font-size: 15px;
+  padding: 11px;
+}
+
+.hint {
+  width: var(--bw);
+  margin: 12px auto 0;
+  text-align: center;
+  font-size: 13px;
+  color: #f0d9ad;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .6);
+}
+
+.btn {
+  font-family: var(--display);
+  letter-spacing: .5px;
+  color: #fff4dc;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, .45);
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .08) 0 2px, transparent 2px 7px), linear-gradient(180deg, #c68c4e, #a06b35);
+  border: 3px solid #2a1a0e;
+  border-radius: 12px;
+  box-shadow: 0 5px 0 #4a2f17, inset 0 2px 0 rgba(255, 235, 190, .5);
+}
+
+.btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #4a2f17, inset 0 2px 0 rgba(255, 235, 190, .4);
+}
+
+.btn.alt {
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .08) 0 2px, transparent 2px 7px), linear-gradient(180deg, #8f6a3f, #6b4a28);
+  color: #ffe7b8;
+  box-shadow: 0 5px 0 #3a2412, inset 0 2px 0 rgba(255, 235, 190, .35);
+}
+
+.btn.alt:active {
+  box-shadow: 0 1px 0 #3a2412;
+}
+
+.overlay {
+  background: rgba(22, 11, 4, .72);
+  backdrop-filter: blur(3px);
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+.overlay .card {
+  margin: auto;
+}
+
+.card {
+  position: relative;
+  border: 4px solid #2a1a0e;
+  border-radius: 18px;
+  color: #fff1d8;
+  background:
+    radial-gradient(circle at 14px 14px, #e6d5ad 0 2.5px, #5a4630 3.5px, transparent 4.5px),
+    radial-gradient(circle at calc(100% - 14px) 14px, #e6d5ad 0 2.5px, #5a4630 3.5px, transparent 4.5px),
+    radial-gradient(circle at 14px calc(100% - 14px), #e6d5ad 0 2.5px, #5a4630 3.5px, transparent 4.5px),
+    radial-gradient(circle at calc(100% - 14px) calc(100% - 14px), #e6d5ad 0 2.5px, #5a4630 3.5px, transparent 4.5px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .09) 0 2px, transparent 2px 8px),
+    linear-gradient(180deg, #86592f, #6a4325);
+  box-shadow: inset 0 3px 0 rgba(255, 235, 190, .35), inset 0 -4px 0 rgba(0, 0, 0, .3), 0 12px 0 rgba(0, 0, 0, .28);
+}
+
+.card h1 {
+  font-family: var(--display);
+  color: #fbe7bf;
+  text-shadow: 0 3px 0 #2a1a0e, 0 -1px 0 rgba(255, 255, 255, .2);
+}
+
+.card h2 {
+  font-family: var(--display);
+  color: #fbe7bf;
+  text-shadow: 0 2px 0 #2a1a0e;
+}
+
+.card p {
+  color: #f3dfb8;
+}
+
+.stat {
+  background: linear-gradient(180deg, #3b2412, #2a1a0e);
+  border: 2px solid #1c1108;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .6);
+}
+
+.stat small {
+  color: #d9bc8a;
+}
+
+.stat strong {
+  color: #ffe19a;
+}
+
+.big-score {
+  color: #ffe19a;
+  text-shadow: 0 3px 0 #2a1a0e;
+}
+
+.badge {
+  background: linear-gradient(180deg, #ffe08a, #e0a83c);
+  color: #3a2412;
+  border: 2px solid #2a1a0e;
+}
+
+/* ---------- 9. Text section below the game (paper on wood) ---------- */
+.info {
+  border: 4px solid #2a1a0e;
+  border-radius: 16px;
+  color: #4a2f17;
+  background: repeating-linear-gradient(0deg, rgba(120, 80, 30, .07) 0 1px, transparent 1px 6px), linear-gradient(180deg, #f6e6c6, #ead3a4);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .55), 0 8px 18px rgba(0, 0, 0, .45);
+}
+
+.info h2 {
+  color: #5a3515;
+  font-family: var(--display);
+}
+
+.info a {
+  color: #8a4a1c;
+}
+
+footer,
+footer a {
+  color: #e6c896;
+}
+
+@media (max-width: 420px) {
+  :root {
+    --pad: 10px;
+    --gap: 3px;
+  }
+
+  .plaque strong {
+    font-size: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}

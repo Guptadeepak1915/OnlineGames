@@ -114,5 +114,15 @@ const GAMES = [
     art: "WOODEN", c1: '#ff5c7a', c2: '#0f2a1a',
     isNew: true
   },
+  {
+    id:"woodblock",
+    name:"wood-block",
+    folder: "woodblock/",
+    category: "Arcade",
+    desc: "Put The blocks and fill the cell and gain Highest Score",
+    bestKey: "woodblock_best",
+    art:"WB",c1: '#ff5c7a', c2: '#0f2a1a',
+    isNew : true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];
