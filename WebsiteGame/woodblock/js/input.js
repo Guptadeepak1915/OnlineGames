@@ -83,11 +83,20 @@ function moveDrag(e) {
   d.el.classList.toggle("invalid", near && !d.valid);
 }
 function onDragMove(e) {
-  moveDrag(e);
+  const d = UI.drag;
+  if (!d) return;
+  d.latestEvent = e;
+  if (d.moveFrame) return;
+  d.moveFrame = requestAnimationFrame(() => {
+    d.moveFrame = 0;
+    if (UI.drag === d) moveDrag(d.latestEvent);
+  });
 }
 function endDrag() {
   const d = UI.drag;
   if (!d) return null;
+  if (d.moveFrame) cancelAnimationFrame(d.moveFrame);
+  d.moveFrame = 0;
   document.removeEventListener("pointermove", onDragMove);
   document.removeEventListener("pointerup", onDragEnd);
   document.removeEventListener("pointercancel", onDragCancel);
@@ -98,6 +107,7 @@ function endDrag() {
   return d;
 }
 function onDragEnd(e) {
+  if (UI.drag && e) moveDrag(e);
   const d = endDrag();
   if (!d) return;
   if (!d.moved) {

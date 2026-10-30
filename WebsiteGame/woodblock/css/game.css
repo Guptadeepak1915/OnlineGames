@@ -600,6 +600,22 @@ footer a {
   }
 }
 
+@media (hover: none) and (pointer: coarse) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .piece.drag,
+  .piece.drag.invalid {
+    filter: none;
+  }
+
+  .cell.will-clear {
+    animation: none;
+    box-shadow: inset 0 0 0 2px #ffe19a;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   *,

@@ -7,6 +7,10 @@ const UI = { sel: null, cur: null, locked: false, drag: null }; // selected piec
 let gridEl, trayEl, boardEl, popupEl, fxCanvas, fxCtx;
 let cellEls = [],
   slotEls = [];
+let ghostCells = [],
+  clearCells = [],
+  ghostKey = "",
+  ghostValid = false;
 
 function initRender() {
   gridEl = $("grid");
@@ -77,24 +81,39 @@ function renderTray() {
 
 /* ---------- Ghost preview (where the block would go) ---------- */
 function clearGhost() {
-  cellEls.forEach((e) => e.classList.remove("ghost", "will-clear"));
+  ghostCells.forEach((i) => cellEls[i].classList.remove("ghost"));
+  clearCells.forEach((i) => cellEls[i].classList.remove("will-clear"));
+  ghostCells = [];
+  clearCells = [];
+  ghostKey = "";
+  ghostValid = false;
 }
 function showGhost(piece, r, c) {
+  const key = `${piece.id}:${r}:${c}`;
+  if (key === ghostKey) return ghostValid;
   clearGhost();
+  ghostKey = key;
   if (!canPlace(G.grid, piece, r, c)) return false;
-  piece.cells.forEach(([dr, dc]) =>
-    cellEls[(r + dr) * N + c + dc].classList.add("ghost"),
-  );
+  ghostValid = true;
+  piece.cells.forEach(([dr, dc]) => {
+    const index = (r + dr) * N + c + dc;
+    ghostCells.push(index);
+    cellEls[index].classList.add("ghost");
+  });
   const { rows, cols } = previewLines(G.grid, piece, r, c); // rows and columns that would clear glow
   rows.forEach((rr) => {
-    for (let cc = 0; cc < N; cc++)
+    for (let cc = 0; cc < N; cc++) {
+      clearCells.push(rr * N + cc);
       cellEls[rr * N + cc].classList.add("will-clear");
+    }
   });
   cols.forEach((cc) => {
-    for (let rr = 0; rr < N; rr++)
+    for (let rr = 0; rr < N; rr++) {
+      clearCells.push(rr * N + cc);
       cellEls[rr * N + cc].classList.add("will-clear");
+    }
   });
-  return true;
+  return ghostValid;
 }
 
 /* ---------- Score ---------- */
