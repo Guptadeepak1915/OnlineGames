@@ -124,6 +124,41 @@ button {
   min-height: 0
 }
 
+/* googleAd Sense add containe */
+.ads-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.ad-container {
+  flex: 1;
+  min-width: 0;
+  min-height: 100px;
+  text-align: center;
+}
+
+/* Mobile: show only one ad */
+@media (max-width: 600px) {
+  .ads-row {
+    display: block;
+    padding: 0 10px;
+  }
+
+  .ad-container:nth-child(2) {
+    display: none;
+  }
+}
+
+
+
+
 /* ---------- Game stage ---------- */
 .stage {
   position: relative;
