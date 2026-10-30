@@ -5,6 +5,10 @@
 
 const UI = { sel: null, cur: null, locked: false, drag: null }; // selected piece, keyboard cursor, input lock, drag in progress
 let gridEl, trayEl, boardEl, popupEl, fxCanvas, fxCtx;
+const lowPower = !!(
+  window.matchMedia &&
+  window.matchMedia("(hover: none) and (pointer: coarse)").matches
+);
 let cellEls = [],
   slotEls = [];
 let ghostCells = [],
@@ -164,7 +168,7 @@ const chips = [];
 let chipRaf = 0,
   chipLast = 0;
 function sizeFx() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2),
+  const dpr = Math.min(window.devicePixelRatio || 1, lowPower ? 1 : 2),
     w = boardEl.clientWidth,
     h = boardEl.clientHeight;
   fxCanvas.width = Math.max(1, Math.round(w * dpr));
@@ -173,13 +177,22 @@ function sizeFx() {
 }
 function spawnChips(cleared) {
   if (!fxCtx) return;
+  const br = boardEl.getBoundingClientRect(),
+    first = cellEls[0].getBoundingClientRect(),
+    nextColumn = cellEls[1].getBoundingClientRect(),
+    nextRow = cellEls[N].getBoundingClientRect(),
+    cellSize = first.width,
+    pitchX = nextColumn.left - first.left,
+    pitchY = nextRow.top - first.top,
+    originX = first.left - br.left,
+    originY = first.top - br.top,
+    maxChips = lowPower ? 72 : 420,
+    chipsPerCell = lowPower ? 1 : 5;
   sizeFx();
-  const br = boardEl.getBoundingClientRect();
   cleared.forEach(({ r, c, wood }) => {
-    const cr = cellEls[r * N + c].getBoundingClientRect();
-    const cx = cr.left - br.left + cr.width / 2,
-      cy = cr.top - br.top + cr.height / 2;
-    for (let k = 0; k < 5 && chips.length < 420; k++) {
+    const cx = originX + c * pitchX + cellSize / 2,
+      cy = originY + r * pitchY + cellSize / 2;
+    for (let k = 0; k < chipsPerCell && chips.length < maxChips; k++) {
       const life = 0.8 + Math.random() * 0.6;
       chips.push({
         x: cx,
@@ -216,13 +229,17 @@ function chipLoop(now) {
     p.x += p.vx * dt;
     p.y += p.vy * dt;
     p.rot += p.vr * dt;
-    fxCtx.save();
     fxCtx.globalAlpha = Math.min(1, (p.life / p.max) * 1.6);
-    fxCtx.translate(p.x, p.y);
-    fxCtx.rotate(p.rot);
     fxCtx.fillStyle = p.color;
-    fxCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-    fxCtx.restore();
+    if (lowPower) {
+      fxCtx.fillRect(p.x, p.y, p.w, p.h);
+    } else {
+      fxCtx.save();
+      fxCtx.translate(p.x, p.y);
+      fxCtx.rotate(p.rot);
+      fxCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      fxCtx.restore();
+    }
   }
   if (chips.length) chipRaf = requestAnimationFrame(chipLoop);
   else {

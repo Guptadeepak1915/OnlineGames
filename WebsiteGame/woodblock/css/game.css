@@ -603,6 +603,35 @@ footer a {
 @media (hover: none) and (pointer: coarse) {
   body {
     background-attachment: scroll;
+    background: linear-gradient(180deg, #5d3b1f, #3b2412 55%, #2b1a0d);
+  }
+
+  .stage,
+  .board {
+    background: linear-gradient(180deg, #7c5230, #5f3c20);
+    box-shadow: inset 0 2px 0 rgba(255, 235, 190, .25), 0 5px 12px rgba(0, 0, 0, .35);
+  }
+
+  .grid {
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .65);
+  }
+
+  .cell {
+    background: #4a3019;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .55);
+  }
+
+  .cell.filled,
+  .pcell {
+    background: linear-gradient(145deg, var(--l), var(--b) 55%, var(--d));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), inset 0 -2px 0 rgba(0, 0, 0, .2);
+  }
+
+  .cell.placed,
+  .cell.clearing,
+  .board.shake,
+  .pop {
+    animation: none;
   }
 
   .piece.drag,
