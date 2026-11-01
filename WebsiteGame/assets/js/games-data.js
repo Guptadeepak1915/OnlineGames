@@ -102,7 +102,7 @@ const GAMES = [
     desc: "Challenge your brain with Wooden Number Slide! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩",
     bestKey: "slidingpuzzlemaster_best",
     art: "SP", c1: '#ff9f43', c2: '#6b1b4e',
-    isNew: true
+    isNew: false
   },
   {
     id: "woodennumberpuzzle",
@@ -112,7 +112,7 @@ const GAMES = [
     desc: "Challenge your brain ! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩 ",
     bestKey: "woodennumberpuzzle_best",
     art: "WOODEN", c1: '#ff5c7a', c2: '#0f2a1a',
-    isNew: true
+    isNew: false
   },
   {
     id:"woodblock",
@@ -122,7 +122,17 @@ const GAMES = [
     desc: "Put The blocks and fill the cell and gain Highest Score",
     bestKey: "woodblock_best",
     art:"WB",c1: '#ff5c7a', c2: '#0f2a1a',
-    isNew : true
+    isNew : false
+  },
+  {
+    id: "sudoku",
+    name: "Sudoku",
+    folder: "sudoku/",
+    category: "Puzzle",
+    desc: "Solve unique 9×9 Sudoku puzzles using row, column, and 3×3 box logic.",
+    bestKey: "sudoku_best",
+    art: "SDK", c1: '#ffd23f', c2: '#3b1b6b',
+    isNew: true
   },
   // ADD NEW GAMES ABOVE THIS LINE
 ];

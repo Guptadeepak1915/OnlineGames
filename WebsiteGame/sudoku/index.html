@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sudoku - Free online 9×9 number puzzle</title>
+<meta name="description" content="Play free Sudoku online. Solve unique 9×9 puzzles using row, column, and 3×3 box logic. Choose a difficulty, use notes and hints, and track your score.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">SUDO<span>KU</span></div>
+    <div class="hdr-right">
+      <div class="pill">Best<b id="hdrBest">0</b></div>
+      <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
+    </div>
+  </header>
+
+  <!-- AD SLOT 1 -->
+  <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+  <div class="stage" id="stage">
+    <div class="hud">
+      <div class="stat"><small>Level</small><strong id="hLevel">1</strong></div>
+      <div class="stat"><small>Score</small><strong id="hScore">0</strong></div>
+      <div class="stat"><small>Lives</small><strong class="lives" id="hLives">♥♥♥</strong></div>
+      <div class="stat"><small>Time</small><strong id="hTime">0:00</strong></div>
+    </div>
+    <p class="goal" id="goal"></p>
+    <p class="logic-msg" id="logicMsg" aria-live="polite"></p>
+
+    <div class="board" id="board" role="grid" aria-label="Number grid"></div>
+
+    <div class="tools">
+      <button class="tool" id="btnNotes" type="button">Notes: off</button>
+      <button class="tool" id="btnUndo" type="button">Undo</button>
+      <button class="tool" id="btnErase" type="button">Erase</button>
+      <button class="tool" id="btnHint" type="button">Hint (3)</button>
+    </div>
+    <div class="pad" id="pad" aria-label="Number buttons"></div>
+    <p class="hint">Enter only a number forced by the row, column, or 3×3 box clues. Keys 1-9 type, arrows move, N notes, U undo, H hint.</p>
+
+    <!-- Start screen -->
+    <div class="overlay" id="menu">
+      <div class="card">
+        <h1>SUDOKU</h1>
+        <p>Fill every row, column, and 3×3 box with the numbers 1 to 9. Each number must appear once in every row, column, and box. Use logic—guessing is not allowed.</p>
+        <button class="btn" id="btnLevels" type="button">Play levels</button>
+        <h3>Or choose a practice difficulty</h3>
+        <div class="opts three" id="diffOpts"></div>
+        <button class="btn alt" id="btnPractice" type="button">Practice</button>
+        <div class="stats">
+          <div class="stat"><small>Best</small><strong id="mBest">0</strong></div>
+          <div class="stat"><small>Plays</small><strong id="mPlays">0</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Level clear / solved -->
+    <div class="overlay hidden" id="clear">
+      <div class="card">
+        <h2 id="cTitle">Level clear!</h2>
+        <p id="cMsg"></p>
+        <div class="stats">
+          <div class="stat"><small>Time</small><strong id="cTime">0:00</strong></div>
+          <div class="stat"><small>Mistakes</small><strong id="cMistakes">0</strong></div>
+          <div class="stat"><small>Points</small><strong id="cPoints">0</strong></div>
+        </div>
+        <button class="btn" id="btnNext" type="button">Next level</button>
+        <button class="btn alt" id="btnClearShare" type="button">Share my score</button>
+        <p id="cShareStatus" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <!-- Game over -->
+    <div class="overlay hidden" id="over">
+      <div class="card">
+        <h2>Out of lives</h2>
+        <div class="big-score" id="oScore">0</div>
+        <div class="badge hidden" id="oBadge">New best!</div>
+        <p id="oMsg"></p>
+        <div class="stats">
+          <div class="stat"><small>Best</small><strong id="oBest">0</strong></div>
+          <div class="stat"><small>Level</small><strong id="oLevel">1</strong></div>
+        </div>
+        <button class="btn" id="btnAgain" type="button">Play again</button>
+        <button class="btn alt" id="btnShare" type="button">Share my score</button>
+        <button class="btn alt" id="btnOverMenu" type="button">Menu</button>
+        <p id="oShareStatus" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
+  <section class="info">
+    <h2>How to play Sudoku</h2>
+    <p>Fill the 9×9 grid so each row, each column, and each 3×3 box contains the numbers 1 to 9 exactly once. Every puzzle has a unique solution. The game accepts only moves forced by the current clues, so guessing is not allowed. Look for a number that is the only candidate in a square or the only place for that number in a row, column, or box.</p>
+
+    <h2>Levels, lives and score</h2>
+    <p>Play levels begin with easy puzzles and progress through medium to hard. You have 3 lives, and an incorrect move costs a life. Solving a puzzle earns points, with speed and no-mistake bonuses. Hints cost points. Every few levels you earn a life or hint. Practice mode lets you choose a difficulty and provides unlimited hints.</p>
+
+    <h2>Helpers</h2>
+    <p>When you select a square, its row, column, and 3×3 box are highlighted. Matching numbers are marked, and red indicates a duplicate in a Sudoku unit. Notes help track candidates and are removed from peers when you place a number. Undo restores your previous move, Erase clears a square, and Hint fills the next logically forced square. The number under each button shows how many of that digit remain.</p>
+
+    <h2>Tips</h2>
+    <p>Start with a row, column, or box that has the most clues. Check which digits are missing and eliminate candidates using all three Sudoku units. A digit that has only one possible square in any row, column, or box is a safe move.</p>
+  </section>
+
+  <!-- AD SLOT 2 -->
+  <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+  <footer>
+    <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
+  </footer>
+</div>
+
+<script src="../assets/js/site-config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/sudoku.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/input.js"></script>
+<script src="../assets/js/ads.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
