@@ -585,6 +585,18 @@
       const nodeIdx = this.findNearbyNode(pos);
       if (nodeIdx !== -1) {
         if (this.currentNode === null) {
+          const oddNodes = EulerianSolver.getOddDegreeNodes(
+            this.currentLevel.nodes.length,
+            this.currentLevel.edges,
+          );
+          if (oddNodes.length === 2 && !oddNodes.includes(nodeIdx)) {
+            const validStarts = oddNodes
+              .map((index) => `Node ${index + 1}`)
+              .join(" or ");
+            this.showToast(`Start at ${validStarts} to trace every edge.`);
+            return;
+          }
+
           // Starting the first stroke
           this.currentNode = nodeIdx;
           this.sound.playWoodTap();
