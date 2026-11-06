@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Fruit Slice Master - Free Online Blade Arcade Game</title>
+  <meta name="description" content="Slice flying juicy fruits, avoid explosive bombs, chain massive combos, and share your high score in this free arcade game.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@700;800;900&family=Cinzel:wght@800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/board.css">
+  <link rel="stylesheet" href="./css/modals.css">
+  <link rel="stylesheet" href="./css/info.css">
+</head>
+<body>
+  <div class="site-wrap">
+
+    <!-- Top Site Navigation Header (GameHub / onlinefreegame format) -->
+    <header class="site-header">
+      <div class="logo">
+        <span class="blade-icon">⚔️</span>
+        <span class="logo-fruit">FRUIT</span><span class="logo-slice">SLICE</span>
+      </div>
+      <div class="header-right">
+        <div class="pill best-pill" title="Personal Best Score">
+          <span class="trophy-icon">🏆</span>
+          <span class="pill-label">Best:</span>
+          <b id="hdrBest">0</b>
+        </div>
+        <button id="soundToggleBtn" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
+          <span id="soundIcon">🔊</span>
+        </button>
+        <button id="hdrShareBtn" class="pill-btn share-pill" title="Share Your Score">
+          <span>📤 Share</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Game Console & Canvas Stage -->
+    <main class="game-stage-container">
+      <div class="phone-frame" id="phoneFrame">
+
+        <!-- Top Wooden HUD Bar -->
+        <div class="wood-hud">
+          <!-- Current Score Display with Juicy Watermelon Icon -->
+          <div class="hud-score-box">
+            <span class="hud-fruit-icon">🍉</span>
+            <div class="hud-score-content">
+              <span class="hud-score-num" id="hudScore">0</span>
+              <small class="hud-score-label">POINTS</small>
+            </div>
+          </div>
+
+          <!-- Lives / Strikes Indicator (3 strikes system) -->
+          <div class="hud-strikes-box" id="hudStrikes">
+            <span class="strike-slot" id="strike0">✖</span>
+            <span class="strike-slot" id="strike1">✖</span>
+            <span class="strike-slot" id="strike2">✖</span>
+          </div>
+
+          <!-- Pause Button -->
+          <button class="hud-pause-btn" id="pauseBtn" title="Pause Game" aria-label="Pause">
+            <span>⏸</span>
+          </button>
+        </div>
+
+        <!-- Interactive Cutting Board & Blade Canvas Area -->
+        <div class="board-area" id="boardArea">
+          <!-- Background Splatter Canvas (Holds persistent juice stains) -->
+          <canvas id="splatterCanvas"></canvas>
+          <!-- Active Game & Blade Trail Canvas -->
+          <canvas id="sliceCanvas"></canvas>
+
+          <!-- Floating Combo Banner Popup -->
+          <div class="combo-banner hidden" id="comboBanner">
+            <span class="combo-text" id="comboText">COMBO x3!</span>
+            <span class="combo-bonus" id="comboBonus">+3 PTS</span>
+          </div>
+
+          <!-- Critical Slash Flash Notification -->
+          <div class="critical-banner hidden" id="criticalBanner">CRITICAL! +10</div>
+
+          <!-- Toast Message -->
+          <div class="toast-popup hidden" id="toast">Score copied to clipboard!</div>
+        </div>
+
+        <!-- OVERLAY 1: Start Screen Modal -->
+        <div class="modal-overlay" id="startModal">
+          <div class="wood-card">
+            <div class="card-rivet tl"></div>
+            <div class="card-rivet tr"></div>
+            <div class="card-rivet bl"></div>
+            <div class="card-rivet br"></div>
+
+            <div class="title-badge">ARCADE MODE</div>
+            <h1 class="game-title">FRUIT<br><span class="highlight">SLICE</span></h1>
+            <p class="game-tagline">Swipe your blade to slice fruits. Avoid the explosive bombs!</p>
+
+            <div class="stats-row">
+              <div class="stat-col">
+                <small>BEST SCORE</small>
+                <strong id="startBestScore">0</strong>
+              </div>
+              <div class="stat-col">
+                <small>MAX COMBO</small>
+                <strong id="startMaxCombo">0x</strong>
+              </div>
+            </div>
+
+            <button class="btn-play-gold" id="playBtn">
+              <span class="btn-sword">⚔️</span> PLAY NOW
+            </button>
+          </div>
+        </div>
+
+        <!-- OVERLAY 2: Pause Modal -->
+        <div class="modal-overlay hidden" id="pauseModal">
+          <div class="wood-card">
+            <div class="card-rivet tl"></div>
+            <div class="card-rivet tr"></div>
+            <div class="card-rivet bl"></div>
+            <div class="card-rivet br"></div>
+
+            <h2 class="modal-heading">GAME PAUSED</h2>
+            <div class="menu-btn-stack">
+              <button class="btn-play-gold" id="resumeBtn">RESUME</button>
+              <button class="btn-wood-alt" id="restartBtn">RESTART</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OVERLAY 3: Game Over Modal with High Score & Share Feature -->
+        <div class="modal-overlay hidden" id="gameOverModal">
+          <div class="wood-card over-card">
+            <div class="card-rivet tl"></div>
+            <div class="card-rivet tr"></div>
+            <div class="card-rivet bl"></div>
+            <div class="card-rivet br"></div>
+
+            <div class="new-best-badge hidden" id="newBestBadge">🌟 NEW BEST SCORE! 🌟</div>
+            <h2 class="game-over-title">GAME OVER</h2>
+
+            <!-- Big Score Display -->
+            <div class="score-summary-box">
+              <div class="big-score-val" id="finalScore">0</div>
+              <div class="big-score-sub">Total Slices</div>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat-col">
+                <small>BEST</small>
+                <strong id="overBestScore">0</strong>
+              </div>
+              <div class="stat-col">
+                <small>MAX COMBO</small>
+                <strong id="overMaxCombo">0x</strong>
+              </div>
+              <div class="stat-col">
+                <small>ACCURACY</small>
+                <strong id="overAccuracy">100%</strong>
+              </div>
+            </div>
+
+            <!-- Primary Share Score & Play Again Actions -->
+            <div class="game-over-actions">
+              <button class="btn-share-prominent" id="shareScoreBtn">
+                <span class="share-icon">📤</span> SHARE MY SCORE
+              </button>
+              <button class="btn-play-gold" id="playAgainBtn">
+                <span>🔄</span> PLAY AGAIN
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OVERLAY 4: Share Modal Dialog (WhatsApp, Twitter/X, Copy Text) -->
+        <div class="modal-overlay hidden" id="shareDialogModal">
+          <div class="wood-card share-card">
+            <div class="card-rivet tl"></div>
+            <div class="card-rivet tr"></div>
+            <div class="card-rivet bl"></div>
+            <div class="card-rivet br"></div>
+
+            <div class="share-header">
+              <h3 class="share-modal-title">BRAG YOUR SCORE!</h3>
+              <button class="close-x-btn" id="closeShareModalBtn">✕</button>
+            </div>
+
+            <div class="share-preview-box">
+              <div class="share-quote-text" id="shareQuotePreview">
+                "🍉 I sliced 42 fruits with a 4x combo in Fruit Slice! Can you beat my high score? 🥷⚔️"
+              </div>
+            </div>
+
+            <!-- Social Share Quick Links -->
+            <div class="social-share-buttons">
+              <!-- WhatsApp -->
+              <a href="#" class="social-btn whatsapp-btn" id="shareWhatsAppBtn" target="_blank" rel="noopener">
+                <span class="social-icon">💬</span> WhatsApp
+              </a>
+              <!-- Copy Text to Clipboard -->
+              <button class="social-btn copy-btn" id="shareCopyBtn">
+                <span class="social-icon">📋</span> Copy Score
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Information & How to Play Section (onlinefreegame.netlify.app standard) -->
+    <section class="game-info-section">
+      <div class="info-card">
+        <h2>How to Play Fruit Slice</h2>
+        <p>
+          Step into the dojo and test your reflexes! Juicy tropical fruits are tossed into the air. 
+          Swipe across your screen to draw a razor-sharp katana blade trail and slice them in mid-air.
+        </p>
+
+        <div class="rules-grid">
+          <div class="rule-box">
+            <span class="rule-icon">🍉</span>
+            <h3>1. Slice Juicy Fruits</h3>
+            <p>Every sliced fruit awards 1 point. Watermelons, oranges, pineapples, coconuts, and strawberries all splatter luscious juice!</p>
+          </div>
+          <div class="rule-box">
+            <span class="rule-icon">💣</span>
+            <h3>2. Beware the Bombs</h3>
+            <p>Black iron explosive bombs are mixed in with the fruits. Slicing a bomb results in an instant detonation and strike!</p>
+          </div>
+          <div class="rule-box">
+            <span class="rule-icon">⚡</span>
+            <h3>3. Chain Combos</h3>
+            <p>Slice 3 or more fruits in a single swipe to trigger massive Combo bonus points! Watch out for rare Critical +10 slashes.</p>
+          </div>
+          <div class="rule-box">
+            <span class="rule-icon">📤</span>
+            <h3>4. Share & Challenge</h3>
+            <p>Once your game ends, click <strong>Share My Score</strong> to challenge your friends on WhatsApp, Twitter, or copy your brag card!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standard Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="#phoneFrame">Play Fruit Slice</a>
+        <a href="#" id="resetStatsBtn">Reset Scores</a>
+      </div>
+      <p class="copyright">© 2026 GameHub • Fruit Slice Master • Free Browser Arcade</p>
+    </footer>
+
+  </div>
+
+  <script src="./js/audio.js"></script>
+  <script src="./js/particles.js"></script>
+  <script src="./js/fruit.js"></script>
+  <script src="./js/share.js"></script>
+  <script src="./js/game.js"></script>
+</body>
+</html>

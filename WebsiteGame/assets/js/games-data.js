@@ -144,5 +144,15 @@ const GAMES = [
     art: "OL", c1: '#ffd23f', c2: '#3b1b6b',
     isNew: true
   },
+  {
+    id: "fruitslice",
+    name: "Fruit Slice ",
+    folder: "fruitslice/",
+    category: "Fun",
+    desc: "Fruit Slice is an addictive arcade game where players slice flying fruits using quick swipes while avoiding dangerous bombs.",
+    bestKey: "fruitslice_best",
+    art: "FS", c1: '#3df2e0', c2: '#2a0f2e',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];

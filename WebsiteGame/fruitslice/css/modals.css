@@ -1,0 +1,388 @@
+/* ==========================================================================
+   Fruit Slice Master - Modals, Wooden Plaques & Share Overlay
+   ========================================================================== */
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(14, 7, 3, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.wood-card {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  background: linear-gradient(160deg, #442211 0%, #2e160a 70%, #1c0d05 100%);
+  border: 4px solid #6b371b;
+  border-radius: 26px;
+  padding: 28px 22px;
+  box-shadow: 
+    0 24px 50px rgba(0, 0, 0, 0.9),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2),
+    inset 0 0 20px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  animation: cardPop 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes cardPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Brass Rivets in Plaque Corners */
+.card-rivet {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffe699 0%, #c48b20 70%, #613f06 100%);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.6);
+}
+
+.card-rivet.tl { top: 10px; left: 10px; }
+.card-rivet.tr { top: 10px; right: 10px; }
+.card-rivet.bl { bottom: 10px; left: 10px; }
+.card-rivet.br { bottom: 10px; right: 10px; }
+
+.title-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold-core), var(--gold-dark));
+  color: #1a0c04;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.game-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  line-height: 1.05;
+  color: var(--watermelon-red);
+  text-shadow: 0 3px 0 #801026, 0 8px 16px rgba(0,0,0,0.8);
+  margin-bottom: 10px;
+}
+
+.game-title .highlight {
+  color: var(--gold-bright);
+  text-shadow: 0 3px 0 #996300, 0 8px 16px rgba(0,0,0,0.8);
+}
+
+.game-tagline {
+  font-size: 0.85rem;
+  color: #cca484;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(18, 9, 4, 0.7);
+  border: 1px solid #572e17;
+  border-radius: 14px;
+  padding: 10px 6px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.stat-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-col small {
+  font-size: 0.65rem;
+  color: #a0785a;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.stat-col strong {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+/* Big Gold Action Buttons */
+.btn-play-gold {
+  width: 100%;
+  background: linear-gradient(180deg, #fce074 0%, #e2a524 60%, #b3780f 100%);
+  border: 2px solid #fff2a3;
+  color: #2b1406;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.7);
+  transition: all 0.15s ease;
+}
+
+.btn-play-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(240, 184, 50, 0.45);
+}
+
+.btn-play-gold:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.6);
+}
+
+.btn-wood-alt {
+  width: 100%;
+  background: linear-gradient(180deg, #5c2f18 0%, #30170a 100%);
+  border: 1px solid #753d1e;
+  color: #e8d0bc;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  padding: 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: all 0.15s ease;
+}
+
+.btn-wood-alt:hover {
+  background: linear-gradient(180deg, #6c371d 0%, #3a1c0d 100%);
+  color: #fff;
+}
+
+.menu-btn-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-heading {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--gold-bright);
+  text-shadow: 0 2px 4px #000;
+  margin-bottom: 18px;
+}
+
+/* Game Over Modal & Share Score Layout */
+.over-card {
+  padding-top: 24px;
+}
+
+.new-best-badge {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  display: inline-block;
+  box-shadow: 0 3px 8px rgba(16, 185, 129, 0.4);
+  animation: pulseBadge 1.2s infinite alternate;
+}
+
+@keyframes pulseBadge {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+.game-over-title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  color: var(--strike-active);
+  text-shadow: 0 3px 0 #801026, 0 6px 12px rgba(0,0,0,0.8);
+  margin-bottom: 12px;
+}
+
+.score-summary-box {
+  background: rgba(18, 9, 4, 0.8);
+  border: 2px solid #5d3119;
+  border-radius: 18px;
+  padding: 12px 10px;
+  margin-bottom: 16px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.7);
+}
+
+.big-score-val {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  color: var(--gold-bright);
+  text-shadow: 0 3px 0 #996300, 0 6px 16px rgba(245, 176, 27, 0.5);
+  line-height: 1;
+}
+
+.big-score-sub {
+  font-size: 0.75rem;
+  color: #cca484;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.game-over-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Prominent Share Score Button */
+.btn-share-prominent {
+  width: 100%;
+  background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+  border: 2px solid #93c5fd;
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  padding: 13px 18px;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(29, 78, 216, 0.5), inset 0 1px 1px rgba(255,255,255,0.4);
+  transition: all 0.15s ease;
+}
+
+.btn-share-prominent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(59, 130, 246, 0.6);
+  background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+}
+
+.btn-share-prominent:active {
+  transform: translateY(2px);
+}
+
+/* Share Score Modal Dialog (WhatsApp, Twitter/X, Copy Text) */
+.share-card {
+  max-width: 380px;
+  padding: 22px 18px;
+}
+
+.share-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.share-modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--gold-bright);
+  text-shadow: 0 2px 4px #000;
+}
+
+.close-x-btn {
+  background: #3a1d0f;
+  border: 1px solid #733c1d;
+  color: var(--gold-bright);
+  font-size: 1.1rem;
+  font-weight: 800;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.share-preview-box {
+  background: rgba(18, 9, 4, 0.8);
+  border: 1px dashed #6b371b;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+.share-quote-text {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #ffeedd;
+  line-height: 1.45;
+}
+
+.social-share-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.92rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* WhatsApp Vibrant Green */
+.whatsapp-btn {
+  background: linear-gradient(180deg, #2fe06e 0%, #1da851 100%);
+  border: 1px solid #6ee7b7;
+  color: #ffffff;
+}
+
+.whatsapp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+}
+
+/* Twitter / X Sleek Dark */
+.twitter-btn {
+  background: linear-gradient(180deg, #1f2937 0%, #0f172a 100%);
+  border: 1px solid #475569;
+  color: #ffffff;
+}
+
+.twitter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.5);
+  background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+}
+
+/* Copy Score Golden Brass */
+.copy-btn {
+  background: linear-gradient(180deg, #f5b01b 0%, #b87b0a 100%);
+  border: 1px solid #ffe875;
+  color: #261103;
+}
+
+.copy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245, 176, 27, 0.35);
+}
