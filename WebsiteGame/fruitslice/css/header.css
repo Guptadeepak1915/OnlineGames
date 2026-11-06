@@ -2,6 +2,18 @@
    Fruit Slice Master - Header Bar & Top Controls
    ========================================================================== */
 
+/* Top Quick Navigation (Back & Home) */
+.site-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.site-navigation a {
+  text-decoration: none;
+}
+
 .site-header {
   display: flex;
   justify-content: space-between;

@@ -132,7 +132,7 @@ const GAMES = [
     desc: "Solve unique 9×9 Sudoku puzzles using row, column, and 3×3 box logic.",
     bestKey: "sudoku_best",
     art: "SDK", c1: '#ffd23f', c2: '#3b1b6b',
-    isNew: true
+    isNew: false
   },
   {
     id: "onelinepuzzle",

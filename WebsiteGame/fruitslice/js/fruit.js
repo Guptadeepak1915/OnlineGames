@@ -72,8 +72,8 @@ const FRUIT_TYPES = {
 
 class Fruit {
   constructor(canvasWidth, canvasHeight) {
-    this.canvasWidth = canvasWidth;
-    this.canvasHeight = canvasHeight;
+    this.canvasWidth = canvasWidth && canvasWidth > 0 ? canvasWidth : 360;
+    this.canvasHeight = canvasHeight && canvasHeight > 0 ? canvasHeight : 480;
 
     // Select random fruit or bomb (~18% chance of bomb after score > 5)
     const keys = Object.keys(FRUIT_TYPES);

@@ -17,6 +17,12 @@
 <body>
   <div class="site-wrap">
 
+    <!-- Top Quick Navigation (Back & Home) -->
+    <nav class="site-navigation" aria-label="Site navigation">
+      <button class="pill-btn" id="backBtn" type="button" title="Go Back">← Back</button>
+      <a class="pill-btn" id="homeBtn" href="../index.html" title="Go to Home">⌂ Home</a>
+    </nav>
+
     <!-- Top Site Navigation Header (GameHub / onlinefreegame format) -->
     <header class="site-header">
       <div class="logo">
@@ -31,9 +37,6 @@
         </div>
         <button id="soundToggleBtn" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
           <span id="soundIcon">🔊</span>
-        </button>
-        <button id="hdrShareBtn" class="pill-btn share-pill" title="Share Your Score">
-          <span>📤 Share</span>
         </button>
       </div>
     </header>
@@ -248,6 +251,7 @@
     <!-- Standard Site Footer -->
     <footer class="site-footer">
       <div class="footer-links">
+        <a href="../index.html">⌂ Home</a>
         <a href="#phoneFrame">Play Fruit Slice</a>
         <a href="#" id="resetStatsBtn">Reset Scores</a>
       </div>

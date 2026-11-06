@@ -11,17 +11,31 @@
 
   class FruitSliceGame {
     constructor() {
-      // Audio Synthesizer
-      const SoundConstructor = window.SoundFX || SoundFX;
+      // Audio Synthesizer with safe fallback
+      const SoundConstructor =
+        window.SoundFX ||
+        class {
+          init() {}
+          toggle() {
+            return true;
+          }
+          playSwoosh() {}
+          playSlice() {}
+          playExplosion() {}
+          playCombo() {}
+          playStrike() {}
+          playGameOver() {}
+        };
       this.sound = new SoundConstructor();
 
       // Canvases
       this.sliceCanvas = document.getElementById("sliceCanvas");
-      this.sliceCtx = this.sliceCanvas.getContext("2d");
+      this.sliceCtx = this.sliceCanvas ? this.sliceCanvas.getContext("2d") : null;
       this.splatCanvas = document.getElementById("splatterCanvas");
-      this.splatCtx = this.splatCanvas.getContext("2d");
+      this.splatCtx = this.splatCanvas ? this.splatCanvas.getContext("2d") : null;
 
-      // HUD & Overlays
+      // Navigation & Header
+      this.backBtn = document.getElementById("backBtn");
       this.hudScore = document.getElementById("hudScore");
       this.hdrBest = document.getElementById("hdrBest");
       this.pauseBtn = document.getElementById("pauseBtn");
@@ -32,7 +46,7 @@
         document.getElementById("strike0"),
         document.getElementById("strike1"),
         document.getElementById("strike2"),
-      ];
+      ].filter(Boolean);
 
       // Banners & Popups
       this.comboBanner = document.getElementById("comboBanner");
@@ -71,14 +85,19 @@
 
       // Game State
       this.score = 0;
-      this.bestScore = parseInt(
-        localStorage.getItem("fruitslice_best") || "0",
-        10,
-      );
-      this.maxCombo = parseInt(
-        localStorage.getItem("fruitslice_maxcombo") || "0",
-        10,
-      );
+      this.bestScore = 0;
+      this.maxCombo = 0;
+      try {
+        this.bestScore = parseInt(
+          localStorage.getItem("fruitslice_best") || "0",
+          10,
+        ) || 0;
+        this.maxCombo = parseInt(
+          localStorage.getItem("fruitslice_maxcombo") || "0",
+          10,
+        ) || 0;
+      } catch (e) {}
+
       this.strikes = 0;
       this.maxStrikes = 3;
       this.totalFruitsSpawned = 0;
@@ -96,6 +115,10 @@
       this.critTimer = null;
       this.toastTimer = null;
 
+      // Default dimensions
+      this.width = 360;
+      this.height = 480;
+
       // Spawning timer
       this.spawnTimer = 0;
       this.spawnInterval = 85; // Frames between spawns
@@ -108,43 +131,50 @@
 
     initCanvasSize() {
       const resize = () => {
+        if (!this.sliceCanvas || !this.sliceCanvas.parentElement) return;
         const rect = this.sliceCanvas.parentElement.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
-        const w = rect.width;
-        const h = rect.height;
+        const w = rect.width > 0 ? rect.width : (this.sliceCanvas.parentElement.clientWidth || 360);
+        const h = rect.height > 0 ? rect.height : (this.sliceCanvas.parentElement.clientHeight || 480);
 
         this.width = w;
         this.height = h;
 
         [this.sliceCanvas, this.splatCanvas].forEach((c) => {
+          if (!c) return;
           c.width = w * dpr;
           c.height = h * dpr;
           c.style.width = `${w}px`;
           c.style.height = `${h}px`;
         });
 
-        this.sliceCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        this.splatCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (this.sliceCtx) this.sliceCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (this.splatCtx) this.splatCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
       };
 
+      resize();
       window.addEventListener("resize", resize);
       setTimeout(resize, 40);
+      setTimeout(resize, 150);
     }
 
     updateHudBest() {
-      this.hdrBest.textContent = this.bestScore;
-      this.startBestScore.textContent = this.bestScore;
-      this.startMaxCombo.textContent = `${this.maxCombo}x`;
+      if (this.hdrBest) this.hdrBest.textContent = this.bestScore;
+      if (this.startBestScore) this.startBestScore.textContent = this.bestScore;
+      if (this.startMaxCombo) this.startMaxCombo.textContent = `${this.maxCombo}x`;
     }
 
     bindEvents() {
-      // Unified Blade Input Handling (Mouse & Touch)
       let isPointerDown = false;
 
       const getPos = (e) => {
+        if (!this.sliceCanvas) return { x: 0, y: 0 };
         const rect = this.sliceCanvas.getBoundingClientRect();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const touch =
+          (e.touches && e.touches[0]) ||
+          (e.changedTouches && e.changedTouches[0]);
+        const clientX = touch ? touch.clientX : e.clientX;
+        const clientY = touch ? touch.clientY : e.clientY;
         return {
           x: clientX - rect.left,
           y: clientY - rect.top,
@@ -153,6 +183,7 @@
 
       const onDown = (e) => {
         if (!this.isPlaying || this.isPaused) return;
+        if (e.cancelable && e.type.startsWith("touch")) e.preventDefault();
         isPointerDown = true;
         const p = getPos(e);
         this.bladeTrail = [{ x: p.x, y: p.y, time: Date.now() }];
@@ -161,6 +192,7 @@
 
       const onMove = (e) => {
         if (!this.isPlaying || this.isPaused || !isPointerDown) return;
+        if (e.cancelable && e.type.startsWith("touch")) e.preventDefault();
         const p = getPos(e);
         const now = Date.now();
 
@@ -185,51 +217,71 @@
         this.checkComboEnd();
       };
 
-      this.sliceCanvas.addEventListener("mousedown", onDown);
+      if (this.sliceCanvas) {
+        this.sliceCanvas.addEventListener("mousedown", onDown);
+        this.sliceCanvas.addEventListener("touchstart", onDown, { passive: false });
+      }
       window.addEventListener("mousemove", onMove);
       window.addEventListener("mouseup", onUp);
-
-      this.sliceCanvas.addEventListener("touchstart", onDown, {
-        passive: false,
-      });
       window.addEventListener("touchmove", onMove, { passive: false });
       window.addEventListener("touchend", onUp);
 
+      // Navigation Buttons
+      if (this.backBtn) {
+        this.backBtn.addEventListener("click", () => {
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = "../index.html";
+          }
+        });
+      }
+
       // Buttons
-      this.playBtn.addEventListener("click", () => this.startGame());
-      this.playAgainBtn.addEventListener("click", () => this.startGame());
+      if (this.playBtn) this.playBtn.addEventListener("click", () => this.startGame());
+      if (this.playAgainBtn) this.playAgainBtn.addEventListener("click", () => this.startGame());
 
-      this.pauseBtn.addEventListener("click", () => this.pauseGame());
-      this.resumeBtn.addEventListener("click", () => this.resumeGame());
-      this.restartBtn.addEventListener("click", () => {
-        this.hideModal(this.pauseModal);
-        this.startGame();
-      });
+      if (this.pauseBtn) this.pauseBtn.addEventListener("click", () => this.pauseGame());
+      if (this.resumeBtn) this.resumeBtn.addEventListener("click", () => this.resumeGame());
+      if (this.restartBtn) {
+        this.restartBtn.addEventListener("click", () => {
+          this.hideModal(this.pauseModal);
+          this.startGame();
+        });
+      }
 
-      this.soundToggleBtn.addEventListener("click", () => {
-        const enabled = this.sound.toggle();
-        this.soundIcon.textContent = enabled ? "🔊" : "🔇";
-      });
+      if (this.soundToggleBtn) {
+        this.soundToggleBtn.addEventListener("click", () => {
+          const enabled = this.sound.toggle();
+          if (this.soundIcon) this.soundIcon.textContent = enabled ? "🔊" : "🔇";
+        });
+      }
 
       // Share Score Handlers
-      this.shareScoreBtn.addEventListener("click", () => this.openShareFlow());
-      this.hdrShareBtn.addEventListener("click", () => this.openShareFlow());
-      this.closeShareModalBtn.addEventListener("click", () =>
-        this.hideModal(this.shareDialogModal),
-      );
-      this.shareCopyBtn.addEventListener("click", () => this.copyScoreText());
+      if (this.shareScoreBtn) this.shareScoreBtn.addEventListener("click", () => this.openShareFlow());
+      if (this.hdrShareBtn) this.hdrShareBtn.addEventListener("click", () => this.openShareFlow());
+      if (this.closeShareModalBtn) {
+        this.closeShareModalBtn.addEventListener("click", () =>
+          this.hideModal(this.shareDialogModal),
+        );
+      }
+      if (this.shareCopyBtn) this.shareCopyBtn.addEventListener("click", () => this.copyScoreText());
 
-      this.resetStatsBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (confirm("Reset your best score and combo records?")) {
-          localStorage.removeItem("fruitslice_best");
-          localStorage.removeItem("fruitslice_maxcombo");
-          this.bestScore = 0;
-          this.maxCombo = 0;
-          this.updateHudBest();
-          this.showToast("Best score reset!");
-        }
-      });
+      if (this.resetStatsBtn) {
+        this.resetStatsBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (confirm("Reset your best score and combo records?")) {
+            try {
+              localStorage.removeItem("fruitslice_best");
+              localStorage.removeItem("fruitslice_maxcombo");
+            } catch (err) {}
+            this.bestScore = 0;
+            this.maxCombo = 0;
+            this.updateHudBest();
+            this.showToast("Best score reset!");
+          }
+        });
+      }
     }
 
     startGame() {
@@ -242,7 +294,10 @@
       this.particles = [];
       this.bladeTrail = [];
 
-      this.hudScore.textContent = "0";
+      // Start spawning fruits right away (within 10 frames)
+      this.spawnTimer = this.spawnInterval - 10;
+
+      if (this.hudScore) this.hudScore.textContent = "0";
       this.updateStrikesUI();
 
       this.hideModal(this.startModal);
@@ -251,7 +306,9 @@
       this.hideModal(this.shareDialogModal);
 
       // Clear splatter canvas
-      this.splatCtx.clearRect(0, 0, this.width, this.height);
+      if (this.splatCtx && this.width && this.height) {
+        this.splatCtx.clearRect(0, 0, this.width, this.height);
+      }
 
       this.isPlaying = true;
       this.isPaused = false;
@@ -281,7 +338,7 @@
         // Line-segment to fruit circle distance test
         const dist = this.distToSegment(f.x, f.y, p1.x, p1.y, p2.x, p2.y);
         if (dist <= f.radius) {
-          if (f.type.isBomb) {
+          if (f.type && f.type.isBomb) {
             // DETONATE BOMB!
             f.slice(cutAngle);
             this.sound.playExplosion();
@@ -298,19 +355,22 @@
             const isCritical = Math.random() < 0.1;
             const pts = isCritical ? 10 : 1;
             this.score += pts;
-            this.hudScore.textContent = this.score;
+            if (this.hudScore) this.hudScore.textContent = this.score;
 
             if (isCritical) {
               this.showCriticalFlash();
             }
 
             // Juice Splatter Decal on Wooden Board
-            this.addJuiceStain(f.x, f.y, f.type.juiceColor, f.radius);
+            const juiceColor = (f.type && f.type.juiceColor) || "#ff2a55";
+            this.addJuiceStain(f.x, f.y, juiceColor, f.radius);
 
             // Flying Juice Particles
-            const ParticleClass = window.Particle || Particle;
-            for (let i = 0; i < 20; i++) {
-              this.particles.push(new ParticleClass(f.x, f.y, f.type.juiceColor));
+            const ParticleClass = window.Particle;
+            if (ParticleClass) {
+              for (let i = 0; i < 20; i++) {
+                this.particles.push(new ParticleClass(f.x, f.y, juiceColor));
+              }
             }
           }
         }
@@ -334,11 +394,13 @@
               ? 5
               : 3;
         this.score += bonus;
-        this.hudScore.textContent = this.score;
+        if (this.hudScore) this.hudScore.textContent = this.score;
 
         if (this.currentStrokeSlices > this.maxCombo) {
           this.maxCombo = this.currentStrokeSlices;
-          localStorage.setItem("fruitslice_maxcombo", this.maxCombo);
+          try {
+            localStorage.setItem("fruitslice_maxcombo", this.maxCombo);
+          } catch (e) {}
         }
 
         this.sound.playCombo(this.currentStrokeSlices);
@@ -348,6 +410,7 @@
     }
 
     addJuiceStain(x, y, color, radius) {
+      if (!this.splatCtx) return;
       const ctx = this.splatCtx;
       ctx.save();
       ctx.globalAlpha = 0.45;
@@ -389,6 +452,7 @@
 
     updateStrikesUI() {
       this.strikeSlots.forEach((slot, idx) => {
+        if (!slot) return;
         if (idx < this.strikes) {
           slot.classList.add("active");
         } else {
@@ -398,29 +462,33 @@
     }
 
     triggerScreenFlash() {
-      const originalBg = this.sliceCanvas.parentElement.style.backgroundColor;
-      this.sliceCanvas.parentElement.style.backgroundColor = "#ff2a48";
+      if (!this.sliceCanvas || !this.sliceCanvas.parentElement) return;
+      const parent = this.sliceCanvas.parentElement;
+      const originalBg = parent.style.backgroundColor;
+      parent.style.backgroundColor = "#ff2a48";
       setTimeout(() => {
-        this.sliceCanvas.parentElement.style.backgroundColor = originalBg;
+        parent.style.backgroundColor = originalBg;
       }, 100);
     }
 
     showComboBanner(slices, bonus) {
-      this.comboText.textContent = `COMBO x${slices}!`;
-      this.comboBonus.textContent = `+${bonus} PTS`;
+      if (!this.comboBanner) return;
+      if (this.comboText) this.comboText.textContent = `COMBO x${slices}!`;
+      if (this.comboBonus) this.comboBonus.textContent = `+${bonus} PTS`;
       this.comboBanner.classList.remove("hidden");
 
       clearTimeout(this.comboTimer);
       this.comboTimer = setTimeout(() => {
-        this.comboBanner.classList.add("hidden");
+        if (this.comboBanner) this.comboBanner.classList.add("hidden");
       }, 800);
     }
 
     showCriticalFlash() {
+      if (!this.criticalBanner) return;
       this.criticalBanner.classList.remove("hidden");
       clearTimeout(this.critTimer);
       this.critTimer = setTimeout(() => {
-        this.criticalBanner.classList.add("hidden");
+        if (this.criticalBanner) this.criticalBanner.classList.add("hidden");
       }, 700);
     }
 
@@ -431,15 +499,17 @@
       const isNewBest = this.score > this.bestScore;
       if (isNewBest) {
         this.bestScore = this.score;
-        localStorage.setItem("fruitslice_best", this.bestScore);
-        this.newBestBadge.classList.remove("hidden");
+        try {
+          localStorage.setItem("fruitslice_best", this.bestScore);
+        } catch (e) {}
+        if (this.newBestBadge) this.newBestBadge.classList.remove("hidden");
       } else {
-        this.newBestBadge.classList.add("hidden");
+        if (this.newBestBadge) this.newBestBadge.classList.add("hidden");
       }
 
-      this.finalScore.textContent = this.score;
-      this.overBestScore.textContent = this.bestScore;
-      this.overMaxCombo.textContent = `${this.maxCombo}x`;
+      if (this.finalScore) this.finalScore.textContent = this.score;
+      if (this.overBestScore) this.overBestScore.textContent = this.bestScore;
+      if (this.overMaxCombo) this.overMaxCombo.textContent = `${this.maxCombo}x`;
 
       const accuracy =
         this.totalFruitsSpawned > 0
@@ -450,7 +520,7 @@
               ),
             )
           : 100;
-      this.overAccuracy.textContent = `${accuracy}%`;
+      if (this.overAccuracy) this.overAccuracy.textContent = `${accuracy}%`;
 
       this.updateHudBest();
       this.showModal(this.gameOverModal);
@@ -460,47 +530,55 @@
        Share Score Feature (Powered by share.js)
        ========================================================================== */
     openShareFlow() {
-      const Share = window.FruitSliceShare || FruitSliceShare;
-      Share.openShareFlow(this.score, this.maxCombo, () => {
+      const Share = window.FruitSliceShare;
+      if (Share) {
+        Share.openShareFlow(this.score, this.maxCombo, () => {
+          this.openShareModal();
+        });
+      } else {
         this.openShareModal();
-      });
+      }
     }
 
     openShareModal() {
-      const Share = window.FruitSliceShare || FruitSliceShare;
-      Share.populateShareModal({
-        score: this.score,
-        maxCombo: this.maxCombo,
-        previewEl: this.shareQuotePreview,
-        waBtn: this.shareWhatsAppBtn,
-        twBtn: this.shareTwitterBtn,
-      });
-
+      const Share = window.FruitSliceShare;
+      if (Share) {
+        Share.populateShareModal({
+          score: this.score,
+          maxCombo: this.maxCombo,
+          previewEl: this.shareQuotePreview,
+          waBtn: this.shareWhatsAppBtn,
+          twBtn: this.shareTwitterBtn,
+        });
+      }
       this.showModal(this.shareDialogModal);
     }
 
     copyScoreText() {
-      const Share = window.FruitSliceShare || FruitSliceShare;
-      Share.copyScoreText(this.score, this.maxCombo, (msg) => {
-        this.showToast(msg);
-      });
+      const Share = window.FruitSliceShare;
+      if (Share) {
+        Share.copyScoreText(this.score, this.maxCombo, (msg) => {
+          this.showToast(msg);
+        });
+      }
     }
 
     showToast(msg) {
+      if (!this.toast) return;
       this.toast.textContent = msg;
       this.toast.classList.remove("hidden");
       clearTimeout(this.toastTimer);
       this.toastTimer = setTimeout(() => {
-        this.toast.classList.add("hidden");
+        if (this.toast) this.toast.classList.add("hidden");
       }, 2400);
     }
 
     showModal(modal) {
-      modal.classList.remove("hidden");
+      if (modal) modal.classList.remove("hidden");
     }
 
     hideModal(modal) {
-      modal.classList.add("hidden");
+      if (modal) modal.classList.add("hidden");
     }
 
     /* ==========================================================================
@@ -527,11 +605,13 @@
           1 +
           (Math.random() < 0.4 ? 1 : 0) +
           (this.score > 25 && Math.random() < 0.3 ? 1 : 0);
-        
-        const FruitClass = window.Fruit || Fruit;
-        for (let i = 0; i < count; i++) {
-          this.fruits.push(new FruitClass(this.width, this.height));
-          this.totalFruitsSpawned++;
+
+        const FruitClass = window.Fruit;
+        if (FruitClass) {
+          for (let i = 0; i < count; i++) {
+            this.fruits.push(new FruitClass(this.width, this.height));
+            this.totalFruitsSpawned++;
+          }
         }
       }
 
@@ -541,7 +621,7 @@
         f.update();
 
         // Check if un-sliced fruit fell off screen (adds strike)
-        if (f.missed && !f.type.isBomb) {
+        if (f.missed && f.type && !f.type.isBomb) {
           this.addStrike(false);
           this.fruits.splice(i, 1);
         } else if (f.isDead()) {
@@ -564,6 +644,7 @@
     }
 
     render() {
+      if (!this.sliceCtx) return;
       const ctx = this.sliceCtx;
       ctx.clearRect(0, 0, this.width, this.height);
 
@@ -613,6 +694,8 @@
       ctx.restore();
     }
   }
+
+  window.FruitSliceGame = FruitSliceGame;
 
   // Initialize on DOM Ready
   if (document.readyState === "loading") {
