@@ -1,0 +1,256 @@
+/* ==========================================================================
+   Main Game Frame (Tactile Mobile Wooden Console)
+   ========================================================================== */
+.game-stage-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.phone-frame {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(160deg, #2b150c 0%, #1a0b05 100%);
+  border: 8px solid #3d2011;
+  border-radius: 36px;
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.85),
+    0 4px 14px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 2px #6e3a1f,
+    inset 0 4px 10px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Top Header (Replicating Screenshot Curved Bar in Wood & Brass)
+   ========================================================================== */
+.wood-header {
+  position: relative;
+  width: 100%;
+  padding: 16px 20px 20px;
+  background: linear-gradient(180deg, #442211 0%, #30170a 90%, #271207 100%);
+  border-bottom: 3px solid #1a0c05;
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
+  box-shadow: 
+    0 8px 18px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.18);
+  z-index: 10;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+
+.stat-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 70px;
+}
+
+.stat-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #cca484;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px #000;
+}
+
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #fff8e8;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 8px var(--gold-glow);
+  line-height: 1.1;
+}
+
+.stat-divider {
+  width: 2px;
+  height: 32px;
+  background: linear-gradient(180deg, transparent, rgba(240, 184, 50, 0.4), transparent);
+}
+
+.pause-btn {
+  background: linear-gradient(180deg, #542b15 0%, #2b1408 100%);
+  border: 2px solid #733c1d;
+  color: var(--brass-bright);
+  width: 44px;
+  height: 38px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+  transition: all 0.12s ease;
+}
+
+.pause-btn:hover {
+  border-color: var(--brass-gold);
+}
+
+.pause-btn:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.pause-bars {
+  font-family: monospace;
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  color: var(--brass-bright);
+}
+
+/* ==========================================================================
+   Board & Canvas Area (Polished Solid Wood with Carved Recessed Tracks)
+   ========================================================================== */
+.board-area {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(68, 35, 18, 0.4) 0%, rgba(18, 9, 4, 0.95) 100%),
+    repeating-radial-gradient(circle at 30% 40%, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 4px, transparent 4px, transparent 18px),
+    #241208;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 8px 24px rgba(0,0,0,0.8);
+}
+
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none; /* Prevents scroll while drawing */
+  cursor: pointer;
+}
+
+/* Subtle Toast for Dead-End / Eulerian Notification */
+.hint-toast {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  background: rgba(30, 14, 6, 0.95);
+  border: 1px solid var(--brass-gold);
+  color: var(--brass-bright);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  z-index: 20;
+  white-space: nowrap;
+}
+
+.hint-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Bottom Curved Dock (Replicating Screenshot UI)
+   ========================================================================== */
+.wood-footer {
+  position: relative;
+  width: 100%;
+  padding: 18px 20px 22px;
+  background: linear-gradient(0deg, #442211 0%, #30170a 90%, #271207 100%);
+  border-top: 3px solid #1a0c05;
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  box-shadow: 
+    0 -8px 18px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.18);
+  z-index: 10;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.wood-btn {
+  background: linear-gradient(180deg, #522a15 0%, #2b1408 100%);
+  border: 2px solid #753d1e;
+  border-radius: 14px;
+  width: 58px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+  transition: all 0.12s ease;
+  position: relative;
+}
+
+.wood-btn:hover {
+  border-color: var(--brass-gold);
+  background: linear-gradient(180deg, #613119 0%, #35190b 100%);
+}
+
+.wood-btn:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.footer-icon {
+  width: 24px;
+  height: 24px;
+  fill: var(--brass-bright);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
+  transition: transform 0.15s ease;
+}
+
+.wood-btn:hover .footer-icon {
+  transform: scale(1.1);
+  fill: #fff;
+}
+
+.footer-divider {
+  width: 2px;
+  height: 36px;
+  background: linear-gradient(180deg, transparent, rgba(240, 184, 50, 0.4), transparent);
+}
+
+/* Hint Button with Super-Sharp Badge */
+.hint-btn-wrap {
+  width: 68px;
+}
+
+.hint-inner {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bulb-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.hint-counter {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--brass-bright);
+  text-shadow: 0 1px 3px #000;
+}

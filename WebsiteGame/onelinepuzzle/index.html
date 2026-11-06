@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>1Line Wood Craft - Premium One Stroke Puzzle Game</title>
+  <meta name="description" content="Connect all dots with a single continuous stroke on a handcrafted premium wooden board. Brain training one line puzzle with hints and levels.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/game.css">
+</head>
+<body>
+  <div class="site-wrap">
+    <nav class="site-navigation" aria-label="Site navigation">
+      <button class="pill-btn" id="backBtn" type="button">← Back</button>
+      <a class="pill-btn" href="../index.html">⌂ Home</a>
+    </nav>
+
+    <!-- Top Site Navigation Header (GameHub Format) -->
+    <header class="site-header">
+      <div class="logo">
+        <span class="wood-text">WOOD</span><span class="gold-text">LINE</span>
+        <span class="sub-badge">1-STROKE</span>
+      </div>
+      <div class="header-actions">
+        <button id="soundToggleBtn" class="pill-btn" aria-label="Toggle Sound" title="Toggle Sound">
+          <span class="icon" id="soundIcon">🔊</span>
+        </button>
+        <button id="levelsGalleryBtn" class="pill-btn gallery-btn" title="Stage Select">
+          <span class="icon">▦</span> <span class="btn-text">Stages</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Game Frame (Mobile Phone Bezel with Premium Wood Craftsmanship) -->
+    <main class="game-stage-container">
+      <div class="phone-frame" id="phoneFrame">
+        
+        <!-- Curved Top Header (Replicating Screenshot UI in Luxurious Wood & Brass) -->
+        <div class="wood-header">
+          <div class="header-cutout"></div>
+          <div class="header-content">
+            <div class="stat-badge">
+              <span class="stat-label">LEVEL</span>
+              <span class="stat-val" id="hudLevel">1</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-badge">
+              <span class="stat-label">STAGE</span>
+              <span class="stat-val" id="hudStage">1</span>
+            </div>
+            <button class="pause-btn" id="pauseBtn" title="Pause / Menu" aria-label="Pause">
+              <span class="pause-bars">00</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Interactive Wooden Game Board & Canvas -->
+        <div class="board-area" id="boardArea">
+          <canvas id="gameCanvas"></canvas>
+          <div class="hint-toast" id="hintToast"></div>
+        </div>
+
+        <!-- Curved Bottom Control Bar (Replicating Screenshot UI) -->
+        <div class="wood-footer">
+          <div class="footer-content">
+            <!-- Undo Move -->
+            <button class="wood-btn" id="undoBtn" title="Undo Last Stroke" aria-label="Undo">
+              <svg viewBox="0 0 24 24" class="footer-icon">
+                <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.2 3.16-1.98 5.12-1.98 3.52 0 6.44 2.37 7.31 5.6l2.4-.79C20.97 11.23 17.15 8 12.5 8z"/>
+              </svg>
+            </button>
+
+            <div class="footer-divider"></div>
+
+            <!-- Restart Level -->
+            <button class="wood-btn" id="resetBtn" title="Restart Stage" aria-label="Restart">
+              <svg viewBox="0 0 24 24" class="footer-icon">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+              </svg>
+            </button>
+
+            <div class="footer-divider"></div>
+
+            <!-- Hint Button with Count Badge -->
+            <button class="wood-btn hint-btn-wrap" id="hintBtn" title="Get Eulerian Path Hint" aria-label="Hint">
+              <div class="hint-inner">
+                <svg viewBox="0 0 24 24" class="footer-icon bulb-icon">
+                  <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-1.3l-.85-.6C7.8 13.16 7 11.66 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.66-.8 4.16-2.15 5.1z"/>
+                </svg>
+                <span class="hint-counter" id="hintCount">17</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- OVERLAY: Stage Complete Celebration Plaque -->
+        <div class="modal-overlay hidden" id="winModal">
+          <div class="wood-plaque">
+            <div class="plaque-rivet tl"></div>
+            <div class="plaque-rivet tr"></div>
+            <div class="plaque-rivet bl"></div>
+            <div class="plaque-rivet br"></div>
+            <h2 class="gold-title">STAGE CLEARED!</h2>
+            <div class="stars-row" id="winStars">
+              <span class="star active">★</span>
+              <span class="star active">★</span>
+              <span class="star active">★</span>
+            </div>
+            <p class="win-subtitle">Masterfully connected with 1 continuous stroke!</p>
+            <div class="stats-card">
+              <div class="modal-stat">
+                <span class="label">Time</span>
+                <strong id="winTime">0:14</strong>
+              </div>
+              <div class="modal-stat">
+                <span class="label">Total Solved</span>
+                <strong id="winSolvedCount">1 / 18</strong>
+              </div>
+            </div>
+            <div class="modal-buttons">
+              <button class="gold-action-btn" id="nextStageBtn">NEXT STAGE ▶</button>
+              <button class="wood-action-btn" id="replayStageBtn">Replay</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OVERLAY: Pause / Menu Plaque -->
+        <div class="modal-overlay hidden" id="pauseModal">
+          <div class="wood-plaque">
+            <div class="plaque-rivet tl"></div>
+            <div class="plaque-rivet tr"></div>
+            <div class="plaque-rivet bl"></div>
+            <div class="plaque-rivet br"></div>
+            <h2 class="gold-title">GAME PAUSED</h2>
+            <div class="modal-menu-list">
+              <button class="gold-action-btn" id="resumeBtn">RESUME</button>
+              <button class="wood-action-btn" id="pauseRestartBtn">Restart Stage</button>
+              <button class="wood-action-btn" id="pauseGalleryBtn">Select Stage</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OVERLAY: Stage Selector Gallery (Panel 3 from Screenshot) -->
+        <div class="modal-overlay hidden" id="galleryModal">
+          <div class="wood-plaque gallery-plaque">
+            <div class="gallery-header">
+              <h2 class="gold-title">SELECT STAGE</h2>
+              <button class="close-x-btn" id="closeGalleryBtn">✕</button>
+            </div>
+            <p class="gallery-subtitle">Trace every edge without lifting your finger!</p>
+            <div class="stages-grid" id="stagesGrid">
+              <!-- Dynamically populated level previews with SVG thumbnails -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Information & SEO Section (Consistent with onlinefreegame.netlify.app format) -->
+    <section class="game-info-section">
+      <div class="info-card">
+        <h2>About 1Line Wood Craft</h2>
+        <p>
+          <strong>1Line Wood Craft</strong> is an executive brain-training puzzle inspired by classical Eulerian path mathematics.
+          Featuring a rich, polished mahogany and walnut tactile board with metallic brass inlays, your goal is simple yet challenging:
+          <strong>connect all the dots and trace every single edge in one continuous, unbroken stroke</strong> without lifting your finger or traversing any line twice.
+        </p>
+
+        <div class="rules-grid">
+          <div class="rule-box">
+            <span class="rule-icon">📐</span>
+            <h3>1. The Golden Rule</h3>
+            <p>Every line on the puzzle board must be carved exactly once. You cannot re-trace an already illuminated golden line.</p>
+          </div>
+          <div class="rule-box">
+            <span class="rule-icon">✨</span>
+            <h3>2. Continuous Stroke</h3>
+            <p>Once you tap or drag from a node, your finger must continue without lifting. If you make a mistake, tap Undo (↩) or Restart (↻).</p>
+          </div>
+          <div class="rule-box">
+            <span class="rule-icon">💡</span>
+            <h3>3. Eulerian Path Hints</h3>
+            <p>If you're stuck, tap the Lightbulb (💡). Euler's theorem proves that a graph can only be solved if it has 0 or exactly 2 odd-degree vertices!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standard Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="#phoneFrame">Play Game</a>
+        <a href="#stagesGrid" id="footerStagesLink">Stage Gallery</a>
+        <a href="#" id="resetAllDataBtn">Reset Progress</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../about.html">About</a>
+        <a href="../blog/">Blog</a>
+      </div>
+      <p class="copyright">© 2026 GameHub • 1Line Wood Craft • Handcrafted Wooden Casual Puzzle</p>
+    </footer>
+  </div>
+
+  <script src="./js/audio.js"></script>
+  <script src="./js/levels.js"></script>
+  <script src="./js/solver.js"></script>
+  <script src="./js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Site Header (GameHub Format with Warm Wood Inlays)
+   ========================================================================== */
+.site-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.site-navigation a {
+  text-decoration: none;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: linear-gradient(180deg, #381d0f 0%, #241208 100%);
+  border-radius: 18px;
+  border: 1px solid var(--wood-border-light);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15);
+  margin-bottom: 14px;
+}
+
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: 1px;
+}
+
+.wood-text {
+  color: #e59d64;
+  text-shadow: 0 1px 2px #000, 0 0 10px rgba(229,157,100,0.3);
+}
+
+.gold-text {
+  color: var(--brass-bright);
+  text-shadow: 0 1px 2px #000, 0 0 12px var(--gold-glow);
+}
+
+.sub-badge {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--brass-gold), var(--brass-dark));
+  color: #1a0c04;
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-left: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.pill-btn {
+  background: linear-gradient(180deg, #4b2614 0%, #2a1409 100%);
+  border: 1px solid #733c1d;
+  color: var(--brass-bright);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
+  transition: all 0.15s ease;
+}
+
+.pill-btn:hover {
+  background: linear-gradient(180deg, #5c2f19 0%, #351a0c 100%);
+  transform: translateY(-1px);
+}
+
+.pill-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+}

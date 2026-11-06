@@ -134,5 +134,15 @@ const GAMES = [
     art: "SDK", c1: '#ffd23f', c2: '#3b1b6b',
     isNew: true
   },
+  {
+    id: "onelinepuzzle",
+    name: "One Line Puzzle",
+    folder: "onelinepuzzle/",
+    category: "Puzzle",
+    desc: "Eat, grow and do not hit the wall.",
+    bestKey: "onelinepuzzle_best",
+    art: "OL", c1: '#ffd23f', c2: '#3b1b6b',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];
