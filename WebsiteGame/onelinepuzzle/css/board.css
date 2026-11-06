@@ -134,7 +134,7 @@
   width: 100%;
   height: 100%;
   display: block;
-  touch-action: none; /* Prevents scroll while drawing */
+  touch-action: auto;
   cursor: pointer;
 }
 

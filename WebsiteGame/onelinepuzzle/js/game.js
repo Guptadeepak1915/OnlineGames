@@ -22,9 +22,12 @@
   class WoodOneLineGame {
     constructor() {
       this.sound = new SoundFX();
-      this.currentLevelIndex = 0;
       this.unlockedLevelIndex = parseInt(localStorage.getItem('woodline_unlocked') || '0', 10);
       this.hintsLeft = parseInt(localStorage.getItem('woodline_hints') || '17', 10);
+      this.savedProgress = this.readProgress();
+      this.currentLevelIndex = this.savedProgress
+        ? this.savedProgress.levelIndex
+        : Math.min(this.unlockedLevelIndex, LEVELS.length - 1);
 
       // State of the current puzzle
       this.currentLevel = null;
@@ -46,8 +49,13 @@
       this.initCanvas();
       this.bindEvents();
       this.loadLevel(this.currentLevelIndex);
+      this.restoreProgress(this.savedProgress);
+      this.saveProgress();
       this.renderGallery();
       this.updateHintDisplay();
+      if (this.visitedEdges.size === this.currentLevel.edges.length) {
+        this.onStageClear();
+      }
     }
 
     initDOMElements() {
@@ -69,6 +77,7 @@
       // Modals
       this.winModal = document.getElementById('winModal');
       this.nextStageBtn = document.getElementById('nextStageBtn');
+      this.shareScoreBtn = document.getElementById('shareScoreBtn');
       this.replayStageBtn = document.getElementById('replayStageBtn');
       this.winTime = document.getElementById('winTime');
       this.winSolvedCount = document.getElementById('winSolvedCount');
@@ -83,6 +92,76 @@
       this.stagesGrid = document.getElementById('stagesGrid');
       this.footerStagesLink = document.getElementById('footerStagesLink');
       this.resetAllDataBtn = document.getElementById('resetAllDataBtn');
+    }
+
+    readProgress() {
+      const saved = localStorage.getItem('woodline_progress');
+      if (!saved) return null;
+
+      try {
+        const progress = JSON.parse(saved);
+        if (!Number.isInteger(progress.levelIndex) || progress.levelIndex < 0 ||
+            progress.levelIndex >= LEVELS.length || !Array.isArray(progress.moves)) {
+          throw new Error('Invalid saved puzzle progress');
+        }
+
+        const level = LEVELS[progress.levelIndex];
+        const edgeKeys = new Set(level.edges.map(([u, v]) => this.getEdgeKey(u, v)));
+        const visited = new Set();
+        let currentNode = null;
+        const moves = progress.moves.map((move) => {
+          if (!Array.isArray(move) || move.length !== 2 ||
+              !Number.isInteger(move[0]) || !Number.isInteger(move[1])) {
+            throw new Error('Invalid saved puzzle move');
+          }
+
+          const [from, to] = move;
+          const key = this.getEdgeKey(from, to);
+          if (!edgeKeys.has(key) || visited.has(key) ||
+              (currentNode !== null && currentNode !== from)) {
+            throw new Error('Saved puzzle moves do not form a valid path');
+          }
+
+          visited.add(key);
+          currentNode = to;
+          return { from, to, key };
+        });
+
+        const selectedNode = progress.currentNode;
+        if (selectedNode !== null &&
+            (!Number.isInteger(selectedNode) || selectedNode < 0 ||
+             selectedNode >= level.nodes.length ||
+             (currentNode !== null && selectedNode !== currentNode))) {
+          throw new Error('Invalid saved puzzle position');
+        }
+
+        return {
+          levelIndex: progress.levelIndex,
+          moves,
+          currentNode: currentNode === null ? selectedNode : currentNode
+        };
+      } catch (error) {
+        console.warn('Unable to restore saved puzzle progress:', error);
+        localStorage.removeItem('woodline_progress');
+        return null;
+      }
+    }
+
+    restoreProgress(progress) {
+      if (!progress) return;
+
+      this.moveHistory = progress.moves;
+      this.visitedEdges = new Set(progress.moves.map(({ key }) => key));
+      this.currentNode = progress.currentNode;
+      this.draw();
+    }
+
+    saveProgress() {
+      localStorage.setItem('woodline_progress', JSON.stringify({
+        levelIndex: this.currentLevelIndex,
+        moves: this.moveHistory.map(({ from, to }) => [from, to]),
+        currentNode: this.currentNode
+      }));
     }
 
     initCanvas() {
@@ -330,14 +409,16 @@
       };
 
       const onPointerDown = (e) => {
-        e.preventDefault();
         const pos = getPos(e);
+        if (e.type !== 'touchstart' || this.findNearbyNode(pos) !== -1) {
+          e.preventDefault();
+        }
         this.handleStart(pos);
       };
 
       const onPointerMove = (e) => {
-        e.preventDefault();
         if (!this.isDragging) return;
+        e.preventDefault();
         const pos = getPos(e);
         this.handleMove(pos);
       };
@@ -402,12 +483,14 @@
         } else {
           this.loadLevel(0);
         }
+        this.saveProgress();
       });
 
       this.replayStageBtn.addEventListener('click', () => {
         this.hideModal(this.winModal);
         this.resetStage();
       });
+      this.shareScoreBtn.addEventListener('click', () => this.shareScore());
 
       // Reset All Progress (Storage clearing)
       this.resetAllDataBtn.addEventListener('click', (e) => {
@@ -418,8 +501,9 @@
           this.unlockedLevelIndex = 0;
           this.hintsLeft = 17;
           this.updateHintDisplay();
-          this.renderGallery();
           this.loadLevel(0);
+          this.saveProgress();
+          this.renderGallery();
         }
       });
     }
@@ -455,6 +539,7 @@
         }
         this.isDragging = true;
         this.dragPos = pos;
+        this.saveProgress();
         this.draw();
       }
     }
@@ -492,6 +577,7 @@
 
       this.draw();
       this.checkWinCondition();
+      this.saveProgress();
     }
 
     undo() {
@@ -502,6 +588,7 @@
       this.hintEdge = null;
       this.sound.playUndo();
       this.draw();
+      this.saveProgress();
     }
 
     resetStage() {
@@ -512,6 +599,7 @@
       this.isDragging = false;
       this.sound.playUndo();
       this.draw();
+      this.saveProgress();
     }
 
     useHint() {
@@ -546,6 +634,7 @@
       this.updateHintDisplay();
       this.sound.playWoodTap();
       this.draw();
+      this.saveProgress();
     }
 
     showToast(msg) {
@@ -576,16 +665,45 @@
         this.unlockedLevelIndex = Math.min(LEVELS.length - 1, this.currentLevelIndex + 1);
         localStorage.setItem('woodline_unlocked', this.unlockedLevelIndex);
       }
+      this.saveProgress();
 
       // Calculate time
-      const elapsed = Math.max(1, Math.floor((Date.now() - this.startTime) / 1000));
-      const mins = Math.floor(elapsed / 60);
-      const secs = elapsed % 60;
+      this.elapsedSeconds = Math.max(1, Math.floor((Date.now() - this.startTime) / 1000));
+      const mins = Math.floor(this.elapsedSeconds / 60);
+      const secs = this.elapsedSeconds % 60;
       this.winTime.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
       this.winSolvedCount.textContent = `${this.currentLevelIndex + 1} / ${LEVELS.length}`;
 
       this.renderGallery();
       this.showModal(this.winModal);
+    }
+
+    async shareScore() {
+      const level = this.currentLevel;
+      const score = `I solved ${level.name} (Stage ${level.id}/${LEVELS.length}) in ${this.winTime.textContent} One Line Puzzle !`;
+      const shareData = {
+        title: 'One Line Puzzle',
+        text: `${score} Can you beat my score?`,
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (error) {
+          if (error.name === 'AbortError') return;
+          console.warn('Native score sharing failed; trying clipboard instead:', error);
+        }
+      }
+
+      try {
+        await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        this.showToast('Score copied! Share it with your friends.');
+      } catch (error) {
+        console.error('Unable to share or copy the score:', error);
+        this.showToast('Could not share the score. Please try again.');
+      }
     }
 
     showModal(modal) {
@@ -641,6 +759,7 @@
           card.addEventListener('click', () => {
             this.hideModal(this.galleryModal);
             this.loadLevel(idx);
+            this.saveProgress();
           });
         }
 
