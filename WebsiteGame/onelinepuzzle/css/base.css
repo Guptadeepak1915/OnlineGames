@@ -11,12 +11,12 @@
   --wood-surface-light: #522d17;
   --wood-border-dark: #190c05;
   --wood-border-light: #6a3a1f;
-  
+
   /* Polished Oak / Teak Board */
   --board-base: #2a150b;
   --board-grad-top: #381d0f;
   --board-grad-bottom: #1f0f07;
-  
+
   /* Brass & Gold Metallic Accents */
   --brass-bright: #ffe27a;
   --brass-gold: #f0b832;
@@ -24,16 +24,16 @@
   --brass-rim: #7d540d;
   --gold-glow: rgba(240, 184, 50, 0.55);
   --gold-glow-intense: rgba(255, 215, 80, 0.85);
-  
+
   /* Node / Peg Gems (Amethyst & Sapphire Jewel Tones like Screenshot) */
   --peg-purple-light: #d884ff;
   --peg-purple: #9333ea;
   --peg-purple-dark: #581c87;
-  
+
   --peg-blue-light: #60a5fa;
   --peg-blue: #2563eb;
   --peg-blue-dark: #1e3a8a;
-  
+
   /* Recessed Carved Line Grooves */
   --groove-shadow: rgba(0, 0, 0, 0.85);
   --groove-unvisited: #4a2817;
@@ -45,12 +45,14 @@
 
   /* Shadows */
   --shadow-plaque: 0 16px 36px rgba(0, 0, 0, 0.65), 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-inset-wood: inset 0 3px 6px rgba(0,0,0,0.7), inset 0 -2px 4px rgba(255,255,255,0.1);
+  --shadow-inset-wood: inset 0 3px 6px rgba(0, 0, 0, 0.7), inset 0 -2px 4px rgba(255, 255, 255, 0.1);
   --shadow-button-press: 0 2px 0 var(--wood-border-dark);
 }
 
 /* Base Reset & Background */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -58,15 +60,16 @@
   user-select: none;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   min-height: 100%;
   background-color: var(--wood-bg-dark);
   /* Organic Parquet Wood Plank Texture via Layered CSS Gradients */
-  background-image: 
+  background-image:
     radial-gradient(ellipse at 50% 20%, rgba(100, 52, 26, 0.35) 0%, rgba(20, 11, 6, 0.95) 75%),
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 12px),
-    repeating-linear-gradient(-45deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 3px, transparent 3px, transparent 18px),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 2px, transparent 2px, transparent 12px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 3px, transparent 3px, transparent 18px),
     linear-gradient(180deg, #1f1008 0%, #110804 100%);
   background-attachment: fixed;
   color: #f1dfcf;

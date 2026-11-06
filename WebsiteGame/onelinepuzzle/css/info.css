@@ -11,7 +11,7 @@
   border: 1px solid var(--wood-border-light);
   border-radius: 20px;
   padding: 24px 20px;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
 }
 
 .info-card h2 {
@@ -50,7 +50,7 @@
   border: 1px solid #4a2713;
   border-radius: 14px;
   padding: 14px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .rule-icon {

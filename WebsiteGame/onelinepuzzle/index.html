@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
   <title>1Line Wood Craft - Premium One Stroke Puzzle Game</title>
-  <meta name="description" content="Connect all dots with a single continuous stroke on a handcrafted premium wooden board. Brain training one line puzzle with hints and levels.">
+  <meta name="description"
+    content="Connect all dots with a single continuous stroke on a handcrafted premium wooden board. Brain training one line puzzle with hints and levels.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito:wght@600;700;800;900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="./css/game.css">
 </head>
+
 <body>
   <div class="site-wrap">
     <nav class="site-navigation" aria-label="Site navigation">
@@ -36,7 +41,7 @@
     <!-- Main Game Frame (Mobile Phone Bezel with Premium Wood Craftsmanship) -->
     <main class="game-stage-container">
       <div class="phone-frame" id="phoneFrame">
-        
+
         <!-- Curved Top Header (Replicating Screenshot UI in Luxurious Wood & Brass) -->
         <div class="wood-header">
           <div class="header-cutout"></div>
@@ -68,7 +73,8 @@
             <!-- Undo Move -->
             <button class="wood-btn" id="undoBtn" title="Undo Last Stroke" aria-label="Undo">
               <svg viewBox="0 0 24 24" class="footer-icon">
-                <path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.2 3.16-1.98 5.12-1.98 3.52 0 6.44 2.37 7.31 5.6l2.4-.79C20.97 11.23 17.15 8 12.5 8z"/>
+                <path
+                  d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.2 3.16-1.98 5.12-1.98 3.52 0 6.44 2.37 7.31 5.6l2.4-.79C20.97 11.23 17.15 8 12.5 8z" />
               </svg>
             </button>
 
@@ -77,7 +83,8 @@
             <!-- Restart Level -->
             <button class="wood-btn" id="resetBtn" title="Restart Stage" aria-label="Restart">
               <svg viewBox="0 0 24 24" class="footer-icon">
-                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                <path
+                  d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
               </svg>
             </button>
 
@@ -87,7 +94,8 @@
             <button class="wood-btn hint-btn-wrap" id="hintBtn" title="Get Eulerian Path Hint" aria-label="Hint">
               <div class="hint-inner">
                 <svg viewBox="0 0 24 24" class="footer-icon bulb-icon">
-                  <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-1.3l-.85-.6C7.8 13.16 7 11.66 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.66-.8 4.16-2.15 5.1z"/>
+                  <path
+                    d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-1.3l-.85-.6C7.8 13.16 7 11.66 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.66-.8 4.16-2.15 5.1z" />
                 </svg>
                 <span class="hint-counter" id="hintCount">17</span>
               </div>
@@ -165,26 +173,32 @@
       <div class="info-card">
         <h2>About 1Line Wood Craft</h2>
         <p>
-          <strong>1Line Wood Craft</strong> is an executive brain-training puzzle inspired by classical Eulerian path mathematics.
-          Featuring a rich, polished mahogany and walnut tactile board with metallic brass inlays, your goal is simple yet challenging:
-          <strong>connect all the dots and trace every single edge in one continuous, unbroken stroke</strong> without lifting your finger or traversing any line twice.
+          <strong>1Line Wood Craft</strong> is an executive brain-training puzzle inspired by classical Eulerian path
+          mathematics.
+          Featuring a rich, polished mahogany and walnut tactile board with metallic brass inlays, your goal is simple
+          yet challenging:
+          <strong>connect all the dots and trace every single edge in one continuous, unbroken stroke</strong> without
+          lifting your finger or traversing any line twice.
         </p>
 
         <div class="rules-grid">
           <div class="rule-box">
             <span class="rule-icon">📐</span>
             <h3>1. The Golden Rule</h3>
-            <p>Every line on the puzzle board must be carved exactly once. You cannot re-trace an already illuminated golden line.</p>
+            <p>Every line on the puzzle board must be carved exactly once. You cannot re-trace an already illuminated
+              golden line.</p>
           </div>
           <div class="rule-box">
             <span class="rule-icon">✨</span>
             <h3>2. Continuous Stroke</h3>
-            <p>Once you tap or drag from a node, your finger must continue without lifting. If you make a mistake, tap Undo (↩) or Restart (↻).</p>
+            <p>Once you tap or drag from a node, your finger must continue without lifting. If you make a mistake, tap
+              Undo (↩) or Restart (↻).</p>
           </div>
           <div class="rule-box">
             <span class="rule-icon">💡</span>
             <h3>3. Eulerian Path Hints</h3>
-            <p>If you're stuck, tap the Lightbulb (💡). Euler's theorem proves that a graph can only be solved if it has 0 or exactly 2 odd-degree vertices!</p>
+            <p>If you're stuck, tap the Lightbulb (💡). Euler's theorem proves that a graph can only be solved if it has
+              0 or exactly 2 odd-degree vertices!</p>
           </div>
         </div>
       </div>
@@ -200,7 +214,7 @@
         <a href="../about.html">About</a>
         <a href="../blog/">Blog</a>
       </div>
-      <p class="copyright">© 2026 GameHub • 1Line Wood Craft • Handcrafted Wooden Casual Puzzle</p>
+      <p class="copyright">© 2026 GameHub • One Line Puzzle • Handcrafted Wooden Casual Puzzle</p>
     </footer>
   </div>
 
@@ -209,4 +223,5 @@
   <script src="./js/solver.js"></script>
   <script src="./js/game.js"></script>
 </body>
+
 </html>

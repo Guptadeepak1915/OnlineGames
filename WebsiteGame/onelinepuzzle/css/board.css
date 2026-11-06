@@ -14,7 +14,7 @@
   background: linear-gradient(160deg, #2b150c 0%, #1a0b05 100%);
   border: 8px solid #3d2011;
   border-radius: 36px;
-  box-shadow: 
+  box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.85),
     0 4px 14px rgba(0, 0, 0, 0.6),
     inset 0 0 0 2px #6e3a1f,
@@ -35,7 +35,7 @@
   border-bottom: 3px solid #1a0c05;
   border-bottom-left-radius: 28px;
   border-bottom-right-radius: 28px;
-  box-shadow: 
+  box-shadow:
     0 8px 18px rgba(0, 0, 0, 0.6),
     inset 0 1px 2px rgba(255, 255, 255, 0.18);
   z-index: 10;
@@ -90,7 +90,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: all 0.12s ease;
 }
 
@@ -100,7 +100,7 @@
 
 .pause-btn:active {
   transform: translateY(2px);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .pause-bars {
@@ -118,16 +118,16 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1.15;
-  background: 
+  background:
     radial-gradient(circle at 50% 50%, rgba(68, 35, 18, 0.4) 0%, rgba(18, 9, 4, 0.95) 100%),
-    repeating-radial-gradient(circle at 30% 40%, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 4px, transparent 4px, transparent 18px),
+    repeating-radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 4px, transparent 4px, transparent 18px),
     #241208;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 12px;
   overflow: hidden;
-  box-shadow: inset 0 8px 24px rgba(0,0,0,0.8);
+  box-shadow: inset 0 8px 24px rgba(0, 0, 0, 0.8);
 }
 
 #gameCanvas {
@@ -151,7 +151,7 @@
   font-size: 0.8rem;
   padding: 6px 14px;
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
   pointer-events: none;
   opacity: 0;
   transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
@@ -175,7 +175,7 @@
   border-top: 3px solid #1a0c05;
   border-top-left-radius: 28px;
   border-top-right-radius: 28px;
-  box-shadow: 
+  box-shadow:
     0 -8px 18px rgba(0, 0, 0, 0.6),
     inset 0 1px 2px rgba(255, 255, 255, 0.18);
   z-index: 10;
@@ -197,7 +197,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   transition: all 0.12s ease;
   position: relative;
 }
@@ -209,14 +209,14 @@
 
 .wood-btn:active {
   transform: translateY(2px);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .footer-icon {
   width: 24px;
   height: 24px;
   fill: var(--brass-bright);
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
   transition: transform 0.15s ease;
 }
 

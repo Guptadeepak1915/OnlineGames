@@ -10,7 +10,7 @@
  */
 
 (function () {
-  'use strict';
+  "use strict";
 
   const SoundFX = window.WoodLineSoundFX;
   const LEVELS = window.WoodLineLevels;
@@ -22,8 +22,14 @@
   class WoodOneLineGame {
     constructor() {
       this.sound = new SoundFX();
-      this.unlockedLevelIndex = parseInt(localStorage.getItem('woodline_unlocked') || '0', 10);
-      this.hintsLeft = parseInt(localStorage.getItem('woodline_hints') || '17', 10);
+      this.unlockedLevelIndex = parseInt(
+        localStorage.getItem("woodline_unlocked") || "0",
+        10,
+      );
+      this.hintsLeft = parseInt(
+        localStorage.getItem("woodline_hints") || "17",
+        10,
+      );
       this.savedProgress = this.readProgress();
       this.currentLevelIndex = this.savedProgress
         ? this.savedProgress.levelIndex
@@ -33,8 +39,8 @@
       this.currentLevel = null;
       this.currentNode = null;
       this.visitedEdges = new Set(); // Stores "u-v" keys
-      this.moveHistory = [];         // [{ from, to, edgeIndex }]
-      this.hintEdge = null;          // { from, to }
+      this.moveHistory = []; // [{ from, to, edgeIndex }]
+      this.hintEdge = null; // { from, to }
 
       // Input & Dragging Tracking
       this.isDragging = false;
@@ -59,67 +65,80 @@
     }
 
     initDOMElements() {
-      this.backBtn = document.getElementById('backBtn');
-      this.canvas = document.getElementById('gameCanvas');
-      this.ctx = this.canvas.getContext('2d');
-      this.hudLevel = document.getElementById('hudLevel');
-      this.hudStage = document.getElementById('hudStage');
-      this.pauseBtn = document.getElementById('pauseBtn');
-      this.undoBtn = document.getElementById('undoBtn');
-      this.resetBtn = document.getElementById('resetBtn');
-      this.hintBtn = document.getElementById('hintBtn');
-      this.hintCount = document.getElementById('hintCount');
-      this.hintToast = document.getElementById('hintToast');
-      this.soundToggleBtn = document.getElementById('soundToggleBtn');
-      this.soundIcon = document.getElementById('soundIcon');
-      this.levelsGalleryBtn = document.getElementById('levelsGalleryBtn');
+      this.backBtn = document.getElementById("backBtn");
+      this.canvas = document.getElementById("gameCanvas");
+      this.ctx = this.canvas.getContext("2d");
+      this.hudLevel = document.getElementById("hudLevel");
+      this.hudStage = document.getElementById("hudStage");
+      this.pauseBtn = document.getElementById("pauseBtn");
+      this.undoBtn = document.getElementById("undoBtn");
+      this.resetBtn = document.getElementById("resetBtn");
+      this.hintBtn = document.getElementById("hintBtn");
+      this.hintCount = document.getElementById("hintCount");
+      this.hintToast = document.getElementById("hintToast");
+      this.soundToggleBtn = document.getElementById("soundToggleBtn");
+      this.soundIcon = document.getElementById("soundIcon");
+      this.levelsGalleryBtn = document.getElementById("levelsGalleryBtn");
 
       // Modals
-      this.winModal = document.getElementById('winModal');
-      this.nextStageBtn = document.getElementById('nextStageBtn');
-      this.shareScoreBtn = document.getElementById('shareScoreBtn');
-      this.replayStageBtn = document.getElementById('replayStageBtn');
-      this.winTime = document.getElementById('winTime');
-      this.winSolvedCount = document.getElementById('winSolvedCount');
+      this.winModal = document.getElementById("winModal");
+      this.nextStageBtn = document.getElementById("nextStageBtn");
+      this.shareScoreBtn = document.getElementById("shareScoreBtn");
+      this.replayStageBtn = document.getElementById("replayStageBtn");
+      this.winTime = document.getElementById("winTime");
+      this.winSolvedCount = document.getElementById("winSolvedCount");
 
-      this.pauseModal = document.getElementById('pauseModal');
-      this.resumeBtn = document.getElementById('resumeBtn');
-      this.pauseRestartBtn = document.getElementById('pauseRestartBtn');
-      this.pauseGalleryBtn = document.getElementById('pauseGalleryBtn');
+      this.pauseModal = document.getElementById("pauseModal");
+      this.resumeBtn = document.getElementById("resumeBtn");
+      this.pauseRestartBtn = document.getElementById("pauseRestartBtn");
+      this.pauseGalleryBtn = document.getElementById("pauseGalleryBtn");
 
-      this.galleryModal = document.getElementById('galleryModal');
-      this.closeGalleryBtn = document.getElementById('closeGalleryBtn');
-      this.stagesGrid = document.getElementById('stagesGrid');
-      this.footerStagesLink = document.getElementById('footerStagesLink');
-      this.resetAllDataBtn = document.getElementById('resetAllDataBtn');
+      this.galleryModal = document.getElementById("galleryModal");
+      this.closeGalleryBtn = document.getElementById("closeGalleryBtn");
+      this.stagesGrid = document.getElementById("stagesGrid");
+      this.footerStagesLink = document.getElementById("footerStagesLink");
+      this.resetAllDataBtn = document.getElementById("resetAllDataBtn");
     }
 
     readProgress() {
-      const saved = localStorage.getItem('woodline_progress');
+      const saved = localStorage.getItem("woodline_progress");
       if (!saved) return null;
 
       try {
         const progress = JSON.parse(saved);
-        if (!Number.isInteger(progress.levelIndex) || progress.levelIndex < 0 ||
-            progress.levelIndex >= LEVELS.length || !Array.isArray(progress.moves)) {
-          throw new Error('Invalid saved puzzle progress');
+        if (
+          !Number.isInteger(progress.levelIndex) ||
+          progress.levelIndex < 0 ||
+          progress.levelIndex >= LEVELS.length ||
+          !Array.isArray(progress.moves)
+        ) {
+          throw new Error("Invalid saved puzzle progress");
         }
 
         const level = LEVELS[progress.levelIndex];
-        const edgeKeys = new Set(level.edges.map(([u, v]) => this.getEdgeKey(u, v)));
+        const edgeKeys = new Set(
+          level.edges.map(([u, v]) => this.getEdgeKey(u, v)),
+        );
         const visited = new Set();
         let currentNode = null;
         const moves = progress.moves.map((move) => {
-          if (!Array.isArray(move) || move.length !== 2 ||
-              !Number.isInteger(move[0]) || !Number.isInteger(move[1])) {
-            throw new Error('Invalid saved puzzle move');
+          if (
+            !Array.isArray(move) ||
+            move.length !== 2 ||
+            !Number.isInteger(move[0]) ||
+            !Number.isInteger(move[1])
+          ) {
+            throw new Error("Invalid saved puzzle move");
           }
 
           const [from, to] = move;
           const key = this.getEdgeKey(from, to);
-          if (!edgeKeys.has(key) || visited.has(key) ||
-              (currentNode !== null && currentNode !== from)) {
-            throw new Error('Saved puzzle moves do not form a valid path');
+          if (
+            !edgeKeys.has(key) ||
+            visited.has(key) ||
+            (currentNode !== null && currentNode !== from)
+          ) {
+            throw new Error("Saved puzzle moves do not form a valid path");
           }
 
           visited.add(key);
@@ -128,21 +147,24 @@
         });
 
         const selectedNode = progress.currentNode;
-        if (selectedNode !== null &&
-            (!Number.isInteger(selectedNode) || selectedNode < 0 ||
-             selectedNode >= level.nodes.length ||
-             (currentNode !== null && selectedNode !== currentNode))) {
-          throw new Error('Invalid saved puzzle position');
+        if (
+          selectedNode !== null &&
+          (!Number.isInteger(selectedNode) ||
+            selectedNode < 0 ||
+            selectedNode >= level.nodes.length ||
+            (currentNode !== null && selectedNode !== currentNode))
+        ) {
+          throw new Error("Invalid saved puzzle position");
         }
 
         return {
           levelIndex: progress.levelIndex,
           moves,
-          currentNode: currentNode === null ? selectedNode : currentNode
+          currentNode: currentNode === null ? selectedNode : currentNode,
         };
       } catch (error) {
-        console.warn('Unable to restore saved puzzle progress:', error);
-        localStorage.removeItem('woodline_progress');
+        console.warn("Unable to restore saved puzzle progress:", error);
+        localStorage.removeItem("woodline_progress");
         return null;
       }
     }
@@ -157,11 +179,14 @@
     }
 
     saveProgress() {
-      localStorage.setItem('woodline_progress', JSON.stringify({
-        levelIndex: this.currentLevelIndex,
-        moves: this.moveHistory.map(({ from, to }) => [from, to]),
-        currentNode: this.currentNode
-      }));
+      localStorage.setItem(
+        "woodline_progress",
+        JSON.stringify({
+          levelIndex: this.currentLevelIndex,
+          moves: this.moveHistory.map(({ from, to }) => [from, to]),
+          currentNode: this.currentNode,
+        }),
+      );
     }
 
     initCanvas() {
@@ -176,12 +201,17 @@
         this.canvas.style.width = `${size}px`;
         this.canvas.style.height = `${size}px`;
 
-        this.ctx.resetTransform ? this.ctx.resetTransform() : this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        this.ctx.scale((size * dpr) / this.canvasSize, (size * dpr) / this.canvasSize);
+        this.ctx.resetTransform
+          ? this.ctx.resetTransform()
+          : this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+        this.ctx.scale(
+          (size * dpr) / this.canvasSize,
+          (size * dpr) / this.canvasSize,
+        );
         this.draw();
       };
 
-      window.addEventListener('resize', resize);
+      window.addEventListener("resize", resize);
       setTimeout(resize, 50);
     }
 
@@ -232,18 +262,18 @@
           ctx.lineTo(p2[0], p2[1]);
 
           // Deep dark bottom groove
-          ctx.strokeStyle = '#180b05';
+          ctx.strokeStyle = "#180b05";
           ctx.lineWidth = 14;
-          ctx.lineCap = 'round';
+          ctx.lineCap = "round";
           ctx.stroke();
 
           // Inner wooden channel
-          ctx.strokeStyle = '#432212';
+          ctx.strokeStyle = "#432212";
           ctx.lineWidth = 8;
           ctx.stroke();
 
           // Subtle upper bevel light
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
           ctx.lineWidth = 2;
           ctx.stroke();
         }
@@ -260,18 +290,18 @@
           ctx.beginPath();
           ctx.moveTo(p1[0], p1[1]);
           ctx.lineTo(p2[0], p2[1]);
-          ctx.strokeStyle = 'rgba(245, 158, 11, 0.45)';
+          ctx.strokeStyle = "rgba(245, 158, 11, 0.45)";
           ctx.lineWidth = 18;
-          ctx.lineCap = 'round';
+          ctx.lineCap = "round";
           ctx.stroke();
 
           // Warm amber body
-          ctx.strokeStyle = '#f59e0b';
+          ctx.strokeStyle = "#f59e0b";
           ctx.lineWidth = 9;
           ctx.stroke();
 
           // Molten yellow-white core
-          ctx.strokeStyle = '#fff2a3';
+          ctx.strokeStyle = "#fff2a3";
           ctx.lineWidth = 3.5;
           ctx.stroke();
         }
@@ -284,16 +314,16 @@
         ctx.moveTo(p0[0], p0[1]);
         ctx.lineTo(this.dragPos.x, this.dragPos.y);
 
-        ctx.strokeStyle = 'rgba(255, 224, 116, 0.35)';
+        ctx.strokeStyle = "rgba(255, 224, 116, 0.35)";
         ctx.lineWidth = 14;
-        ctx.lineCap = 'round';
+        ctx.lineCap = "round";
         ctx.stroke();
 
-        ctx.strokeStyle = '#fbb01b';
+        ctx.strokeStyle = "#fbb01b";
         ctx.lineWidth = 6;
         ctx.stroke();
 
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = "#ffffff";
         ctx.lineWidth = 2;
         ctx.stroke();
       }
@@ -311,15 +341,21 @@
         ctx.lineTo(pTo[0], pTo[1]);
         ctx.setLineDash([8, 6]);
         ctx.lineDashOffset = -dashOffset;
-        ctx.strokeStyle = '#ffe484';
+        ctx.strokeStyle = "#ffe484";
         ctx.lineWidth = 5;
         ctx.stroke();
         ctx.restore();
 
         // Pulsing target beacon
         ctx.beginPath();
-        ctx.arc(pTo[0], pTo[1], 24 + Math.sin(Date.now() / 150) * 4, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255, 215, 0, 0.7)';
+        ctx.arc(
+          pTo[0],
+          pTo[1],
+          24 + Math.sin(Date.now() / 150) * 4,
+          0,
+          Math.PI * 2,
+        );
+        ctx.strokeStyle = "rgba(255, 215, 0, 0.7)";
         ctx.lineWidth = 3;
         ctx.stroke();
       }
@@ -332,14 +368,21 @@
         // Drop shadow
         ctx.beginPath();
         ctx.arc(x, y + 4, radius + 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+        ctx.fillStyle = "rgba(0, 0, 0, 0.65)";
         ctx.fill();
 
         // Polished Brass Rim Bezel
-        const brassGrad = ctx.createRadialGradient(x - 3, y - 3, 2, x, y, radius + 3);
-        brassGrad.addColorStop(0, '#fff4b8');
-        brassGrad.addColorStop(0.5, '#d49b28');
-        brassGrad.addColorStop(1, '#664107');
+        const brassGrad = ctx.createRadialGradient(
+          x - 3,
+          y - 3,
+          2,
+          x,
+          y,
+          radius + 3,
+        );
+        brassGrad.addColorStop(0, "#fff4b8");
+        brassGrad.addColorStop(0.5, "#d49b28");
+        brassGrad.addColorStop(1, "#664107");
 
         ctx.beginPath();
         ctx.arc(x, y, radius + 3, 0, Math.PI * 2);
@@ -348,26 +391,26 @@
 
         // Gemstone Sphere / Colored Marble (matching screenshot theme)
         const gemGrad = ctx.createRadialGradient(x - 4, y - 4, 1, x, y, radius);
-        if (lvl.color === 'purple') {
-          gemGrad.addColorStop(0, '#f3c7ff');
-          gemGrad.addColorStop(0.3, '#c084fc');
-          gemGrad.addColorStop(0.7, '#9333ea');
-          gemGrad.addColorStop(1, '#4c1d95');
-        } else if (lvl.color === 'blue') {
-          gemGrad.addColorStop(0, '#bfdbfe');
-          gemGrad.addColorStop(0.3, '#60a5fa');
-          gemGrad.addColorStop(0.7, '#2563eb');
-          gemGrad.addColorStop(1, '#1e3a8a');
-        } else if (lvl.color === 'green') {
-          gemGrad.addColorStop(0, '#bbf7d0');
-          gemGrad.addColorStop(0.3, '#4ade80');
-          gemGrad.addColorStop(0.7, '#16a34a');
-          gemGrad.addColorStop(1, '#14532d');
+        if (lvl.color === "purple") {
+          gemGrad.addColorStop(0, "#f3c7ff");
+          gemGrad.addColorStop(0.3, "#c084fc");
+          gemGrad.addColorStop(0.7, "#9333ea");
+          gemGrad.addColorStop(1, "#4c1d95");
+        } else if (lvl.color === "blue") {
+          gemGrad.addColorStop(0, "#bfdbfe");
+          gemGrad.addColorStop(0.3, "#60a5fa");
+          gemGrad.addColorStop(0.7, "#2563eb");
+          gemGrad.addColorStop(1, "#1e3a8a");
+        } else if (lvl.color === "green") {
+          gemGrad.addColorStop(0, "#bbf7d0");
+          gemGrad.addColorStop(0.3, "#4ade80");
+          gemGrad.addColorStop(0.7, "#16a34a");
+          gemGrad.addColorStop(1, "#14532d");
         } else {
-          gemGrad.addColorStop(0, '#fef08a');
-          gemGrad.addColorStop(0.3, '#facc15');
-          gemGrad.addColorStop(0.7, '#d97706');
-          gemGrad.addColorStop(1, '#78350f');
+          gemGrad.addColorStop(0, "#fef08a");
+          gemGrad.addColorStop(0.3, "#facc15");
+          gemGrad.addColorStop(0.7, "#d97706");
+          gemGrad.addColorStop(1, "#78350f");
         }
 
         ctx.beginPath();
@@ -378,14 +421,14 @@
         // 3D Specular Highlight Glare
         ctx.beginPath();
         ctx.arc(x - 4, y - 4, radius * 0.35, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+        ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
         ctx.fill();
 
         // Current Active Node Glowing Halo
         if (isCurrent) {
           ctx.beginPath();
           ctx.arc(x, y, radius + 6, 0, Math.PI * 2);
-          ctx.strokeStyle = 'rgba(255, 240, 150, 0.85)';
+          ctx.strokeStyle = "rgba(255, 240, 150, 0.85)";
           ctx.lineWidth = 2.5;
           ctx.stroke();
         }
@@ -404,13 +447,13 @@
         const scaleY = this.canvasSize / rect.height;
         return {
           x: (clientX - rect.left) * scaleX,
-          y: (clientY - rect.top) * scaleY
+          y: (clientY - rect.top) * scaleY,
         };
       };
 
       const onPointerDown = (e) => {
         const pos = getPos(e);
-        if (e.type !== 'touchstart' || this.findNearbyNode(pos) !== -1) {
+        if (e.type !== "touchstart" || this.findNearbyNode(pos) !== -1) {
           e.preventDefault();
         }
         this.handleStart(pos);
@@ -431,52 +474,62 @@
       };
 
       // Unified Pointer Events
-      this.canvas.addEventListener('mousedown', onPointerDown);
-      window.addEventListener('mousemove', onPointerMove);
-      window.addEventListener('mouseup', onPointerUp);
+      this.canvas.addEventListener("mousedown", onPointerDown);
+      window.addEventListener("mousemove", onPointerMove);
+      window.addEventListener("mouseup", onPointerUp);
 
-      this.canvas.addEventListener('touchstart', onPointerDown, { passive: false });
-      window.addEventListener('touchmove', onPointerMove, { passive: false });
-      window.addEventListener('touchend', onPointerUp);
+      this.canvas.addEventListener("touchstart", onPointerDown, {
+        passive: false,
+      });
+      window.addEventListener("touchmove", onPointerMove, { passive: false });
+      window.addEventListener("touchend", onPointerUp);
 
       // Button Controls
-      this.backBtn.addEventListener('click', () => {
+      this.backBtn.addEventListener("click", () => {
         if (window.history.length > 1) {
           window.history.back();
         } else {
-          window.location.href = '../index.html';
+          window.location.href = "../index.html";
         }
       });
-      this.undoBtn.addEventListener('click', () => this.undo());
-      this.resetBtn.addEventListener('click', () => this.resetStage());
-      this.hintBtn.addEventListener('click', () => this.useHint());
-      this.pauseBtn.addEventListener('click', () => this.showModal(this.pauseModal));
+      this.undoBtn.addEventListener("click", () => this.undo());
+      this.resetBtn.addEventListener("click", () => this.resetStage());
+      this.hintBtn.addEventListener("click", () => this.useHint());
+      this.pauseBtn.addEventListener("click", () =>
+        this.showModal(this.pauseModal),
+      );
 
       // Sound Toggle
-      this.soundToggleBtn.addEventListener('click', () => {
+      this.soundToggleBtn.addEventListener("click", () => {
         const enabled = this.sound.toggle();
-        this.soundIcon.textContent = enabled ? '🔊' : '🔇';
+        this.soundIcon.textContent = enabled ? "🔊" : "🔇";
       });
 
       // Modals
-      this.resumeBtn.addEventListener('click', () => this.hideModal(this.pauseModal));
-      this.pauseRestartBtn.addEventListener('click', () => {
+      this.resumeBtn.addEventListener("click", () =>
+        this.hideModal(this.pauseModal),
+      );
+      this.pauseRestartBtn.addEventListener("click", () => {
         this.hideModal(this.pauseModal);
         this.resetStage();
       });
-      this.pauseGalleryBtn.addEventListener('click', () => {
+      this.pauseGalleryBtn.addEventListener("click", () => {
         this.hideModal(this.pauseModal);
         this.showModal(this.galleryModal);
       });
 
-      this.levelsGalleryBtn.addEventListener('click', () => this.showModal(this.galleryModal));
-      this.closeGalleryBtn.addEventListener('click', () => this.hideModal(this.galleryModal));
-      this.footerStagesLink.addEventListener('click', (e) => {
+      this.levelsGalleryBtn.addEventListener("click", () =>
+        this.showModal(this.galleryModal),
+      );
+      this.closeGalleryBtn.addEventListener("click", () =>
+        this.hideModal(this.galleryModal),
+      );
+      this.footerStagesLink.addEventListener("click", (e) => {
         e.preventDefault();
         this.showModal(this.galleryModal);
       });
 
-      this.nextStageBtn.addEventListener('click', () => {
+      this.nextStageBtn.addEventListener("click", () => {
         this.hideModal(this.winModal);
         if (this.currentLevelIndex + 1 < LEVELS.length) {
           this.loadLevel(this.currentLevelIndex + 1);
@@ -486,18 +539,18 @@
         this.saveProgress();
       });
 
-      this.replayStageBtn.addEventListener('click', () => {
+      this.replayStageBtn.addEventListener("click", () => {
         this.hideModal(this.winModal);
         this.resetStage();
       });
-      this.shareScoreBtn.addEventListener('click', () => this.shareScore());
+      this.shareScoreBtn.addEventListener("click", () => this.shareScore());
 
       // Reset All Progress (Storage clearing)
-      this.resetAllDataBtn.addEventListener('click', (e) => {
+      this.resetAllDataBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        if (confirm('Reset all unlocked stages and best scores?')) {
-          localStorage.removeItem('woodline_unlocked');
-          localStorage.removeItem('woodline_hints');
+        if (confirm("Reset all unlocked stages and best scores?")) {
+          localStorage.removeItem("woodline_unlocked");
+          localStorage.removeItem("woodline_hints");
           this.unlockedLevelIndex = 0;
           this.hintsLeft = 17;
           this.updateHintDisplay();
@@ -523,7 +576,9 @@
     }
 
     hasEdge(u, v) {
-      return this.currentLevel.edges.some(([n1, n2]) => (n1 === u && n2 === v) || (n1 === v && n2 === u));
+      return this.currentLevel.edges.some(
+        ([n1, n2]) => (n1 === u && n2 === v) || (n1 === v && n2 === u),
+      );
     }
 
     handleStart(pos) {
@@ -570,8 +625,11 @@
       this.sound.playLineConnect(this.moveHistory.length);
 
       // Clear current hint if satisfied
-      if (this.hintEdge && ((this.hintEdge.from === fromNode && this.hintEdge.to === toNode) ||
-                            (this.hintEdge.from === toNode && this.hintEdge.to === fromNode))) {
+      if (
+        this.hintEdge &&
+        ((this.hintEdge.from === fromNode && this.hintEdge.to === toNode) ||
+          (this.hintEdge.from === toNode && this.hintEdge.to === fromNode))
+      ) {
         this.hintEdge = null;
       }
 
@@ -604,17 +662,23 @@
 
     useHint() {
       if (this.hintsLeft <= 0) {
-        this.showToast('No hints remaining!');
+        this.showToast("No hints remaining!");
         return;
       }
 
-      const unvisited = this.currentLevel.edges.filter(([u, v]) => !this.visitedEdges.has(this.getEdgeKey(u, v)));
+      const unvisited = this.currentLevel.edges.filter(
+        ([u, v]) => !this.visitedEdges.has(this.getEdgeKey(u, v)),
+      );
       if (unvisited.length === 0) return;
 
-      const solution = EulerianSolver.solve(this.currentLevel.nodes.length, unvisited, this.currentNode);
+      const solution = EulerianSolver.solve(
+        this.currentLevel.nodes.length,
+        unvisited,
+        this.currentNode,
+      );
 
       if (!solution || solution.length === 0) {
-        this.showToast('Dead end reached! Tap Undo (↩) or Restart (↻)');
+        this.showToast("Dead end reached! Tap Undo (↩) or Restart (↻)");
         return;
       }
 
@@ -630,7 +694,7 @@
       }
 
       this.hintsLeft--;
-      localStorage.setItem('woodline_hints', this.hintsLeft);
+      localStorage.setItem("woodline_hints", this.hintsLeft);
       this.updateHintDisplay();
       this.sound.playWoodTap();
       this.draw();
@@ -639,10 +703,10 @@
 
     showToast(msg) {
       this.hintToast.textContent = msg;
-      this.hintToast.classList.add('show');
+      this.hintToast.classList.add("show");
       clearTimeout(this.toastTimer);
       this.toastTimer = setTimeout(() => {
-        this.hintToast.classList.remove('show');
+        this.hintToast.classList.remove("show");
       }, 2400);
     }
 
@@ -662,16 +726,22 @@
 
       // Unlock next stage
       if (this.currentLevelIndex >= this.unlockedLevelIndex) {
-        this.unlockedLevelIndex = Math.min(LEVELS.length - 1, this.currentLevelIndex + 1);
-        localStorage.setItem('woodline_unlocked', this.unlockedLevelIndex);
+        this.unlockedLevelIndex = Math.min(
+          LEVELS.length - 1,
+          this.currentLevelIndex + 1,
+        );
+        localStorage.setItem("woodline_unlocked", this.unlockedLevelIndex);
       }
       this.saveProgress();
 
       // Calculate time
-      this.elapsedSeconds = Math.max(1, Math.floor((Date.now() - this.startTime) / 1000));
+      this.elapsedSeconds = Math.max(
+        1,
+        Math.floor((Date.now() - this.startTime) / 1000),
+      );
       const mins = Math.floor(this.elapsedSeconds / 60);
       const secs = this.elapsedSeconds % 60;
-      this.winTime.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      this.winTime.textContent = `${mins}:${secs < 10 ? "0" : ""}${secs}`;
       this.winSolvedCount.textContent = `${this.currentLevelIndex + 1} / ${LEVELS.length}`;
 
       this.renderGallery();
@@ -680,11 +750,11 @@
 
     async shareScore() {
       const level = this.currentLevel;
-      const score = `I solved ${level.name} (Stage ${level.id}/${LEVELS.length}) in ${this.winTime.textContent} One Line Puzzle !`;
+      const score = `I solved ${level.name} (Stage ${level.id}/${LEVELS.length}) in ${this.winTime.textContent} on One Line Puzzle !`;
       const shareData = {
-        title: 'One Line Puzzle',
+        title: "One Line Puzzle",
         text: `${score} Can you beat my score?`,
-        url: window.location.href
+        url: window.location.href,
       };
 
       if (navigator.share) {
@@ -692,41 +762,48 @@
           await navigator.share(shareData);
           return;
         } catch (error) {
-          if (error.name === 'AbortError') return;
-          console.warn('Native score sharing failed; trying clipboard instead:', error);
+          if (error.name === "AbortError") return;
+          console.warn(
+            "Native score sharing failed; trying clipboard instead:",
+            error,
+          );
         }
       }
 
       try {
-        await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
-        this.showToast('Score copied! Share it with your friends.');
+        await navigator.clipboard.writeText(
+          `${shareData.text} ${shareData.url}`,
+        );
+        this.showToast("Score copied! Share it with your friends.");
       } catch (error) {
-        console.error('Unable to share or copy the score:', error);
-        this.showToast('Could not share the score. Please try again.');
+        console.error("Unable to share or copy the score:", error);
+        this.showToast("Could not share the score. Please try again.");
       }
     }
 
     showModal(modal) {
-      modal.classList.remove('hidden');
+      modal.classList.remove("hidden");
     }
 
     hideModal(modal) {
-      modal.classList.add('hidden');
+      modal.classList.add("hidden");
     }
 
     /* ==========================================================================
        Level Selector Gallery (Matching Panel 3 in Screenshot!)
        ========================================================================== */
     renderGallery() {
-      this.stagesGrid.innerHTML = '';
+      this.stagesGrid.innerHTML = "";
 
       LEVELS.forEach((lvl, idx) => {
         const isUnlocked = idx <= this.unlockedLevelIndex;
         const isCurrent = idx === this.currentLevelIndex;
 
-        const card = document.createElement('div');
-        card.className = `stage-card ${isCurrent ? 'current' : ''} ${!isUnlocked ? 'locked' : ''}`;
-        card.title = isUnlocked ? `Stage ${lvl.id}: ${lvl.name}` : `Locked (Clear Stage ${idx})`;
+        const card = document.createElement("div");
+        card.className = `stage-card ${isCurrent ? "current" : ""} ${!isUnlocked ? "locked" : ""}`;
+        card.title = isUnlocked
+          ? `Stage ${lvl.id}: ${lvl.name}`
+          : `Locked (Clear Stage ${idx})`;
 
         // Build Miniature SVG Thumbnail
         let svgContent = `<svg viewBox="0 0 400 400" width="100%" height="100%">`;
@@ -735,13 +812,19 @@
         lvl.edges.forEach(([u, v]) => {
           const p1 = lvl.nodes[u];
           const p2 = lvl.nodes[v];
-          svgContent += `<line x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${isUnlocked ? '#cca484' : '#57331e'}" stroke-width="12" stroke-linecap="round"/>`;
+          svgContent += `<line x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${isUnlocked ? "#cca484" : "#57331e"}" stroke-width="12" stroke-linecap="round"/>`;
         });
 
         // Nodes
         const dotColor = isUnlocked
-          ? (lvl.color === 'purple' ? '#a855f7' : lvl.color === 'blue' ? '#3b82f6' : lvl.color === 'green' ? '#22c55e' : '#eab308')
-          : '#6e442c';
+          ? lvl.color === "purple"
+            ? "#a855f7"
+            : lvl.color === "blue"
+              ? "#3b82f6"
+              : lvl.color === "green"
+                ? "#22c55e"
+                : "#eab308"
+          : "#6e442c";
 
         lvl.nodes.forEach(([x, y]) => {
           svgContent += `<circle cx="${x}" cy="${y}" r="18" fill="${dotColor}" stroke="#ffe27a" stroke-width="3"/>`;
@@ -751,12 +834,12 @@
 
         card.innerHTML = `
           <div class="stage-card-thumb">${svgContent}</div>
-          <div class="stage-card-num">${isUnlocked ? `Stage ${lvl.id}` : '🔒'}</div>
-          <div class="stage-card-stars">${isUnlocked ? (idx < this.unlockedLevelIndex ? '★★★' : '☆☆☆') : ''}</div>
+          <div class="stage-card-num">${isUnlocked ? `Stage ${lvl.id}` : "🔒"}</div>
+          <div class="stage-card-stars">${isUnlocked ? (idx < this.unlockedLevelIndex ? "★★★" : "☆☆☆") : ""}</div>
         `;
 
         if (isUnlocked) {
-          card.addEventListener('click', () => {
+          card.addEventListener("click", () => {
             this.hideModal(this.galleryModal);
             this.loadLevel(idx);
             this.saveProgress();
@@ -769,8 +852,8 @@
   }
 
   // Initialize on DOM Ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => new WoodOneLineGame());
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => new WoodOneLineGame());
   } else {
     new WoodOneLineGame();
   }
