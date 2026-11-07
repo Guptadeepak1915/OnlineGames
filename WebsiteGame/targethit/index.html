@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Target Hit - Free Rotating Target Precision Arcade Game</title>
+  <meta name="description" content="Throw knives at rotating targets without hitting previous objects! Slice bonus apples, defeat armored bosses, and unlock legendary blades in this free browser arcade game.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Top Quick Navigation -->
+    <nav class="site-navigation" aria-label="Site navigation">
+      <button class="pill-btn" id="backBtn" type="button" title="Go Back">← Back</button>
+      <a class="pill-btn" id="homeBtn" href="../index.html" title="Go to Home">⌂ Home</a>
+    </nav>
+
+    <!-- Top Site Navigation Header -->
+    <header class="site-header">
+      <div class="logo-wrap">
+        <span class="logo-icon">🎯</span>
+        <div class="logo-main">TARGET<span class="logo-sub">HIT</span></div>
+      </div>
+      <div class="header-right">
+        <div class="pill apple-pill" title="Apples Collected">
+          <span>🍎</span>
+          <b id="hudApples">0</b>
+        </div>
+        <div class="pill" title="Personal Best Score">
+          <span>🏆</span>
+          <b id="hdrBest">0</b>
+        </div>
+        <button id="soundToggleBtn" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
+          <span id="soundIcon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Ad Slot Top -->
+    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+    <!-- Main Game Console & Canvas Stage -->
+    <main class="game-stage-container">
+      <div class="phone-frame" id="phoneFrame">
+
+        <!-- Top Arcade HUD Bar -->
+        <div class="arcade-hud">
+          <div class="hud-stage-badge" id="hudStage">STAGE 1</div>
+
+          <div class="hud-score-center">
+            <span class="hud-score-val" id="hudScore">0</span>
+            <span class="hud-score-lbl">POINTS</span>
+          </div>
+
+          <button class="hud-pause-btn" id="pauseBtn" title="Pause Game" aria-label="Pause">
+            <span>⏸</span>
+          </button>
+        </div>
+
+        <!-- Interactive Board & Canvas Area -->
+        <div class="board-area" id="boardArea">
+          <canvas id="gameCanvas"></canvas>
+
+          <!-- Left Knife Remaining Rack -->
+          <div class="knife-rack" id="knifeRack"></div>
+
+          <!-- Floating Stage Announcement Banner -->
+          <div class="stage-banner hidden" id="stageBanner">
+            <div class="stage-banner-title" id="stageBannerTitle">STAGE 1</div>
+            <div class="stage-banner-sub" id="stageBannerSub">AIM TRUE!</div>
+          </div>
+
+          <!-- Toast Message Notification -->
+          <div class="toast-popup hidden" id="toast">Score copied to clipboard! 📋</div>
+
+          <!-- OVERLAY 1: Start Screen Modal -->
+          <div class="modal-overlay" id="startModal">
+            <div class="arcade-card">
+              <span class="card-badge">ARCADE PRECISION</span>
+              <h1 class="modal-title">TARGET<br><span class="highlight">HIT</span></h1>
+              <p class="modal-desc">Throw knives at rotating targets. Don't hit previous blades!</p>
+
+              <div class="stats-row">
+                <div class="stat-box">
+                  <small>BEST SCORE</small>
+                  <strong id="startBestScore">0</strong>
+                </div>
+                <div class="stat-box">
+                  <small>MAX STAGE</small>
+                  <strong id="startBestStage">1</strong>
+                </div>
+                <div class="stat-box">
+                  <small>APPLES</small>
+                  <strong id="startApples">0</strong>
+                </div>
+              </div>
+
+              <button class="btn-gold-primary" id="playBtn">
+                <span>🗡️</span> PLAY NOW
+              </button>
+              <button class="btn-secondary-arcade" id="shopBtn">
+                <span>⚔️</span> WEAPONS LOCKER
+              </button>
+            </div>
+          </div>
+
+          <!-- OVERLAY 2: Pause Modal -->
+          <div class="modal-overlay hidden" id="pauseModal">
+            <div class="arcade-card">
+              <span class="card-badge">PAUSED</span>
+              <h2 class="modal-title">GAME<br><span class="highlight">PAUSED</span></h2>
+              <p class="modal-desc">Take a breather before your next throw.</p>
+              <button class="btn-gold-primary" id="resumeBtn">RESUME</button>
+              <button class="btn-secondary-arcade" id="restartBtn">RESTART</button>
+            </div>
+          </div>
+
+          <!-- OVERLAY 3: Game Over Modal -->
+          <div class="modal-overlay hidden" id="gameOverModal">
+            <div class="arcade-card">
+              <div class="new-best-badge hidden" id="newBestBadge">🌟 NEW RECORD! 🌟</div>
+              <h2 class="modal-title">TARGET<br><span class="highlight">CLASH!</span></h2>
+
+              <!-- Big Score Display -->
+              <div class="score-summary-box">
+                <div class="big-score-val" id="finalScore">0</div>
+                <div class="big-score-sub">Total Knives Embedded</div>
+              </div>
+
+              <div class="stats-row">
+                <div class="stat-box">
+                  <small>STAGE</small>
+                  <strong id="overStage">1</strong>
+                </div>
+                <div class="stat-box">
+                  <small>BEST</small>
+                  <strong id="overBestScore">0</strong>
+                </div>
+                <div class="stat-box">
+                  <small>APPLES</small>
+                  <strong id="overApples">0</strong>
+                </div>
+              </div>
+
+              <button class="btn-share-prominent" id="shareScoreBtn">
+                <span>📤</span> SHARE MY SCORE
+              </button>
+              <button class="btn-gold-primary" id="playAgainBtn">
+                <span>🔄</span> PLAY AGAIN
+              </button>
+              <button class="btn-secondary-arcade" id="shopOverBtn">
+                <span>⚔️</span> WEAPONS LOCKER
+              </button>
+            </div>
+          </div>
+
+          <!-- OVERLAY 4: Weapons Shop Modal -->
+          <div class="modal-overlay hidden" id="shopModal">
+            <div class="arcade-card shop-card">
+              <div class="shop-header">
+                <div class="shop-title">WEAPONS LOCKER</div>
+                <div class="shop-apples-badge">🍎 <span id="shopApplesCount">0</span></div>
+                <button class="close-x-btn" id="closeShopBtn">✕</button>
+              </div>
+
+              <div class="weapons-grid" id="weaponsGrid">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- OVERLAY 5: Social Share Dialog Modal -->
+          <div class="modal-overlay hidden" id="shareModal">
+            <div class="arcade-card">
+              <div class="shop-header">
+                <div class="shop-title">BRAG YOUR SCORE!</div>
+                <button class="close-x-btn" id="closeShareBtn">✕</button>
+              </div>
+
+              <div class="share-quote-box" id="shareQuotePreview">
+                "🎯 I reached Stage 5 in Target Hit! Can you beat my aim?"
+              </div>
+
+              <div class="social-btns-row">
+                <a href="#" class="btn-social whatsapp" id="shareWhatsAppBtn" target="_blank" rel="noopener">
+                  <span>💬</span> WhatsApp
+                </a>
+                <a href="#" class="btn-social twitter" id="shareTwitterBtn" target="_blank" rel="noopener">
+                  <span>🐦</span> X / Twitter
+                </a>
+                <button class="btn-social copy" id="shareCopyBtn">
+                  <span>📋</span> Copy
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Dedicated Bottom Tap Button -->
+        <div class="bottom-controls">
+          <button class="btn-throw-big" id="throwBtn">
+            <span class="throw-blade-icon">🗡️</span> TAP TO THROW
+          </button>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Ad Slot Bottom -->
+    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+
+    <!-- Information & How to Play Section -->
+    <section class="game-info-section">
+      <div class="info-card">
+        <h2>How to Play Target Hit</h2>
+        <p>
+          Target Hit tests your reflexes, timing, and pinpoint accuracy! Rotating targets spin at fluctuating speeds and patterns. 
+          Your mission is to throw every allocated knife into the target without striking any previously embedded blades.
+        </p>
+
+        <div class="rules-grid">
+          <div class="rule-box">
+            <span class="rule-icon">🎯</span>
+            <h3>1. Tap to Throw</h3>
+            <p>Tap anywhere on screen or press Spacebar to throw a blade vertically into the spinning target rim.</p>
+          </div>
+
+          <div class="rule-box">
+            <span class="rule-icon">⚡</span>
+            <h3>2. Avoid Previous Blades</h3>
+            <p>Watch out! Striking another knife results in an instant deflection clash and ends your game run.</p>
+          </div>
+
+          <div class="rule-box">
+            <span class="rule-icon">🍎</span>
+            <h3>3. Slice Bonus Apples</h3>
+            <p>Target apples pinned to the rotating rim for extra points and currency to unlock rare blades in the locker.</p>
+          </div>
+
+          <div class="rule-box">
+            <span class="rule-icon">👑</span>
+            <h3>4. Armored Boss Stages</h3>
+            <p>Every 5 stages, face armored Boss Targets with erratic speeds, reversing spins, and high stakes!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Standard Site Footer -->
+    <footer>
+      <a href="../index.html">Games</a>
+      <a href="../blog/">Blog</a>
+      <a href="../privacy.html">Privacy Policy</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </footer>
+
+  </div>
+
+  <!-- Game Scripts -->
+  <script src="../assets/js/site-config.js"></script>
+  <script src="./js/audio.js"></script>
+  <script src="./js/particles.js"></script>
+  <script src="./js/weapons.js"></script>
+  <script src="./js/target.js"></script>
+  <script src="./js/knife.js"></script>
+  <script src="./js/share.js"></script>
+  <script src="./js/game.js"></script>
+  <script src="../assets/js/ads.js"></script>
+  <script>
+    if (typeof initAds === "function") initAds();
+  </script>
+</body>
+</html>

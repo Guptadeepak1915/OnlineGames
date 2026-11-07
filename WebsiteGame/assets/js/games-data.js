@@ -154,5 +154,15 @@ const GAMES = [
     art: "FS", c1: '#3df2e0', c2: '#2a0f2e',
     isNew: true
   },
+  {
+    id: "targethit",
+    name: "Target Hit",
+    folder: "targethit/",
+    category: "Arcade",
+    desc: "Throw knives at rotating targets without hitting previous objects. Slice apples and defeat armored bosses!",
+    bestKey: "targethit_best",
+    art: "TH", c1: '#3df2e0', c2: '#120d2b',
+    isNew: true
+  },
   // ADD NEW GAMES ABOVE THIS LINE
 ];
