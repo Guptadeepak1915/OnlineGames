@@ -96,6 +96,8 @@
       this.galleryModal = document.getElementById("galleryModal");
       this.closeGalleryBtn = document.getElementById("closeGalleryBtn");
       this.stagesGrid = document.getElementById("stagesGrid");
+      this.levelTabs = document.getElementById("levelTabs");
+      this.activeGalleryLevel = "all";
       this.footerStagesLink = document.getElementById("footerStagesLink");
       this.resetAllDataBtn = document.getElementById("resetAllDataBtn");
     }
@@ -227,8 +229,10 @@
       this.isDragging = false;
 
       // Update HUD
-      this.hudLevel.textContent = 1;
-      this.hudStage.textContent = this.currentLevel.id;
+      const lvlNum = this.currentLevel.level || Math.floor(index / 10) + 1;
+      const stgNum = this.currentLevel.stageInLevel || (index % 10) + 1;
+      this.hudLevel.textContent = lvlNum;
+      this.hudStage.textContent = stgNum;
 
       // Reset timer
       this.startTime = Date.now();
@@ -762,7 +766,7 @@
 
     async shareScore() {
       const level = this.currentLevel;
-      const score = `I solved ${level.name} (Stage ${level.id}/${LEVELS.length}) in ${this.winTime.textContent} on One Line Puzzle !`;
+      const score = `I solved Level ${level.level || 1} • Stage ${level.stageInLevel || level.id}: ${level.name} (Total: ${level.id}/${LEVELS.length}) in ${this.winTime.textContent} on One Line Puzzle!`;
       const shareData = {
         title: "One Line Puzzle",
         text: `${score} Can you beat my score?`,
@@ -804,27 +808,79 @@
     /* ==========================================================================
        Level Selector Gallery (Matching Panel 3 in Screenshot!)
        ========================================================================== */
+    renderLevelTabs() {
+      if (!this.levelTabs) return;
+      this.levelTabs.innerHTML = "";
+
+      const tabs = [
+        { id: "all", label: "All (" + LEVELS.length + ")" },
+        { id: 1, label: "Lvl 1: Cedar" },
+        { id: 2, label: "Lvl 2: Walnut" },
+        { id: 3, label: "Lvl 3: Bronze" },
+        { id: 4, label: "Lvl 4: Silver" },
+        { id: 5, label: "Lvl 5: Gold" },
+        { id: 6, label: "Lvl 6: Obsidian" }
+      ];
+
+      tabs.forEach((tab) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "level-tab-btn " + (this.activeGalleryLevel === tab.id ? "active" : "");
+        btn.textContent = tab.label;
+        btn.addEventListener("click", () => {
+          this.activeGalleryLevel = tab.id;
+          this.renderLevelTabs();
+          this.renderGalleryGrid();
+        });
+        this.levelTabs.appendChild(btn);
+      });
+    }
+
     renderGallery() {
+      this.renderLevelTabs();
+      this.renderGalleryGrid();
+    }
+
+    renderGalleryGrid() {
       this.stagesGrid.innerHTML = "";
 
-      LEVELS.forEach((lvl, idx) => {
+      const filtered = LEVELS.filter((lvl) => {
+        if (this.activeGalleryLevel === "all") return true;
+        return lvl.level === this.activeGalleryLevel;
+      });
+
+      let currentRenderedLevel = null;
+
+      filtered.forEach((lvl) => {
+        const idx = lvl.id - 1;
         const isUnlocked = idx <= this.unlockedLevelIndex;
         const isCurrent = idx === this.currentLevelIndex;
 
+        // Group header when showing "all"
+        if (this.activeGalleryLevel === "all" && lvl.level !== currentRenderedLevel) {
+          currentRenderedLevel = lvl.level;
+          const header = document.createElement("div");
+          header.className = "stage-group-header";
+          const levelStages = LEVELS.filter((l) => l.level === lvl.level);
+          const solvedInLevel = levelStages.filter((l) => l.id - 1 < this.unlockedLevelIndex).length;
+          header.innerHTML = "<span>Level " + lvl.level + ": " + (lvl.levelName || "") + "</span><span class='stage-group-progress'>" + solvedInLevel + "/" + levelStages.length + " Solved</span>";
+          this.stagesGrid.appendChild(header);
+        }
+
         const card = document.createElement("div");
-        card.className = `stage-card ${isCurrent ? "current" : ""} ${!isUnlocked ? "locked" : ""}`;
+        card.className = "stage-card " + (isCurrent ? "current" : "") + " " + (!isUnlocked ? "locked" : "");
         card.title = isUnlocked
-          ? `Stage ${lvl.id}: ${lvl.name}`
-          : `Locked (Clear Stage ${idx})`;
+          ? "Level " + lvl.level + " - Stage " + lvl.stageInLevel + ": " + lvl.name + " (Stage " + lvl.id + ")"
+          : "Locked (Clear Stage " + idx + ")";
 
         // Build Miniature SVG Thumbnail
-        let svgContent = `<svg viewBox="0 0 400 400" width="100%" height="100%">`;
+        let svgContent = '<svg viewBox="0 0 400 400" width="100%" height="100%">';
 
         // Edges
         lvl.edges.forEach(([u, v]) => {
           const p1 = lvl.nodes[u];
           const p2 = lvl.nodes[v];
-          svgContent += `<line x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${isUnlocked ? "#cca484" : "#57331e"}" stroke-width="12" stroke-linecap="round"/>`;
+          svgContent += '<line x1="' + p1[0] + '" y1="' + p1[1] + '" x2="' + p2[0] + '" y2="' + p2[1] + '" stroke="' + (isUnlocked ? "#cca484" : "#57331e") + '" stroke-width="12" stroke-linecap="round"/>';
         });
 
         // Nodes
@@ -839,16 +895,15 @@
           : "#6e442c";
 
         lvl.nodes.forEach(([x, y]) => {
-          svgContent += `<circle cx="${x}" cy="${y}" r="18" fill="${dotColor}" stroke="#ffe27a" stroke-width="3"/>`;
+          svgContent += '<circle cx="' + x + '" cy="' + y + '" r="18" fill="' + dotColor + '" stroke="#ffe27a" stroke-width="3"/>';
         });
 
-        svgContent += `</svg>`;
+        svgContent += "</svg>";
 
-        card.innerHTML = `
-          <div class="stage-card-thumb">${svgContent}</div>
-          <div class="stage-card-num">${isUnlocked ? `Stage ${lvl.id}` : "🔒"}</div>
-          <div class="stage-card-stars">${isUnlocked ? (idx < this.unlockedLevelIndex ? "★★★" : "☆☆☆") : ""}</div>
-        `;
+        card.innerHTML =
+          '<div class="stage-card-thumb">' + svgContent + '</div>' +
+          '<div class="stage-card-num">' + (isUnlocked ? "Stage " + (lvl.stageInLevel || lvl.id) : "🔒") + '</div>' +
+          '<div class="stage-card-stars">' + (isUnlocked ? (idx < this.unlockedLevelIndex ? "★★★" : "☆☆☆") : "") + '</div>';
 
         if (isUnlocked) {
           card.addEventListener("click", () => {

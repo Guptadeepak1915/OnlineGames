@@ -29,7 +29,7 @@ const GAMES = [
     name: "Snake Rush",
     folder: "snakerush/",
     category: "Arcade",
-    desc: "Eat, grow and do not hit the wall.",
+    desc: "Connect all dots in one continuous stroke across 60 handcrafted wooden stages in 6 master levels.",
     bestKey: "snakerush_best",
     art: "SR", c1: '#ff9f43', c2: '#6b1b4e',
     isNew: false
