@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://onlinefreegame.netlify.app/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/fliprun/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/numfill/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/blog/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/blog/flip-run-tips.html</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/blog/how-to-solve-numfill.html</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/blog/mental-math-tricks.html</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/about.html</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/contact.html</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/privacy.html</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/snakerush/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/memorymatch/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/tictactoe/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/2048merge/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/fourinarow/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/wordfill/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/bricksbreakerquest/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/slidingpuzzlemaster/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/woodennumberpuzzle/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/woodblock/</loc></url>
-  
-  <url><loc>https://onlinefreegame.netlify.app/sudoku/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/onelinepuzzle/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/fruitslice/</loc></url>
-  <url><loc>https://onlinefreegame.netlify.app/targethit/</loc></url>
+
+  <!-- Main pages -->
+  <url><loc>https://onlinefreegame.netlify.app/</loc><lastmod>2026-11-11</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/about.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/contact.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/privacy.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/terms.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+
+  <!-- Game pages -->
+  <url><loc>https://onlinefreegame.netlify.app/fliprun/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/numfill/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/snakerush/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/memorymatch/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/tictactoe/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/2048merge/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/fourinarow/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/wordfill/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/bricksbreakerquest/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/slidingpuzzlemaster/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/woodennumberpuzzle/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/woodblock/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/sudoku/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/onelinepuzzle/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/fruitslice/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/targethit/</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
+  <!-- Blog index -->
+  <url><loc>https://onlinefreegame.netlify.app/blog/</loc><lastmod>2026-11-11</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
+  <!-- Blog articles -->
+  <url><loc>https://onlinefreegame.netlify.app/blog/flip-run-tips.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/how-to-solve-numfill.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/mental-math-tricks.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/2048-strategy-guide.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/sudoku-mastery-guide.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/snake-rush-tactics.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/sliding-puzzle-mechanics.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/wood-block-puzzle-tactics.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/fruit-slice-masterclass.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/target-hit-arcade-guide.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/one-line-puzzle-eulerian-math.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://onlinefreegame.netlify.app/blog/cognitive-benefits-browser-games.html</loc><lastmod>2026-11-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
 </urlset>

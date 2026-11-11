@@ -4,59 +4,72 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Snake Rush - Free online game</title>
-  <meta name="description" content="Eat, grow and do not hit the wall.">
+  <title>Snake Rush - Free Online Snake Game, No Login</title>
+  <meta name="description" content="Play Snake Rush free in your browser. Steer your snake, eat fruits to grow, avoid walls and your own tail. No download, no account needed.">
+  <link rel="canonical" href="https://onlinefreegame.netlify.app/snakerush/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="css/game.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Snake Rush",
+    "description": "Steer your growing snake, eat fruits for points, dodge walls and your own body. Golden bonus fruits appear for high rewards.",
+    "genre": ["Arcade", "Casual", "Skill Game"],
+    "playMode": "SinglePlayer",
+    "applicationCategory": "Browser Game",
+    "operatingSystem": "Any modern web browser"
+  }
+  </script>
 </head>
 
 <body>
   <div class="wrap">
     <header>
-      <div class="logo">SNAKE RUSH</div>
+      <div class="logo">SNAKE<span>RUSH</span></div>
       <div class="hdr-right">
         <div class="pill">Best<b id="hdrBest">0</b></div>
         <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
       </div>
     </header>
 
-    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+    <div class="ad-slot" data-slot=""></div>
 
-    <!-- GAME AREA: replace this demo with your real game -->
     <div class="stage" id="stage">
-      <div class="demo">
-        <div class="stats">
-          <div class="stat"><small>Score</small><strong id="score">0</strong></div>
-          <div class="stat"><small>Time</small><strong id="time">10</strong></div>
-        </div>
-        <button class="btn" id="tapBtn">Start</button>
-        <p id="msg">Tap as many times as you can in 10 seconds.</p>
-      </div>
+      <noscript>
+        <p class="card" style="padding:20px;text-align:center;">Please enable JavaScript to play Snake Rush.</p>
+      </noscript>
     </div>
 
     <section class="info">
-      <h2>How to play Snake Rush</h2>
-      <p>Use the arrow keys, WASD or swipe to steer the snake. Eat the red food to grow and score 10 points. Every 5
-        foods a golden food appears for 5 seconds and gives 50 points. The game ends if you hit the wall or your own
-        body. The snake gets faster every 4 foods.</p>
-      <p>Tip: plan your path early, keep to the middle when the snake is short, and use the edges only when you have a
-        clear path.</p>
+      <h2>How to Play Snake Rush</h2>
+      <p>Use the arrow keys, WASD or swipe on a touchscreen to steer the snake. Eat the red food dots to grow longer and score 10 points each. The game ends immediately if you steer the snake into the outer wall or into any part of your own body. The snake speeds up every 4 foods, so stay alert as the grid fills up.</p>
+
+      <h2>Golden Bonus Fruits</h2>
+      <p>Every 5 regular red foods, a glowing golden food appears on the board for exactly 5 seconds. If you can reach it in time, it awards 50 points — five times more than a standard red food. The golden food vanishes after 5 seconds if not collected, so plan your route efficiently but do not take suicidal corners to reach it.</p>
+
+      <h2>Scoring and Difficulty</h2>
+      <p>Red food: 10 points per piece. Golden food: 50 points per piece. Your best score is saved locally on your device via browser localStorage — no account or login needed. As your score climbs, the snake's speed automatically increases every 4 foods collected, making later stages a true test of reaction time and spatial planning.</p>
+
+      <h2>Winning Tips</h2>
+      <p>When your snake is short, stay near the center of the board — you have maximum room to maneuver. As your snake grows, switch to a perimeter-hugging S-curve pattern: weave left to right across parallel rows and use the edge lane to return. This "snake-fill" approach maximizes survivability on a crowded board. Never try to cut through a corridor narrower than your snake's current length.</p>
+
+      <p>Read our detailed <a href="../blog/snake-rush-tactics.html">Snake Rush strategy guide</a> for Hamiltonian loop theory and golden food risk management.</p>
     </section>
 
-    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+    <div class="ad-slot" data-slot=""></div>
 
     <footer>
-      <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a
-        href="../about.html">About</a><a href="../contact.html">Contact</a>
+      <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
     </footer>
   </div>
   <script src="../assets/js/site-config.js"></script>
   <script src="js/game.js"></script>
   <script src="../assets/js/ads.js"></script>
-  <script>initAds();</script>
+  <script>if (typeof initAds === "function") initAds();</script>
 </body>
 
 </html>

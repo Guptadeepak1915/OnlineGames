@@ -4,56 +4,81 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>2048 Merge - Free online game</title>
-  <meta name="description" content="Slide and merge tiles to reach 2048.">
+  <title>2048 Merge - Free Online Number Puzzle Game</title>
+  <meta name="description" content="Play 2048 Merge free in your browser. Slide and merge numbered tiles on a 4x4 grid to reach the 2048 tile. No download, no account needed.">
+  <link rel="canonical" href="https://onlinefreegame.netlify.app/2048merge/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="css/game.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "2048 Merge",
+    "description": "Slide numbered tiles on a 4x4 grid and merge matching values to build the 2048 tile.",
+    "genre": ["Puzzle", "Brain Training", "Number Game"],
+    "playMode": "SinglePlayer",
+    "applicationCategory": "Browser Game",
+    "operatingSystem": "Any modern web browser"
+  }
+  </script>
 </head>
 
 <body>
   <div class="wrap">
     <header>
-      <div class="logo">2048 MERGE</div>
+      <div class="logo">2048 <span>MERGE</span></div>
       <div class="hdr-right">
         <div class="pill">Best<b id="hdrBest">0</b></div>
         <a class="icon-btn" href="../index.html" style="text-decoration:none">All games</a>
       </div>
     </header>
 
-    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+    <div class="ad-slot" data-slot=""></div>
 
-    <!-- GAME AREA: replace this demo with your real game -->
     <div class="stage" id="stage">
-      <div class="demo">
-        <div class="stats">
-          <div class="stat"><small>Score</small><strong id="score">0</strong></div>
-          <div class="stat"><small>Time</small><strong id="time">10</strong></div>
-        </div>
-        <button class="btn" id="tapBtn">Start</button>
-        <p id="msg">Tap as many times as you can in 10 seconds.</p>
-      </div>
+      <noscript>
+        <p class="card" style="padding:20px;text-align:center;">Please enable JavaScript to play 2048 Merge.</p>
+      </noscript>
     </div>
 
     <section class="info">
-      <h2>How to play 2048 Merge</h2>
-      <p>Slide and merge tiles to reach 2048. Write the rules, scoring and tips for your game here. A clear text section
-        helps visitors and search engines.</p>
+      <h2>How to Play 2048 Merge</h2>
+      <p>2048 Merge is played on a 4×4 grid. Your objective is to slide numbered tiles across the board and merge tiles with identical numbers. When two tiles with the same number touch, they combine into one tile with double the value (e.g. 2 + 2 = 4, 4 + 4 = 8, 8 + 8 = 16, up to 1024 + 1024 = 2048).</p>
+      <p>After every move, a new tile (either a 2 or a 4) appears in an empty spot on the board. The game is won when you create a tile with the value <strong>2048</strong>. You can continue playing beyond 2048 to reach 4096 and higher!</p>
+
+      <h2>Game Controls</h2>
+      <ul>
+        <li><strong>On Mobile / Touchscreens:</strong> Swipe Up, Down, Left, or Right across the board.</li>
+        <li><strong>On Desktop / Keyboard:</strong> Use the <strong>Arrow Keys</strong> or <strong>W, A, S, D</strong>.</li>
+        <li><strong>Undo Feature:</strong> Made an accidental swipe? Click the <strong>Undo</strong> button to reverse your last move (up to 3 undos per game).</li>
+      </ul>
+
+      <h2>Winning Strategy: The Corner Anchor Protocol</h2>
+      <p>The most effective strategy to reach 2048 consistently is to designate a permanent corner (such as the bottom-left corner) for your highest value tile:</p>
+      <ul>
+        <li>Keep your highest tile pinned to that corner and never move it away.</li>
+        <li>Build a descending snake chain of tiles across that row (e.g., 512 &rarr; 256 &rarr; 128 &rarr; 64).</li>
+        <li>Stick strictly to three directions (e.g., Down, Left, and Up) and avoid pressing the opposite direction (Right) so low-value tiles never spawn behind your mega tile.</li>
+        <li>Read our complete <a href="../blog/2048-strategy-guide.html">2048 Strategy Guide</a> for advanced breakdown.</li>
+      </ul>
+
+      <h2>Scoring and Local Saves</h2>
+      <p>Whenever two tiles merge, the value of the resulting tile is added directly to your score. Your personal best score is saved locally on your device via your web browser's localStorage, so your record is waiting whenever you return.</p>
     </section>
 
-    <div class="ad-slot" data-slot="">Ad space (banner)</div>
+    <div class="ad-slot" data-slot=""></div>
 
     <footer>
-      <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a
-        href="../about.html">About</a><a href="../contact.html">Contact</a>
+      <a href="../index.html">Games</a><a href="../blog/">Blog</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms of Service</a><a href="../about.html">About</a><a href="../contact.html">Contact</a>
     </footer>
   </div>
   <script src="../assets/js/site-config.js"></script>
   <script src="js/game.js"></script>
   <script src="../assets/js/ads.js"></script>
-  <script>initAds();</script>
+  <script>if (typeof initAds === "function") initAds();</script>
 </body>
 
 </html>

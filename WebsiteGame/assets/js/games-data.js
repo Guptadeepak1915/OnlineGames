@@ -7,10 +7,10 @@ const GAMES = [
   {
     id: 'fliprun',
     name: 'FlipRun',
-    folder: 'fliprun/',                 // folder name inside WebsiteGame
+    folder: 'fliprun/',
     category: 'Arcade',
     desc: 'Flip gravity with one tap, dodge spikes, grab coins and build combos up to x5.',
-    bestKey: 'fliprun_best',            // localStorage key where the game saves best score
+    bestKey: 'fliprun_best',
     art: 'FR', c1: '#ff5c7a', c2: '#3b1b6b',
     isNew: false
   },
@@ -29,7 +29,7 @@ const GAMES = [
     name: "Snake Rush",
     folder: "snakerush/",
     category: "Arcade",
-    desc: "Connect all dots in one continuous stroke across 60 handcrafted wooden stages in 6 master levels.",
+    desc: "Slither, steer with precision, eat fruits to grow longer, and dodge walls and your own tail.",
     bestKey: "snakerush_best",
     art: "SR", c1: '#ff9f43', c2: '#6b1b4e',
     isNew: false
@@ -59,12 +59,12 @@ const GAMES = [
     name: "2048 Merge",
     folder: "2048merge/",
     category: "Puzzle",
-    desc: "Slide and merge tiles to reach 2048.",
+    desc: "Slide numbered tiles across the 4x4 grid and merge identical numbers to build the legendary 2048 tile.",
     bestKey: "2048merge_best",
     art: "2M", c1: '#ffd23f', c2: '#3b1b6b',
     isNew: false
   },
-    {
+  {
     id: 'fourinarow',
     name: 'Four in a Row',
     folder: 'fourinarow/',
@@ -74,7 +74,7 @@ const GAMES = [
     art: '4R', c1: '#ffd23f', c2: '#c93353',
     isNew: false
   },
-    {
+  {
     id: 'wordfill',
     name: 'Word Fill',
     folder: 'wordfill/',
@@ -84,7 +84,7 @@ const GAMES = [
     art: 'WF', c1: '#3df2e0', c2: '#3b1b6b',
     isNew: false
   },
-    {
+  {
     id: 'bricksbreakerquest',
     name: 'Bricks Breaker Quest',
     folder: 'bricksbreakerquest/',
@@ -99,37 +99,37 @@ const GAMES = [
     name: "Sliding Puzzle Master",
     folder: "slidingpuzzlemaster/",
     category: "Puzzle",
-    desc: "Challenge your brain with Wooden Number Slide! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩",
+    desc: "Slide the numbered tiles into numerical order in this classic brain teaser with daily challenges.",
     bestKey: "slidingpuzzlemaster_best",
     art: "SP", c1: '#ff9f43', c2: '#6b1b4e',
     isNew: false
   },
   {
     id: "woodennumberpuzzle",
-    name: "wooden-number-puzzle",
+    name: "Wooden Number Slide",
     folder: "woodennumberpuzzle/",
     category: "Puzzle",
-    desc: "Challenge your brain ! Arrange the numbered tiles in the correct order, solve puzzles, and enjoy a classic wooden puzzle experience. 🧩 ",
+    desc: "A rich tactile wooden sliding puzzle. Arrange numbers across 3x3, 4x4, and 5x5 grids with hints and undos.",
     bestKey: "woodennumberpuzzle_best",
     art: "WOODEN", c1: '#ff5c7a', c2: '#0f2a1a',
     isNew: false
   },
   {
-    id:"woodblock",
-    name:"wood-block",
+    id: "woodblock",
+    name: "Wood Block Puzzle",
     folder: "woodblock/",
     category: "Arcade",
-    desc: "Put The blocks and fill the cell and gain Highest Score",
+    desc: "Place wooden blocks on the 8x8 grid, clear full rows and columns, and achieve high combo scores.",
     bestKey: "woodblock_best",
-    art:"WB",c1: '#ff5c7a', c2: '#0f2a1a',
-    isNew : false
+    art: "WB", c1: '#ff5c7a', c2: '#0f2a1a',
+    isNew: false
   },
   {
     id: "sudoku",
     name: "Sudoku",
     folder: "sudoku/",
     category: "Puzzle",
-    desc: "Solve unique 9×9 Sudoku puzzles using row, column, and 3×3 box logic.",
+    desc: "Solve unique 9x9 Sudoku puzzles using row, column, and 3x3 box logic with pencil notes and hints.",
     bestKey: "sudoku_best",
     art: "SDK", c1: '#ffd23f', c2: '#3b1b6b',
     isNew: false
@@ -139,17 +139,17 @@ const GAMES = [
     name: "One Line Puzzle",
     folder: "onelinepuzzle/",
     category: "Puzzle",
-    desc: "Eat, grow and do not hit the wall.",
+    desc: "Connect all nodes in one continuous unbroken line without lifting your finger or retracing any path.",
     bestKey: "onelinepuzzle_best",
     art: "OL", c1: '#ffd23f', c2: '#3b1b6b',
     isNew: true
   },
   {
     id: "fruitslice",
-    name: "Fruit Slice ",
+    name: "Fruit Slice",
     folder: "fruitslice/",
     category: "Fun",
-    desc: "Fruit Slice is an addictive arcade game where players slice flying fruits using quick swipes while avoiding dangerous bombs.",
+    desc: "Slice flying juicy fruits, chain massive katana combos, and steer clear of explosive black bombs.",
     bestKey: "fruitslice_best",
     art: "FS", c1: '#3df2e0', c2: '#2a0f2e',
     isNew: true
@@ -163,6 +163,5 @@ const GAMES = [
     bestKey: "targethit_best",
     art: "TH", c1: '#3df2e0', c2: '#120d2b',
     isNew: true
-  },
-  // ADD NEW GAMES ABOVE THIS LINE
+  }
 ];
